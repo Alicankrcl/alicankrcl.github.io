@@ -119,14 +119,13 @@
         .highlight-card h3 { font-size: 1.1rem; margin-bottom: 5px; }
         .highlight-card p { font-size: 0.85rem; color: var(--text-muted); }
 
-        /* --- SKILLS (Uzatmasız, Tamamen Kararlı CSS Çizim Alanı) --- */
+        /* --- SKILLS --- */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
         .skill-card {
             background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 35px 20px; text-align: center; transition: var(--transition-smooth); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
         .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; transition: var(--transition-smooth); opacity: 0.3; }
         
-        /* Kart Renk Atamaları */
         .skill-card[data-tech="python"]::before { background: #3776AB; }
         .skill-card[data-tech="matlab"]::before { background: #E16725; }
         .skill-card[data-tech="catia"]::before { background: #005685; }
@@ -136,14 +135,6 @@
         .skill-card:hover { transform: translateY(-8px); background: var(--bg-surface-hover); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
         .skill-card:hover::before { opacity: 1; height: 4px; }
 
-        .skill-icon-container { height: 65px; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; transition: var(--transition-smooth); }
-        .skill-card:hover .skill-icon-container { transform: scale(1.1); }
-        
-        .skill-name { font-weight: 700; font-size: 1.2rem; margin-bottom: 6px; letter-spacing: -0.02em; }
-        .skill-type { font-size: 0.85rem; color: var(--text-muted); }
-
-        /* --- SIFIRDAN CSS LOGO TASARIMLARI (YAMULMAZ / KIRILMAZ) --- */
-        
         .skill-icon-container { 
             width: 70px;
             height: 60px; 
@@ -169,7 +160,7 @@
         .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 30px; }
         .project-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: var(--transition-smooth); }
         .project-card:hover { transform: translateY(-8px); border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .project-graphic { height: 200px; background: linear-gradient(135deg, #0A0D16, #04060B); display: flex; justify-content: center; align-items: center; position: relative; border-bottom: 1px solid var(--border-color); }
+        .project-graphic { height: 240px; background: linear-gradient(135deg, #0A0D16, #04060B); display: flex; justify-content: center; align-items: center; position: relative; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .project-graphic i { font-size: 4rem; color: rgba(255, 255, 255, 0.03); position: absolute; }
         .blueprint-effect { width: 80%; height: 70%; border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; background: rgba(56, 189, 248, 0.01); }
         .blueprint-line { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--primary); }
@@ -181,6 +172,95 @@
         .project-links { display: flex; gap: 15px; margin-top: auto; }
         .project-btn { font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); }
         .project-btn:hover { color: var(--primary); }
+
+        /* --- STATUS BADGE STYLES --- */
+        .status-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .status-badge.completed {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+        }
+        .status-badge.in-progress {
+            background: rgba(245, 158, 11, 0.1);
+            color: #F59E0B;
+        }
+        .status-badge.design-verified {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+        }
+        .status-badge.manufacturing {
+            background: rgba(168, 85, 247, 0.1);
+            color: #A855F7;
+        }
+
+        /* --- SLIDER CONTROLS --- */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+        .slider-btn:hover {
+            background: rgba(56, 189, 248, 0.3);
+            border-color: var(--primary);
+        }
+        .slider-btn.prev { left: 10px; }
+        .slider-btn.next { right: 10px; }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+            z-index: 10;
+        }
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        .slider-dot.active {
+            background: var(--primary);
+        }
+
+        /* --- LOADING SPINNER --- */
+        .projects-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            gap: 15px;
+        }
+        .projects-loading i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
 
         /* --- CONTACT --- */
         .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; }
@@ -314,7 +394,7 @@
         </div>
     </section>
 
-    <<section id="skills">
+    <section id="skills">
         <h2 class="section-title">Uzmanlık Alanları</h2>
         <div class="skills-grid">
             <div class="skill-card" data-tech="python">
@@ -359,55 +439,21 @@
         </div>
     </section>
 
-   <section id="projects">
+    <!-- ==================== DİNAMİK PROJELER ==================== -->
+    <section id="projects">
         <h2 class="section-title">Öne Çıkan Projeler</h2>
-        <div class="projects-grid">
-            
-            <div class="project-card">
-                <div class="project-graphic" style="height: 240px; position: relative; overflow: hidden; background: #0A0D16;">
-                    <img id="slide1" src="proje1.png" alt="Go-Kart Render 1" style="width: 100%; height: 100%; object-fit: contain; position: absolute; transition: opacity 0.5s ease; opacity: 1;">
-                    <img id="slide2" src="proje2.png" alt="Go-Kart Render 2" style="width: 100%; height: 100%; object-fit: contain; position: absolute; transition: opacity 0.5s ease; opacity: 0;">
-                    <img id="slide3" src="proje3.png" alt="Go-Kart Render 3" style="width: 100%; height: 100%; object-fit: contain; position: absolute; transition: opacity 0.5s ease; opacity: 0;">
-                    <button onclick="changeSlide(-1)" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-left"></i></button>
-                    <button onclick="changeSlide(1)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></button>
-                </div>
-
-                <div class="project-info">
-                    <div class="project-tags">
-                        <span class="tag">SolidWorks</span>
-                        <span class="tag">Ar-Ge & Tasarım</span>
-                        <span class="tag">Kinematik</span>
-                    </div>
-                    <h3 class="project-title">Yüksek Performanslı Go-Kart Şasi Ar-Ge Projesi</h3>
-                    <p class="project-desc" style="font-size: 0.92rem; line-height: 1.5;">
-                        Uluslararası yarışma regülasyonlarına tam uyumlu; dinamik burulma rijitliği (torsional rigidity) ve optimum ağırlık dağılımı matrisleri hesaplanarak geliştirilmiş boru şasi kinematik tasarımı. Proje kapsamında, viraj içi yanal kuvvetlerin (lateral G) şasi geometrisi üzerindeki gerilme yığılmaları minimize edilmiş, malzeme mukavemet sınırları ve kaynak birleşim noktalarındaki yapısal bütünlük CAD ortamında parametrik olarak modellenmiştir. Ackerman yönlendirme geometrisi ve statik kaster/kamber açıları şasinin dinamik kararlılığına entegre edilmiştir.
-                    </p>
-                    <div class="project-links">
-                        <span class="project-btn" style="color: var(--primary); font-weight: 600;"><i class="fas fa-check-circle"></i> Tasarım & Geometri Doğrulaması Tamamlandı</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-info" style="padding-top: 35px;">
-                    <div class="project-tags">
-                        <span class="tag" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B;">Geliştirme Aşamasında</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">Arduino</span>
-                    </div>
-                    <h3 class="project-title">Otonom Sistemler & Sinyal İşleme Altyapısı</h3>
-                    <p class="project-desc">
-                        Gömülü sistemler ve donanım kontrolü (Arduino/ESP32) ile Python tabanlı sinyal/görüntü işleme algoritmalarının entegrasyonunu hedefleyen AR-GE projesi. Sistem mimarisi ve algoritma testleri yerel ortamda geliştirilmektedir.
-                    </p>
-                    <div class="project-links">
-                        <span class="project-btn" style="color: var(--text-muted); cursor: not-allowed;"><i class="fas fa-spinner fa-spin"></i> Kodlar Yeniden Yapılandırılıyor (Format)</span>
-                    </div>
-                </div>
-            </div>
-
+        
+        <!-- Yüklenirken gösterilecek spinner -->
+        <div class="projects-loading" id="projectsLoading">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Projeler yükleniyor...</span>
         </div>
-		
-    </section><section id="contact">
+
+        <!-- Firestore'dan dinamik olarak doldurulacak grid -->
+        <div class="projects-grid" id="projectsGrid" style="display: none;"></div>
+    </section>
+
+    <section id="contact">
         <h2 class="section-title">İletişim</h2>
         <div class="contact-grid">
             <div class="contact-info">
@@ -454,8 +500,180 @@
         <p>&copy; 2026 Alican Karcılı. Tüm Hakları Saklıdır. Built with &lt;3 and Code.</p>
     </footer>
 
+    <!-- ==================== FIREBASE SDK (CDN / Compat) ==================== -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
     <script>
-        // TYPEWRITER EFFECT
+        // ================================================================
+        //  🔥 FIREBASE KONFİGÜRASYONU
+        //  Aşağıdaki değerleri kendi Firebase Console'unuzdan aldığınız
+        //  bilgilerle değiştirin. (Project Settings > General > Your Apps)
+        // ================================================================
+        const firebaseConfig = {
+    apiKey:            "AIzaSyAjDWSMLkNjKG4zm2y4ObTjmx8rG_rTCRO",
+    authDomain:        "alican-site.firebaseapp.com",
+    projectId:         "alican-site",
+    storageBucket:     "alican-site.firebasestorage.app",
+    messagingSenderId: "1017623183273",
+    appId:             "1:1017623183273:web:2a1b68ec002367d07f0eb8"
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // ================================================================
+        //  DİNAMİK PROJE RENDER
+        // ================================================================
+
+        // Status badge map — Firestore'daki status değerine göre etiket
+        const STATUS_MAP = {
+            'Tamamlandı':             { icon: 'fa-check-circle',  cls: 'completed',       label: 'Tamamlandı' },
+            'Tasarım Doğrulandı':     { icon: 'fa-check-circle',  cls: 'design-verified',  label: 'Tasarım Doğrulandı' },
+            'Geliştirme Aşamasında':  { icon: 'fa-spinner fa-spin', cls: 'in-progress',    label: 'Geliştirme Aşamasında' },
+            'Devam Ediyor':           { icon: 'fa-spinner fa-spin', cls: 'in-progress',    label: 'Devam Ediyor' },
+            'İmalatta':               { icon: 'fa-industry',      cls: 'manufacturing',    label: 'İmalatta' }
+        };
+
+        /**
+         * Tek bir proje kartı için HTML string üretir.
+         * Mevcut CSS sınıflarınızla (.project-card, .project-tags, .tag, vb.)
+         * birebir uyumlu çalışır.
+         */
+        function renderProjectCard(project, docId) {
+            const images = project.images || [];
+            const tags   = project.tags   || [];
+            const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Ediyor'];
+
+            // ---- Görsel Slider ----
+            let sliderHTML = '';
+            if (images.length > 0) {
+                const imagesHTML = images.map((url, idx) =>
+                    `<img src="${url}" alt="${project.title} - ${idx + 1}" 
+                          style="width:100%;height:100%;object-fit:contain;position:absolute;transition:opacity 0.5s ease;opacity:${idx === 0 ? 1 : 0};" 
+                          data-slide-index="${idx}">`
+                ).join('');
+
+                const dotsHTML = images.length > 1
+                    ? `<div class="slider-dots">${images.map((_, idx) =>
+                        `<span class="slider-dot ${idx === 0 ? 'active' : ''}" data-dot-index="${idx}"></span>`
+                      ).join('')}</div>`
+                    : '';
+
+                const navButtons = images.length > 1
+                    ? `<button class="slider-btn prev" data-dir="-1"><i class="fas fa-chevron-left"></i></button>
+                       <button class="slider-btn next" data-dir="1"><i class="fas fa-chevron-right"></i></button>`
+                    : '';
+
+                sliderHTML = `
+                    <div class="project-graphic" data-slider data-current="0" data-total="${images.length}">
+                        ${imagesHTML}
+                        ${navButtons}
+                        ${dotsHTML}
+                    </div>`;
+            }
+
+            // ---- Tag'ler ----
+            const tagsHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+            // ---- Status Badge ----
+            const statusHTML = `<span class="status-badge ${status.cls}"><i class="fas ${status.icon}"></i> ${status.label}</span>`;
+
+            return `
+                <div class="project-card" data-project-id="${docId}">
+                    ${sliderHTML}
+                    <div class="project-info" ${images.length === 0 ? 'style="padding-top:35px;"' : ''}>
+                        <div class="project-tags">
+                            ${statusHTML}
+                            ${tagsHTML}
+                        </div>
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-desc" style="font-size:0.92rem;line-height:1.5;">${project.description}</p>
+                        <div class="project-links">
+                            ${statusHTML}
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        /**
+         * Firestore'dan projeleri çeker, sıralar ve DOM'a render eder.
+         */
+        async function loadProjects() {
+            const grid    = document.getElementById('projectsGrid');
+            const loading = document.getElementById('projectsLoading');
+
+            try {
+                const snapshot = await db.collection('projects')
+                    .orderBy('order', 'asc')
+                    .get();
+
+                let html = '';
+                snapshot.forEach(doc => {
+                    html += renderProjectCard(doc.data(), doc.id);
+                });
+
+                if (snapshot.empty) {
+                    html = `<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">Henüz proje eklenmemiş.</p>`;
+                }
+
+                grid.innerHTML = html;
+                grid.style.display = 'grid';
+                loading.style.display = 'none';
+
+                // Slider event'lerini bağla
+                initSliders();
+
+            } catch (err) {
+                console.error('Projeler yüklenirken hata:', err);
+                loading.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:#EF4444;"></i>
+                                     <span>Projeler yüklenemedi. Lütfen sayfayı yenileyin.</span>`;
+            }
+        }
+
+        /**
+         * Render edilen tüm slider'lara tıklama event'lerini bağlar.
+         */
+        function initSliders() {
+            document.querySelectorAll('[data-slider]').forEach(slider => {
+                const total = parseInt(slider.dataset.total);
+                let current = 0;
+
+                function goToSlide(index) {
+                    if (index < 0) index = total - 1;
+                    if (index >= total) index = 0;
+                    current = index;
+                    slider.dataset.current = current;
+
+                    slider.querySelectorAll('img[data-slide-index]').forEach(img => {
+                        img.style.opacity = parseInt(img.dataset.slideIndex) === current ? '1' : '0';
+                    });
+                    slider.querySelectorAll('.slider-dot').forEach(dot => {
+                        dot.classList.toggle('active', parseInt(dot.dataset.dotIndex) === current);
+                    });
+                }
+
+                // Ok butonları
+                slider.querySelectorAll('.slider-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        goToSlide(current + parseInt(btn.dataset.dir));
+                    });
+                });
+
+                // Dot tıklamaları
+                slider.querySelectorAll('.slider-dot').forEach(dot => {
+                    dot.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        goToSlide(parseInt(dot.dataset.dotIndex));
+                    });
+                });
+            });
+        }
+
+        // ================================================================
+        //  TYPEWRITER EFFECT
+        // ================================================================
         const phrases = [
             "Merhaba, ben bir mühendis adayıyım...",
             "Sinyal ve görüntü işleme algoritmaları geliştiriyorum...",
@@ -495,11 +713,9 @@
             loopDeleting();
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            typingEffect();
-        });
-
-        // MOBILE MENU
+        // ================================================================
+        //  MOBILE MENU
+        // ================================================================
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
 
@@ -519,9 +735,10 @@
                 menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
             });
         });
-		
-		
-        // SCROLL INTERACTIONS
+
+        // ================================================================
+        //  SCROLL INTERACTIONS
+        // ================================================================
         const sections = document.querySelectorAll('section');
         const navItems = document.querySelectorAll('.nav-links a');
 
@@ -548,22 +765,14 @@
                 if (item.getAttribute('href').slice(1) === current) { item.classList.add('active'); }
             });
         });
-		// GO-KART RESİM GALERİSİ FONKSİYONU
-        let currentSlide = 1;
-        const totalSlides = 3;
 
-        function changeSlide(direction) {
-            // Mevcut resmi gizle
-            document.getElementById('slide' + currentSlide).style.opacity = 0;
-            
-            // Yeni resim indeksini hesapla
-            currentSlide += direction;
-            if (currentSlide > totalSlides) { currentSlide = 1; }
-            if (currentSlide < 1) { currentSlide = totalSlides; }
-            
-            // Yeni resmi göster
-            document.getElementById('slide' + currentSlide).style.opacity = 1;
-        }
+        // ================================================================
+        //  INIT
+        // ================================================================
+        document.addEventListener("DOMContentLoaded", function() {
+            typingEffect();
+            loadProjects();
+        });
     </script>
 </body>
 </html>
