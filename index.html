@@ -480,7 +480,7 @@
         const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
         const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eHptZGRwa2tuYWZpcWlrd3BnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNDk3MjcsImV4cCI6MjEwNTcyNTcyN30.vOjB1ZjSHI81ARL-udAKO_-USY9KJj2MxgdnVVznOfA';
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
         // ================================================================
         //  DİNAMİK YETENEKLER (SKILLS)
@@ -752,7 +752,7 @@
         // ================================================================
         async function loadSiteContent() {
             try {
-                const { data, error } = await supabase.from('site_content').select('*');
+                const { data, error } = await sb.from('site_content').select('*');
                 if (error || !data) return;
                 const map = {};
                 data.forEach(row => { map[row.key] = row.value; });
