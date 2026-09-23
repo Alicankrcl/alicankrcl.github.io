@@ -478,7 +478,7 @@
         //  SUPABASE KONFİGÜRASYONU
         // ================================================================
         const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
-        const SUPABASE_ANON = 'sb_publishable_1eWd1XHPctAzzUYZypW9zg_fdlZ3Lze';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eHptZGRwa2tuYWZpcWlrd3BnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNDk3MjcsImV4cCI6MjEwNTcyNTcyN30.vOjB1ZjSHI81ARL-udAKO_-USY9KJj2MxgdnVVznOfA';
 
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
@@ -748,12 +748,62 @@
         });
 
         // ================================================================
+        //  SİTE İÇERİĞİ (HAKKIMDA / HEro / İLETİŞİM)
+        // ================================================================
+        async function loadSiteContent() {
+            try {
+                const { data, error } = await supabase.from('site_content').select('*');
+                if (error || !data) return;
+                const map = {};
+                data.forEach(row => { map[row.key] = row.value; });
+
+                if (map.hero_title) {
+                    const h = document.querySelector('.hero-title');
+                    if (h) h.textContent = map.hero_title;
+                }
+                const ps = document.querySelectorAll('.about-text p');
+                if (map.about_p1 && ps[0]) ps[0].textContent = map.about_p1;
+                if (map.about_p2 && ps[1]) ps[1].textContent = map.about_p2;
+
+                if (map.highlights) {
+                    try {
+                        const list = JSON.parse(map.highlights);
+                        const grid = document.querySelector('.about-highlights');
+                        if (grid && list.length) {
+                            grid.innerHTML = list.map(h => `
+                                <div class="highlight-card">
+                                    <i class="${h.icon||'fas fa-star'}"></i>
+                                    <h3>${h.title||''}</h3>
+                                    <p>${h.sub||''}</p>
+                                </div>`).join('');
+                        }
+                    } catch(e) {}
+                }
+                if (map.contact_email) {
+                    document.querySelectorAll('.meta-item span').forEach(el => {
+                        if (el.textContent.includes('@')) el.textContent = map.contact_email;
+                    });
+                }
+                if (map.contact_linkedin) {
+                    document.querySelectorAll('a[href*="linkedin"]').forEach(el => { el.href = map.contact_linkedin; });
+                }
+                if (map.contact_text) {
+                    const ct = document.querySelector('.contact-text');
+                    if (ct) ct.textContent = map.contact_text;
+                }
+            } catch (err) {
+                console.log('site_content:', err.message);
+            }
+        }
+
+        // ================================================================
         //  INIT
         // ================================================================
         document.addEventListener("DOMContentLoaded", function() {
             typingEffect();
             loadSkills();
             loadProjects();
+            loadSiteContent();
         });
     </script>
 </body>
