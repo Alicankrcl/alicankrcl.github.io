@@ -36,7 +36,7 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             line-height: 1.6;
@@ -77,11 +77,21 @@
             max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; justify-content: space-between; align-items: center;
         }
         .logo { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.03em; }
-        .nav-links { display: flex; gap: 35px; }
+        .nav-links { display: flex; gap: 35px; align-items: center; }
         .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); position: relative; }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
         .nav-links a::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--primary); transition: var(--transition-smooth); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        
+        .admin-link {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+            padding: 6px 14px; border-radius: 6px;
+            border: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.02);
+            font-family: 'Fira Code', monospace; opacity: 0.6;
+            transition: var(--transition-smooth); cursor: pointer; text-decoration: none;
+        }
+        .admin-link:hover { opacity: 1; border-color: var(--primary); color: var(--primary); background: var(--primary-glow); }
         .menu-toggle { display: none; font-size: 1.5rem; cursor: pointer; }
 
         /* --- HERO --- */
@@ -102,6 +112,16 @@
         .typewriter-text { color: var(--text-main); font-size: 0.95rem; border-right: 2px solid var(--primary); white-space: nowrap; animation: blink 0.75s step-end infinite; }
 
         .hero-buttons { display: flex; gap: 20px; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: var(--transition-smooth);
+        }
+        .btn-primary { background: var(--gradient-1); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2); }
+        .btn-secondary { background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
         .hero-graphic { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
         .chassis-graphic { width: 320px; height: 320px; position: relative; }
         .chassis-layer { position: absolute; inset: 0; border: 1px dashed rgba(56, 189, 248, 0.1); border-radius: 30px; display: flex; justify-content: center; align-items: center; color: var(--primary); animation: rotate_chassis 10s linear infinite; background: rgba(56, 189, 248, 0.01); }
@@ -112,7 +132,7 @@
         /* --- ABOUT --- */
         .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
         .about-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px; }
-        .about-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .about-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; width: 100%; }
         .highlight-card { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; text-align: center; transition: var(--transition-smooth); }
         .highlight-card:hover { border-color: var(--accent); transform: translateY(-5px); }
         .highlight-card i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
@@ -124,7 +144,11 @@
         .skill-card {
             background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 12px; padding: 35px 20px; text-align: center; transition: var(--transition-smooth); position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        .skill-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; transition: var(--transition-smooth); opacity: 0.3; }
+        .skill-card::before { 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; 
+            background: var(--skill-color, var(--primary));
+            transition: var(--transition-smooth); opacity: 0.4; 
+        }
         
         .skill-card[data-tech="python"]::before { background: #3776AB; }
         .skill-card[data-tech="matlab"]::before { background: #E16725; }
@@ -149,6 +173,10 @@
             max-height: 100%;
             object-fit: contain;
         }
+        .skill-icon-container i {
+            font-size: 2.5rem;
+            color: var(--skill-color, var(--primary));
+        }
         .skill-card:hover .skill-icon-container { 
             transform: scale(1.12); 
         }
@@ -162,16 +190,12 @@
         .project-card:hover { transform: translateY(-8px); border-color: rgba(56, 189, 248, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .project-graphic { height: 240px; background: linear-gradient(135deg, #0A0D16, #04060B); display: flex; justify-content: center; align-items: center; position: relative; border-bottom: 1px solid var(--border-color); overflow: hidden; }
         .project-graphic i { font-size: 4rem; color: rgba(255, 255, 255, 0.03); position: absolute; }
-        .blueprint-effect { width: 80%; height: 70%; border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 6px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; background: rgba(56, 189, 248, 0.01); }
-        .blueprint-line { font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--primary); }
         .project-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .project-tags { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .tag { background: rgba(56, 189, 248, 0.1); color: var(--primary); font-size: 0.75rem; font-weight: 600; padding: 4px 10px; border-radius: 4px; font-family: 'Fira Code', monospace; }
         .project-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.02em; }
         .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
         .project-links { display: flex; gap: 15px; margin-top: auto; }
-        .project-btn { font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted); }
-        .project-btn:hover { color: var(--primary); }
 
         /* --- STATUS BADGE STYLES --- */
         .status-badge {
@@ -184,83 +208,27 @@
             align-items: center;
             gap: 6px;
         }
-        .status-badge.completed {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10B981;
-        }
-        .status-badge.in-progress {
-            background: rgba(245, 158, 11, 0.1);
-            color: #F59E0B;
-        }
-        .status-badge.design-verified {
-            background: rgba(56, 189, 248, 0.1);
-            color: var(--primary);
-        }
-        .status-badge.manufacturing {
-            background: rgba(168, 85, 247, 0.1);
-            color: #A855F7;
-        }
+        .status-badge.completed { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+        .status-badge.in-progress { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+        .status-badge.design-verified { background: rgba(56, 189, 248, 0.1); color: var(--primary); }
+        .status-badge.manufacturing { background: rgba(168, 85, 247, 0.1); color: #A855F7; }
 
         /* --- SLIDER CONTROLS --- */
         .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.6);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition-smooth);
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.6); color: white; border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%; width: 35px; height: 35px; cursor: pointer; z-index: 10;
+            display: flex; align-items: center; justify-content: center; transition: var(--transition-smooth);
         }
-        .slider-btn:hover {
-            background: rgba(56, 189, 248, 0.3);
-            border-color: var(--primary);
-        }
+        .slider-btn:hover { background: rgba(56, 189, 248, 0.3); border-color: var(--primary); }
         .slider-btn.prev { left: 10px; }
         .slider-btn.next { right: 10px; }
+        .slider-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
+        .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: var(--transition-smooth); }
+        .slider-dot.active { background: var(--primary); }
 
-        .slider-dots {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 6px;
-            z-index: 10;
-        }
-        .slider-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-        .slider-dot.active {
-            background: var(--primary);
-        }
-
-        /* --- LOADING SPINNER --- */
-        .projects-loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 20px;
-            color: var(--text-muted);
-            gap: 15px;
-        }
-        .projects-loading i {
-            font-size: 2rem;
-            color: var(--primary);
-        }
+        .projects-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; color: var(--text-muted); gap: 15px; }
+        .projects-loading i { font-size: 2rem; color: var(--primary); }
 
         /* --- CONTACT --- */
         .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; }
@@ -317,6 +285,9 @@
                 <li><a href="#projects">Projeler</a></li>
                 <li><a href="#contact">İletişim</a></li>
             </ul>
+            <a href="admin.html" class="admin-link" title="Admin Panel">
+                <i class="fas fa-lock"></i> Admin
+            </a>
             <div class="menu-toggle" id="menuToggle">
                 <i class="fas fa-bars"></i>
             </div>
@@ -362,7 +333,6 @@
         </div>
     </section>
 
-    
     <section id="about">
         <h2 class="section-title">Hakkımda</h2>
         <div class="about-grid">
@@ -374,7 +344,7 @@
                     Mekanik tasarımlarımı sadece dijital ortamda bırakmayıp; mekatronik sistemler, gömülü yazılımlar ve kontrol teorisiyle birleştirmeyi hedefliyorum. Geliştirdiğim tasarımların sinyal akış şemalarını, veri işleme ve otomasyon altyapılarını kurgulamak için Python ve Arduino platformlarını aktif birer araç olarak kullanıyorum.
                 </p>
             </div>
-            <div class="about-highlights" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; width: 100%;">
+            <div class="about-highlights">
                 <div class="highlight-card">
                     <i class="fas fa-drafting-compass"></i>
                     <h3>CAD & Tasarım</h3>
@@ -394,44 +364,46 @@
         </div>
     </section>
 
+    <!-- ==================== YETENEKLER (DİNAMİK + FALLBACK) ==================== -->
     <section id="skills">
         <h2 class="section-title">Uzmanlık Alanları</h2>
-        <div class="skills-grid">
-            <div class="skill-card" data-tech="python">
+        <div class="skills-grid" id="skillsGrid">
+            <!-- Varsayılan / Fallback Kartlar -->
+            <div class="skill-card" data-tech="python" style="--skill-color: #3776AB;">
                 <div class="skill-icon-container">
-                    <img src="https://www.python.org/static/img/python-logo.png" alt="Python" style="width: auto; height: 45px; object-fit: contain;">
+                    <img src="https://www.python.org/static/img/python-logo.png" alt="Python" style="height: 45px;">
                 </div>
                 <div class="skill-name">Python</div>
                 <div class="skill-type">Görüntü İşleme & Scripting</div>
             </div>
             
-            <div class="skill-card" data-tech="matlab">
+            <div class="skill-card" data-tech="matlab" style="--skill-color: #E16725;">
                 <div class="skill-icon-container">
-                    <img src="https://www.mathworks.com/content/dam/mathworks/mathworks-dot-com/images/responsive/global/matlab-logo.svg" alt="MATLAB" width="48" height="48" style="object-fit: contain;">
+                    <img src="https://www.mathworks.com/content/dam/mathworks/mathworks-dot-com/images/responsive/global/matlab-logo.svg" alt="MATLAB" style="height: 48px;">
                 </div>
                 <div class="skill-name">MATLAB</div>
                 <div class="skill-type">Sinyal İşleme & Simülasyon</div>
             </div>
             
-            <div class="skill-card" data-tech="catia">
+            <div class="skill-card" data-tech="catia" style="--skill-color: #005685;">
                 <div class="skill-icon-container">
-                    <img src="catia.png" alt="CATIA">
+                    <img src="catia.png" onerror="this.onerror=null; this.src='https://cdn.worldvectorlogo.com/logos/catia.svg';" alt="CATIA" style="height: 45px;">
                 </div>
                 <div class="skill-name">CATIA</div>
                 <div class="skill-type">Gelişmiş Yüzey Modelleme</div>
             </div>
             
-            <div class="skill-card" data-tech="solidworks">
+            <div class="skill-card" data-tech="solidworks" style="--skill-color: #DC1928;">
                 <div class="skill-icon-container">
-                    <img src="solidworks.png" alt="SolidWorks">
+                    <img src="solidworks.png" onerror="this.onerror=null; this.src='https://cdn.worldvectorlogo.com/logos/solidworks.svg';" alt="SolidWorks" style="height: 45px;">
                 </div>
                 <div class="skill-name">SolidWorks</div>
                 <div class="skill-type">3D Modelleme & Montaj</div>
             </div>
             
-            <div class="skill-card" data-tech="arduino">
+            <div class="skill-card" data-tech="arduino" style="--skill-color: #00979C;">
                 <div class="skill-icon-container">
-                    <img src="https://img.icons8.com/color/96/arduino.png" alt="Arduino" width="50" height="42" style="object-fit: contain;">
+                    <img src="https://img.icons8.com/color/96/arduino.png" alt="Arduino" style="height: 45px;">
                 </div>
                 <div class="skill-name">Arduino</div>
                 <div class="skill-type">Prototip & Gömülü Sistemler</div>
@@ -443,13 +415,11 @@
     <section id="projects">
         <h2 class="section-title">Öne Çıkan Projeler</h2>
         
-        <!-- Yüklenirken gösterilecek spinner -->
         <div class="projects-loading" id="projectsLoading">
             <i class="fas fa-spinner fa-spin"></i>
             <span>Projeler yükleniyor...</span>
         </div>
 
-        <!-- Firestore'dan dinamik olarak doldurulacak grid -->
         <div class="projects-grid" id="projectsGrid" style="display: none;"></div>
     </section>
 
@@ -467,7 +437,7 @@
                         <span>alicankarcili20@gmail.com</span>
                     </div>
                     <div class="meta-item" style="margin-top: 15px;">
-                        <a href="https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/" target="_blank" style="color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.3s ease;">
+                        <a href="https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/" target="_blank" style="color: var(--text-main); text-decoration: none; display: flex; align-items: center; gap: 10px; transition: color 0.3s ease;">
                             <i class="fab fa-linkedin" style="color: #0077B5; font-size: 1.3rem;"></i>
                             <span style="font-weight: 500;">LinkedIn Profilimi Görüntüle</span>
                         </a>
@@ -500,45 +470,73 @@
         <p>&copy; 2026 Alican Karcılı. Tüm Hakları Saklıdır. Built with &lt;3 and Code.</p>
     </footer>
 
-    <!-- ==================== FIREBASE SDK (CDN / Compat) ==================== -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <!-- ==================== SUPABASE SDK ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
     <script>
         // ================================================================
-        //  🔥 FIREBASE KONFİGÜRASYONU
-        //  Aşağıdaki değerleri kendi Firebase Console'unuzdan aldığınız
-        //  bilgilerle değiştirin. (Project Settings > General > Your Apps)
+        //  SUPABASE KONFİGÜRASYONU
         // ================================================================
-        const firebaseConfig = 
+        const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
+        const SUPABASE_ANON = 'sb_publishable_1eWd1XHPctAzzUYZypW9zg_fdlZ3Lze';
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
         // ================================================================
-        //  DİNAMİK PROJE RENDER
+        //  DİNAMİK YETENEKLER (SKILLS)
         // ================================================================
+        async function loadSkills() {
+            const grid = document.getElementById('skillsGrid');
+            try {
+                const { data, error } = await supabase
+                    .from('skills')
+                    .select('*')
+                    .order('sort_order', { ascending: true });
 
-        // Status badge map — Firestore'daki status değerine göre etiket
+                if (!error && data && data.length > 0) {
+                    let html = '';
+                    data.forEach(skill => {
+                        const color = skill.color || '#38BDF8';
+                        let iconHtml = '';
+                        if (skill.icon_url && skill.icon_url.trim()) {
+                            iconHtml = `<img src="${skill.icon_url}" alt="${skill.name}" style="height: 45px; object-fit: contain;">`;
+                        } else {
+                            iconHtml = `<i class="${skill.icon_class || 'fas fa-cog'}"></i>`;
+                        }
+
+                        html += `
+                            <div class="skill-card" style="--skill-color: ${color};">
+                                <div class="skill-icon-container">
+                                    ${iconHtml}
+                                </div>
+                                <div class="skill-name">${skill.name}</div>
+                                <div class="skill-type">${skill.category || ''}</div>
+                            </div>
+                        `;
+                    });
+                    grid.innerHTML = html;
+                }
+            } catch (err) {
+                console.log('Varsayılan yetenekler gösteriliyor:', err);
+            }
+        }
+
+        // ================================================================
+        //  DİNAMİK PROJELER
+        // ================================================================
         const STATUS_MAP = {
-            'Tamamlandı':             { icon: 'fa-check-circle',  cls: 'completed',       label: 'Tamamlandı' },
-            'Tasarım Doğrulandı':     { icon: 'fa-check-circle',  cls: 'design-verified',  label: 'Tasarım Doğrulandı' },
-            'Geliştirme Aşamasında':  { icon: 'fa-spinner fa-spin', cls: 'in-progress',    label: 'Geliştirme Aşamasında' },
-            'Devam Ediyor':           { icon: 'fa-spinner fa-spin', cls: 'in-progress',    label: 'Devam Ediyor' },
-            'İmalatta':               { icon: 'fa-industry',      cls: 'manufacturing',    label: 'İmalatta' }
+            'Tamamlandı':             { icon: 'fa-check-circle',    cls: 'completed',       label: 'Tamamlandı' },
+            'Tasarım Doğrulandı':     { icon: 'fa-check-circle',    cls: 'design-verified',  label: 'Tasarım Doğrulandı' },
+            'Geliştirme Aşamasında':  { icon: 'fa-spinner fa-spin', cls: 'in-progress',      label: 'Geliştirme Aşamasında' },
+            'Devam Ediyor':           { icon: 'fa-spinner fa-spin', cls: 'in-progress',      label: 'Devam Ediyor' },
+            'İmalatta':               { icon: 'fa-industry',        cls: 'manufacturing',    label: 'İmalatta' }
         };
 
-        /**
-         * Tek bir proje kartı için HTML string üretir.
-         * Mevcut CSS sınıflarınızla (.project-card, .project-tags, .tag, vb.)
-         * birebir uyumlu çalışır.
-         */
-        function renderProjectCard(project, docId) {
+        function renderProjectCard(project) {
             const images = project.images || [];
             const tags   = project.tags   || [];
             const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Ediyor'];
 
-            // ---- Görsel Slider ----
             let sliderHTML = '';
             if (images.length > 0) {
                 const imagesHTML = images.map((url, idx) =>
@@ -566,14 +564,11 @@
                     </div>`;
             }
 
-            // ---- Tag'ler ----
             const tagsHTML = tags.map(t => `<span class="tag">${t}</span>`).join('');
-
-            // ---- Status Badge ----
             const statusHTML = `<span class="status-badge ${status.cls}"><i class="fas ${status.icon}"></i> ${status.label}</span>`;
 
             return `
-                <div class="project-card" data-project-id="${docId}">
+                <div class="project-card" data-project-id="${project.id}">
                     ${sliderHTML}
                     <div class="project-info" ${images.length === 0 ? 'style="padding-top:35px;"' : ''}>
                         <div class="project-tags">
@@ -589,32 +584,30 @@
                 </div>`;
         }
 
-        /**
-         * Firestore'dan projeleri çeker, sıralar ve DOM'a render eder.
-         */
         async function loadProjects() {
             const grid    = document.getElementById('projectsGrid');
             const loading = document.getElementById('projectsLoading');
 
             try {
-                const snapshot = await db.collection('projects')
-                    .orderBy('order', 'asc')
-                    .get();
+                const { data, error } = await supabase
+                    .from('projects')
+                    .select('*')
+                    .order('sort_order', { ascending: true });
+
+                if (error) throw error;
 
                 let html = '';
-                snapshot.forEach(doc => {
-                    html += renderProjectCard(doc.data(), doc.id);
-                });
-
-                if (snapshot.empty) {
+                if (!data || data.length === 0) {
                     html = `<p style="color:var(--text-muted);text-align:center;grid-column:1/-1;">Henüz proje eklenmemiş.</p>`;
+                } else {
+                    data.forEach(project => {
+                        html += renderProjectCard(project);
+                    });
                 }
 
                 grid.innerHTML = html;
                 grid.style.display = 'grid';
                 loading.style.display = 'none';
-
-                // Slider event'lerini bağla
                 initSliders();
 
             } catch (err) {
@@ -624,9 +617,6 @@
             }
         }
 
-        /**
-         * Render edilen tüm slider'lara tıklama event'lerini bağlar.
-         */
         function initSliders() {
             document.querySelectorAll('[data-slider]').forEach(slider => {
                 const total = parseInt(slider.dataset.total);
@@ -646,7 +636,6 @@
                     });
                 }
 
-                // Ok butonları
                 slider.querySelectorAll('.slider-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -654,7 +643,6 @@
                     });
                 });
 
-                // Dot tıklamaları
                 slider.querySelectorAll('.slider-dot').forEach(dot => {
                     dot.addEventListener('click', (e) => {
                         e.stopPropagation();
@@ -764,6 +752,7 @@
         // ================================================================
         document.addEventListener("DOMContentLoaded", function() {
             typingEffect();
+            loadSkills();
             loadProjects();
         });
     </script>

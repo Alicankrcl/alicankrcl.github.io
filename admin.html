@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- DESIGN SYSTEM (index.html ile birebir aynı) --- */
+        /* --- DESIGN SYSTEM --- */
         :root {
             --bg-main: #07090F;
             --bg-surface: #0E121F;
@@ -32,7 +32,7 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             line-height: 1.6;
@@ -41,7 +41,6 @@
         }
         a { text-decoration: none; color: inherit; }
 
-        /* --- SCROLLBAR --- */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-main); }
         ::-webkit-scrollbar-thumb { background: var(--bg-surface-hover); border-radius: 4px; }
@@ -51,40 +50,25 @@
             background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        /* ================================================================
-           LOGIN SCREEN
-        ================================================================ */
+        /* --- LOGIN SCREEN --- */
         .login-wrapper {
             display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px;
         }
         .login-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 50px 40px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-            text-align: center;
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 50px 40px; width: 100%; max-width: 420px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5); text-align: center;
         }
-        .login-card .logo-area {
-            margin-bottom: 30px;
-        }
-        .login-card .logo-area h1 {
-            font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 5px;
-        }
-        .login-card .logo-area p {
-            color: var(--text-muted); font-size: 0.9rem;
-        }
+        .login-card .logo-area { margin-bottom: 30px; }
+        .login-card .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 5px; }
+        .login-card .logo-area p { color: var(--text-muted); font-size: 0.9rem; }
         .login-card .lock-icon {
             width: 60px; height: 60px; border-radius: 50%; background: var(--primary-glow);
             display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
             color: var(--primary); font-size: 1.5rem;
         }
 
-        /* ================================================================
-           FORM ELEMENTS (Shared)
-        ================================================================ */
+        /* --- FORMS --- */
         .form-group {
             display: flex; flex-direction: column; gap: 6px; text-align: left; margin-bottom: 18px;
         }
@@ -92,15 +76,10 @@
             font-size: 0.8rem; font-weight: 600; color: var(--text-muted); font-family: 'Fira Code', monospace; text-transform: uppercase; letter-spacing: 0.05em;
         }
         .form-control {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            padding: 13px 15px;
-            border-radius: 8px;
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-            font-size: 0.95rem;
-            transition: var(--transition-smooth);
-            width: 100%;
+            background: var(--bg-main); border: 1px solid var(--border-color);
+            padding: 13px 15px; border-radius: 8px; color: var(--text-main);
+            font-family: 'Inter', sans-serif; font-size: 0.95rem;
+            transition: var(--transition-smooth); width: 100%;
         }
         .form-control:focus {
             outline: none; border-color: var(--primary); box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
@@ -110,9 +89,7 @@
         select.form-control {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394A3B8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 15px center;
-            padding-right: 40px;
+            background-repeat: no-repeat; background-position: right 15px center; padding-right: 40px;
         }
 
         /* --- BUTTONS --- */
@@ -122,65 +99,39 @@
             font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.95rem;
             transition: var(--transition-smooth);
         }
-        .btn-primary {
-            background: var(--gradient-1); color: white;
-        }
+        .btn-primary { background: var(--gradient-1); color: white; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2); }
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2);
-        }
+        .btn-danger { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
         .btn-danger:hover { background: var(--danger); color: white; }
-        .btn-secondary {
-            background: var(--bg-surface-hover); color: var(--text-main); border: 1px solid var(--border-color);
-        }
+        .btn-secondary { background: var(--bg-surface-hover); color: var(--text-main); border: 1px solid var(--border-color); }
         .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
         .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
         .btn-full { width: 100%; }
 
-        /* --- ALERT / TOAST --- */
-        .alert {
-            padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 15px; display: none;
-        }
+        .alert { padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 15px; display: none; }
         .alert-error { background: rgba(239, 68, 68, 0.1); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.2); }
         .alert-success { background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.2); }
 
-        /* ================================================================
-           ADMIN PANEL LAYOUT
-        ================================================================ */
+        /* --- ADMIN LAYOUT --- */
         .admin-wrapper { display: none; }
-
         .admin-header {
             position: sticky; top: 0; z-index: 100;
             background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--glass-border);
-            padding: 15px 30px;
+            border-bottom: 1px solid var(--glass-border); padding: 15px 30px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .admin-header .brand {
-            display: flex; align-items: center; gap: 12px;
-        }
-        .admin-header .brand h2 {
-            font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
-        }
+        .admin-header .brand { display: flex; align-items: center; gap: 12px; }
+        .admin-header .brand h2 { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; }
         .admin-header .brand .badge {
             font-size: 0.7rem; font-weight: 600; background: var(--primary-glow); color: var(--primary);
             padding: 3px 10px; border-radius: 20px; font-family: 'Fira Code', monospace;
         }
-        .admin-header .header-actions {
-            display: flex; align-items: center; gap: 15px;
-        }
-        .admin-header .user-email {
-            font-size: 0.85rem; color: var(--text-muted); font-family: 'Fira Code', monospace;
-        }
-
-        .admin-content {
-            max-width: 1100px; margin: 0 auto; padding: 40px 30px;
-        }
+        .admin-header .header-actions { display: flex; align-items: center; gap: 15px; }
+        .admin-header .user-email { font-size: 0.85rem; color: var(--text-muted); font-family: 'Fira Code', monospace; }
+        .admin-content { max-width: 1100px; margin: 0 auto; padding: 40px 30px; }
 
         /* --- TABS --- */
-        .admin-tabs {
-            display: flex; gap: 0; margin-bottom: 35px; border-bottom: 1px solid var(--border-color);
-        }
+        .admin-tabs { display: flex; gap: 0; margin-bottom: 35px; border-bottom: 1px solid var(--border-color); }
         .admin-tab {
             padding: 14px 28px; cursor: pointer; font-weight: 600; font-size: 0.95rem;
             color: var(--text-muted); border-bottom: 2px solid transparent;
@@ -193,84 +144,123 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* ================================================================
-           PROJE FORMU
-        ================================================================ */
-        .project-form-card {
+        /* --- CARDS --- */
+        .admin-card {
             background: var(--bg-surface); border: 1px solid var(--border-color);
-            border-radius: 16px; padding: 35px;
+            border-radius: 16px; padding: 35px; margin-bottom: 30px;
         }
-        .project-form-card h3 {
+        .admin-card h3 {
             font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; letter-spacing: -0.02em;
             display: flex; align-items: center; gap: 10px;
         }
-        .project-form-card h3 i { color: var(--primary); }
-
-        .form-row {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-        }
-        @media (max-width: 768px) {
-            .form-row { grid-template-columns: 1fr; }
-        }
-
-        .image-urls-container {
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        .image-url-row {
-            display: flex; gap: 10px; align-items: center;
-        }
-        .image-url-row .form-control { flex: 1; }
-        .image-url-row .remove-url-btn {
-            width: 38px; height: 38px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.2);
-            background: rgba(239, 68, 68, 0.1); color: var(--danger); cursor: pointer;
-            display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
-            transition: var(--transition-smooth);
-        }
-        .image-url-row .remove-url-btn:hover { background: var(--danger); color: white; }
-        .add-url-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            font-size: 0.85rem; color: var(--primary); cursor: pointer; padding: 6px 0;
-            background: none; border: none; font-family: 'Inter', sans-serif; font-weight: 600;
-            transition: var(--transition-smooth);
-        }
-        .add-url-btn:hover { opacity: 0.8; }
+        .admin-card h3 i { color: var(--primary); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
 
         /* ================================================================
-           PROJE LİSTESİ TABLOSU
+           BİLGİSAYARDAN DOSYA YÜKLEME ALANI (DROPZONE)
         ================================================================ */
-        .projects-table-wrapper {
-            background: var(--bg-surface); border: 1px solid var(--border-color);
-            border-radius: 16px; overflow: hidden;
+        .file-upload-zone {
+            border: 2px dashed rgba(56, 189, 248, 0.3);
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.02);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
         }
-        .projects-table-header {
+        .file-upload-zone:hover, .file-upload-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.06);
+            transform: translateY(-2px);
+        }
+        .file-upload-zone i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: block;
+        }
+        .file-upload-zone h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .file-upload-zone p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Yüklenen Görsel Önizleme Listesi */
+        .image-previews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .image-preview-item {
+            position: relative;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #000;
+        }
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .image-preview-item .remove-img-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: var(--transition-smooth);
+        }
+        .image-preview-item .remove-img-btn:hover {
+            transform: scale(1.15);
+            background: var(--danger);
+        }
+
+        /* --- TABLES --- */
+        .table-wrapper {
+            background: var(--bg-surface); border: 1px solid var(--border-color);
+            border-radius: 16px; overflow: hidden; margin-top: 30px;
+        }
+        .table-header {
             padding: 20px 25px; display: flex; justify-content: space-between; align-items: center;
             border-bottom: 1px solid var(--border-color);
         }
-        .projects-table-header h3 {
-            font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px;
-        }
-        .projects-table-header h3 .count {
+        .table-header h3 { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .table-header h3 .count {
             font-size: 0.8rem; background: var(--primary-glow); color: var(--primary);
             padding: 2px 10px; border-radius: 20px; font-family: 'Fira Code', monospace;
         }
-
-        .projects-table {
-            width: 100%; border-collapse: collapse;
-        }
-        .projects-table th {
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
             padding: 12px 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.08em; color: var(--text-muted); text-align: left;
             border-bottom: 1px solid var(--border-color); font-family: 'Fira Code', monospace;
             background: rgba(0,0,0,0.2);
         }
-        .projects-table td {
+        .data-table td {
             padding: 16px 20px; font-size: 0.9rem; border-bottom: 1px solid var(--border-color);
             vertical-align: middle;
         }
-        .projects-table tr:hover td { background: var(--bg-surface-hover); }
-        .projects-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: var(--bg-surface-hover); }
+        .data-table tr:last-child td { border-bottom: none; }
 
-        .table-title { font-weight: 600; max-width: 250px; }
         .table-tags { display: flex; gap: 5px; flex-wrap: wrap; }
         .table-tag {
             font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 3px;
@@ -284,19 +274,12 @@
         .table-status.in-progress { background: rgba(245,158,11,0.1); color: #F59E0B; }
         .table-status.design-verified { background: rgba(56,189,248,0.1); color: var(--primary); }
         .table-status.manufacturing { background: rgba(168,85,247,0.1); color: #A855F7; }
-
         .table-actions { display: flex; gap: 8px; }
         .table-actions button { padding: 6px 12px; font-size: 0.8rem; }
-
-        .empty-state {
-            text-align: center; padding: 60px 20px; color: var(--text-muted);
-        }
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); }
         .empty-state i { font-size: 3rem; margin-bottom: 15px; opacity: 0.3; }
-        .empty-state p { font-size: 0.95rem; }
 
-        /* ================================================================
-           MODAL (Düzenleme)
-        ================================================================ */
+        /* --- MODALS --- */
         .modal-overlay {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
             backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: flex-start;
@@ -308,9 +291,7 @@
             border-radius: 16px; width: 100%; max-width: 650px; padding: 35px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.5); margin-top: 20px;
         }
-        .modal-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .modal-header h3 { font-size: 1.2rem; font-weight: 700; }
         .modal-close {
             width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-color);
@@ -319,48 +300,31 @@
             transition: var(--transition-smooth);
         }
         .modal-close:hover { border-color: var(--danger); color: var(--danger); }
+        .confirm-modal .modal { max-width: 420px; text-align: center; }
+        .confirm-modal .modal i.warn-icon { font-size: 3rem; color: var(--danger); margin-bottom: 15px; }
+        .confirm-modal .modal p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem; }
+        .confirm-modal .modal .btn-group { display: flex; gap: 12px; justify-content: center; }
 
-        /* --- CONFIRM DELETE MODAL --- */
-        .confirm-modal .modal {
-            max-width: 420px; text-align: center;
-        }
-        .confirm-modal .modal i.warn-icon {
-            font-size: 3rem; color: var(--danger); margin-bottom: 15px;
-        }
-        .confirm-modal .modal p {
-            color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem;
-        }
-        .confirm-modal .modal .btn-group {
-            display: flex; gap: 12px; justify-content: center;
-        }
-
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .admin-header { flex-direction: column; gap: 10px; padding: 15px; }
             .admin-content { padding: 20px 15px; }
             .admin-tabs { overflow-x: auto; }
-            .projects-table { font-size: 0.85rem; }
-            .projects-table th, .projects-table td { padding: 10px 12px; }
+            .data-table { font-size: 0.85rem; }
+            .data-table th, .data-table td { padding: 10px 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ================================================================
-         LOGIN EKRANI
-    ================================================================ -->
+    <!-- ==================== LOGIN SCREEN ==================== -->
     <div class="login-wrapper" id="loginScreen">
         <div class="login-card">
-            <div class="lock-icon">
-                <i class="fas fa-shield-halved"></i>
-            </div>
+            <div class="lock-icon"><i class="fas fa-shield-halved"></i></div>
             <div class="logo-area">
                 <h1><span class="gradient-text">Admin Panel</span></h1>
                 <p>Alican Karcılı Portfolyo Yönetimi</p>
             </div>
-
             <div class="alert alert-error" id="loginError"></div>
-
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginEmail">E-Posta Adresi</label>
@@ -377,16 +341,12 @@
         </div>
     </div>
 
-    <!-- ================================================================
-         ADMIN PANELİ
-    ================================================================ -->
+    <!-- ==================== ADMIN PANEL ==================== -->
     <div class="admin-wrapper" id="adminPanel">
-        
-        <!-- HEADER -->
         <div class="admin-header">
             <div class="brand">
                 <h2><span class="gradient-text">Portfolyo Admin</span></h2>
-                <span class="badge">v1.0</span>
+                <span class="badge">v2.1</span>
             </div>
             <div class="header-actions">
                 <span class="user-email" id="adminEmail"></span>
@@ -399,26 +359,23 @@
             </div>
         </div>
 
-        <!-- CONTENT -->
         <div class="admin-content">
-            
-            <!-- TABS -->
             <div class="admin-tabs">
-                <button class="admin-tab active" data-tab="add">
-                    <i class="fas fa-plus-circle"></i> Yeni Proje Ekle
+                <button class="admin-tab active" data-tab="projects">
+                    <i class="fas fa-rocket"></i> Projeler
                 </button>
-                <button class="admin-tab" data-tab="list">
-                    <i class="fas fa-layer-group"></i> Projeler
+                <button class="admin-tab" data-tab="skills">
+                    <i class="fas fa-tools"></i> Yetenekler
                 </button>
             </div>
 
-            <!-- =================== TAB 1: YENİ PROJE EKLEME =================== -->
-            <div class="tab-content active" id="tab-add">
-                <div class="project-form-card">
-                    <h3><i class="fas fa-rocket"></i> Yeni Proje Ekle</h3>
+            <!-- ==================== TAB 1: PROJELER ==================== -->
+            <div class="tab-content active" id="tab-projects">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> Yeni Proje Ekle</h3>
 
-                    <div class="alert alert-success" id="addSuccess"></div>
-                    <div class="alert alert-error" id="addError"></div>
+                    <div class="alert alert-success" id="addProjectSuccess"></div>
+                    <div class="alert alert-error" id="addProjectError"></div>
 
                     <form id="projectForm">
                         <div class="form-row">
@@ -446,7 +403,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="projOrder">Sıralama Değeri *</label>
-                                <input type="number" id="projOrder" class="form-control" placeholder="1" min="0" value="0" required>
+                                <input type="number" id="projOrder" class="form-control" placeholder="0" min="0" value="0" required>
                             </div>
                         </div>
 
@@ -455,17 +412,18 @@
                             <textarea id="projDesc" class="form-control" placeholder="Projenin teknik detaylarını ve kapsamını açıklayın..." required></textarea>
                         </div>
 
+                        <!-- BİLGİSAYARDAN GÖRSEL YÜKLEME ALANI -->
                         <div class="form-group">
-                            <label>Görsel URL'leri (Slider İçin)</label>
-                            <div class="image-urls-container" id="imageUrlsContainer">
-                                <div class="image-url-row">
-                                    <input type="url" class="form-control image-url-input" placeholder="https://example.com/image1.png">
-                                    <button type="button" class="remove-url-btn" title="Kaldır"><i class="fas fa-times"></i></button>
-                                </div>
+                            <label>Proje Görselleri (Bilgisayardan Çoklu Seçilebilir)</label>
+                            
+                            <div class="file-upload-zone" id="projDropZone" onclick="document.getElementById('projFileInput').click()">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                                <h4>Görselleri Seçmek İçin Tıklayın</h4>
+                                <p>veya dosyaları buraya sürükleyip bırakın (PNG, JPG, WEBP)</p>
+                                <input type="file" id="projFileInput" multiple accept="image/*" style="display: none;">
                             </div>
-                            <button type="button" class="add-url-btn" id="addUrlBtn">
-                                <i class="fas fa-plus"></i> Görsel Ekle
-                            </button>
+
+                            <div class="image-previews-grid" id="projImagePreviews"></div>
                         </div>
 
                         <button type="submit" class="btn btn-primary" id="submitProjectBtn">
@@ -473,26 +431,80 @@
                         </button>
                     </form>
                 </div>
-            </div>
 
-            <!-- =================== TAB 2: PROJE LİSTESİ =================== -->
-            <div class="tab-content" id="tab-list">
-                <div class="projects-table-wrapper">
-                    <div class="projects-table-header">
+                <div class="table-wrapper">
+                    <div class="table-header">
                         <h3>
-                            <i class="fas fa-database" style="color: var(--primary);"></i> 
+                            <i class="fas fa-layer-group" style="color: var(--primary);"></i> 
                             Kayıtlı Projeler 
                             <span class="count" id="projectCount">0</span>
                         </h3>
-                        <button class="btn btn-secondary btn-sm" id="refreshListBtn">
-                            <i class="fas fa-sync-alt"></i> Yenile
-                        </button>
+                        <button class="btn btn-secondary btn-sm" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
                     </div>
                     <div id="projectsListBody">
-                        <div class="empty-state">
-                            <i class="fas fa-folder-open"></i>
-                            <p>Yükleniyor...</p>
+                        <div class="empty-state"><i class="fas fa-folder-open"></i><p>Yükleniyor...</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== TAB 2: YETENEKLER ==================== -->
+            <div class="tab-content" id="tab-skills">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> Yeni Yetenek Ekle</h3>
+                    <div class="alert alert-success" id="addSkillSuccess"></div>
+                    <div class="alert alert-error" id="addSkillError"></div>
+
+                    <form id="skillForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="skillName">Yetenek / Program Adı *</label>
+                                <input type="text" id="skillName" class="form-control" placeholder="Örn. ANSYS, SolidWorks, Python" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="skillCategory">Uzmanlık / Açıklama *</label>
+                                <input type="text" id="skillCategory" class="form-control" placeholder="Örn. Sonlu Elemanlar Analizi (FEA)" required>
+                            </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="skillIcon">Logo / İkon URL (Görsel Linki)</label>
+                                <input type="url" id="skillIcon" class="form-control" placeholder="https://example.com/logo.png veya .svg">
+                            </div>
+                            <div class="form-group">
+                                <label for="skillColor">Vurgu Rengi (Hex)</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="color" id="skillColorPicker" value="#38BDF8" style="width: 50px; height: 48px; border: none; background: none; cursor: pointer; border-radius: 8px;">
+                                    <input type="text" id="skillColor" class="form-control" value="#38BDF8" placeholder="#38BDF8">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="skillOrder">Sıralama Değeri *</label>
+                                <input type="number" id="skillOrder" class="form-control" placeholder="0" min="0" value="0" required>
+                            </div>
+                            <div class="form-group" style="display: flex; align-items: flex-end;">
+                                <button type="submit" class="btn btn-primary btn-full" id="submitSkillBtn">
+                                    <i class="fas fa-save"></i> Yeteneği Kaydet
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-wrapper">
+                    <div class="table-header">
+                        <h3>
+                            <i class="fas fa-tools" style="color: var(--primary);"></i> 
+                            Kayıtlı Yetenekler 
+                            <span class="count" id="skillCount">0</span>
+                        </h3>
+                        <button class="btn btn-secondary btn-sm" id="refreshSkillsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
+                    </div>
+                    <div id="skillsListBody">
+                        <div class="empty-state"><i class="fas fa-folder-open"></i><p>Yükleniyor...</p></div>
                     </div>
                 </div>
             </div>
@@ -500,30 +512,26 @@
         </div>
     </div>
 
-    <!-- ================================================================
-         DÜZENLEME MODAL
-    ================================================================ -->
-    <div class="modal-overlay" id="editModal">
+    <!-- ==================== PROJE DÜZENLEME MODAL ==================== -->
+    <div class="modal-overlay" id="editProjectModal">
         <div class="modal">
             <div class="modal-header">
                 <h3><i class="fas fa-pen" style="color: var(--primary);"></i> Proje Düzenle</h3>
-                <button class="modal-close" id="editModalClose"><i class="fas fa-times"></i></button>
+                <button class="modal-close" onclick="closeModal('editProjectModal')"><i class="fas fa-times"></i></button>
             </div>
+            <div class="alert alert-error" id="editProjectError"></div>
+            <div class="alert alert-success" id="editProjectSuccess"></div>
 
-            <div class="alert alert-error" id="editError"></div>
-            <div class="alert alert-success" id="editSuccess"></div>
-
-            <form id="editForm">
-                <input type="hidden" id="editDocId">
-                
+            <form id="editProjectForm">
+                <input type="hidden" id="editProjDocId">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="editTitle">Proje Başlığı *</label>
-                        <input type="text" id="editTitle" class="form-control" required>
+                        <label for="editProjTitle">Proje Başlığı *</label>
+                        <input type="text" id="editProjTitle" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="editStatus">Proje Durumu *</label>
-                        <select id="editStatus" class="form-control" required>
+                        <label for="editProjStatus">Proje Durumu *</label>
+                        <select id="editProjStatus" class="form-control" required>
                             <option value="Tamamlandı">Tamamlandı</option>
                             <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
                             <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
@@ -535,96 +543,140 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="editTags">Etiketler</label>
-                        <input type="text" id="editTags" class="form-control">
+                        <label for="editProjTags">Etiketler</label>
+                        <input type="text" id="editProjTags" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label for="editOrder">Sıralama Değeri *</label>
-                        <input type="number" id="editOrder" class="form-control" min="0" required>
+                        <label for="editProjOrder">Sıralama Değeri *</label>
+                        <input type="number" id="editProjOrder" class="form-control" min="0" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="editDesc">Detaylı Açıklama *</label>
-                    <textarea id="editDesc" class="form-control" required></textarea>
+                    <label for="editProjDesc">Detaylı Açıklama *</label>
+                    <textarea id="editProjDesc" class="form-control" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label>Görsel URL'leri</label>
-                    <div class="image-urls-container" id="editImageUrlsContainer"></div>
-                    <button type="button" class="add-url-btn" id="editAddUrlBtn">
-                        <i class="fas fa-plus"></i> Görsel Ekle
-                    </button>
+                    <label>Proje Görselleri</label>
+                    <div class="file-upload-zone" onclick="document.getElementById('editProjFileInput').click()" style="padding: 15px;">
+                        <i class="fas fa-plus" style="font-size: 1.4rem;"></i>
+                        <h4>Yeni Görsel Ekle (Bilgisayardan)</h4>
+                        <input type="file" id="editProjFileInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-previews-grid" id="editProjImagePreviews"></div>
                 </div>
 
                 <div style="display: flex; gap: 12px; margin-top: 10px;">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Güncelle
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="editCancelBtn">İptal</button>
+                    <button type="submit" class="btn btn-primary" id="editProjSubmitBtn"><i class="fas fa-save"></i> Güncelle</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('editProjectModal')">İptal</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- ================================================================
-         SİLME ONAY MODAL
-    ================================================================ -->
+    <!-- ==================== YETENEK DÜZENLEME MODAL ==================== -->
+    <div class="modal-overlay" id="editSkillModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-pen" style="color: var(--primary);"></i> Yetenek Düzenle</h3>
+                <button class="modal-close" onclick="closeModal('editSkillModal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="alert alert-error" id="editSkillError"></div>
+            <div class="alert alert-success" id="editSkillSuccess"></div>
+
+            <form id="editSkillForm">
+                <input type="hidden" id="editSkillDocId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSkillName">Yetenek Adı *</label>
+                        <input type="text" id="editSkillName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSkillCategory">Açıklama *</label>
+                        <input type="text" id="editSkillCategory" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editSkillIcon">Logo / İkon URL</label>
+                        <input type="url" id="editSkillIcon" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editSkillColor">Vurgu Rengi (Hex)</label>
+                        <input type="text" id="editSkillColor" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="editSkillOrder">Sıralama Değeri *</label>
+                    <input type="number" id="editSkillOrder" class="form-control" min="0" required>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 10px;">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('editSkillModal')">İptal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== SİLME ONAY MODAL ==================== -->
     <div class="modal-overlay confirm-modal" id="deleteModal">
         <div class="modal">
             <i class="fas fa-trash-alt warn-icon"></i>
-            <h3 style="margin-bottom: 10px;">Projeyi Sil</h3>
-            <p>Bu projeyi kalıcı olarak silmek istediğinize emin misiniz?<br><strong id="deleteProjectName"></strong></p>
-            <input type="hidden" id="deleteDocId">
+            <h3 style="margin-bottom: 10px;">Kaydı Sil</h3>
+            <p>Bu öğeyi kalıcı olarak silmek istediğinize emin misiniz?<br><strong id="deleteItemName"></strong></p>
+            <input type="hidden" id="deleteItemId">
+            <input type="hidden" id="deleteItemType">
             <div class="btn-group">
-                <button class="btn btn-secondary" id="deleteCancelBtn">Vazgeç</button>
+                <button class="btn btn-secondary" onclick="closeModal('deleteModal')">Vazgeç</button>
                 <button class="btn btn-danger" id="deleteConfirmBtn"><i class="fas fa-trash"></i> Evet, Sil</button>
             </div>
         </div>
     </div>
 
-
-    <!-- ==================== FIREBASE SDK ==================== -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <!-- ==================== SUPABASE SDK ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
     <script>
-        // ================================================================
-        //  🔥 FIREBASE KONFİGÜRASYONU
-        //  index.html ile AYNI değerleri kullanın.
-        // ================================================================
-        const firebaseConfig 
+        const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
+        const SUPABASE_ANON = 'sb_publishable_1eWd1XHPctAzzUYZypW9zg_fdlZ3Lze';
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db   = firebase.firestore();
+        // --- AUTH ---
+        const loginScreen = document.getElementById('loginScreen');
+        const adminPanel  = document.getElementById('adminPanel');
+        const loginForm   = document.getElementById('loginForm');
+        const loginError  = document.getElementById('loginError');
+        const loginBtn    = document.getElementById('loginBtn');
+        const logoutBtn   = document.getElementById('logoutBtn');
+        const adminEmail  = document.getElementById('adminEmail');
 
-        // ================================================================
-        //  DOM REFERENCES
-        // ================================================================
-        const loginScreen   = document.getElementById('loginScreen');
-        const adminPanel    = document.getElementById('adminPanel');
-        const loginForm     = document.getElementById('loginForm');
-        const loginError    = document.getElementById('loginError');
-        const loginBtn      = document.getElementById('loginBtn');
-        const logoutBtn     = document.getElementById('logoutBtn');
-        const adminEmail    = document.getElementById('adminEmail');
+        (async () => {
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) showAdmin(session.user);
+            else showLogin();
+        })();
 
-        // ================================================================
-        //  AUTH — GİRİŞ / ÇIKIŞ / STATE
-        // ================================================================
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                loginScreen.style.display = 'none';
-                adminPanel.style.display  = 'block';
-                adminEmail.textContent    = user.email;
-                loadProjectsList();
-            } else {
-                loginScreen.style.display = 'flex';
-                adminPanel.style.display  = 'none';
-            }
+        sb.auth.onAuthStateChange((event, session) => {
+            if (session) showAdmin(session.user);
+            else showLogin();
         });
+
+        function showAdmin(user) {
+            loginScreen.style.display = 'none';
+            adminPanel.style.display  = 'block';
+            adminEmail.textContent    = user.email;
+            loadProjectsList();
+            loadSkillsList();
+        }
+
+        function showLogin() {
+            loginScreen.style.display = 'flex';
+            adminPanel.style.display  = 'none';
+        }
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -632,38 +684,22 @@
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Giriş yapılıyor...';
 
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const { error } = await sb.auth.signInWithPassword({
+                email: document.getElementById('loginEmail').value,
+                password: document.getElementById('loginPassword').value
+            });
 
-            try {
-                await auth.signInWithEmailAndPassword(email, password);
-            } catch (err) {
-                loginError.textContent = getAuthErrorMessage(err.code);
+            if (error) {
+                loginError.textContent = 'E-posta veya şifre hatalı.';
                 loginError.style.display = 'block';
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Giriş Yap';
             }
+            loginBtn.disabled = false;
+            loginBtn.innerHTML = '<i class="fas fa-right-to-bracket"></i> Giriş Yap';
         });
 
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut();
-        });
+        logoutBtn.addEventListener('click', async () => await sb.auth.signOut());
 
-        function getAuthErrorMessage(code) {
-            const messages = {
-                'auth/user-not-found':     'Bu e-posta ile kayıtlı kullanıcı bulunamadı.',
-                'auth/wrong-password':     'Hatalı şifre girdiniz.',
-                'auth/invalid-email':      'Geçersiz e-posta adresi.',
-                'auth/too-many-requests':  'Çok fazla hatalı deneme. Lütfen bekleyin.',
-                'auth/invalid-credential': 'E-posta veya şifre hatalı.'
-            };
-            return messages[code] || 'Giriş hatası: ' + code;
-        }
-
-        // ================================================================
-        //  TAB NAVIGATION
-        // ================================================================
+        // --- TABS ---
         document.querySelectorAll('.admin-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -671,69 +707,185 @@
                 tab.classList.add('active');
                 document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
 
-                if (tab.dataset.tab === 'list') loadProjectsList();
+                if (tab.dataset.tab === 'projects') loadProjectsList();
+                if (tab.dataset.tab === 'skills') loadSkillsList();
             });
         });
 
         // ================================================================
-        //  YENİ PROJE EKLEME
+        //  BİLGİSAYARDAN GÖRSEL YÜKLEME MANTIĞI (STORAGE)
         // ================================================================
-        const projectForm = document.getElementById('projectForm');
-        const addSuccess  = document.getElementById('addSuccess');
-        const addError    = document.getElementById('addError');
+        let selectedFilesForNew = []; // Yeni proje için seçilen dosyalar
+        let editCurrentImages   = []; // Düzenlenen projenin mevcut URL'leri
+        let editNewFiles        = []; // Düzenlenen projeye yeni eklenecek dosyalar
 
-        // Görsel URL satırı ekleme
-        document.getElementById('addUrlBtn').addEventListener('click', () => {
-            addImageUrlRow(document.getElementById('imageUrlsContainer'));
+        // Drag & Drop
+        const dropZone = document.getElementById('projDropZone');
+        ['dragenter', 'dragover'].forEach(name => {
+            dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        });
+        ['dragleave', 'drop'].forEach(name => {
+            dropZone.addEventListener(name, (e) => { e.preventDefault(); dropZone.classList.remove('dragover'); });
+        });
+        dropZone.addEventListener('drop', (e) => {
+            handleFilesSelection(e.dataTransfer.files, 'new');
         });
 
-        // Form gönderimi
+        document.getElementById('projFileInput').addEventListener('change', (e) => {
+            handleFilesSelection(e.target.files, 'new');
+        });
+
+        document.getElementById('editProjFileInput').addEventListener('change', (e) => {
+            handleFilesSelection(e.target.files, 'edit');
+        });
+
+        function handleFilesSelection(files, target) {
+            for (let f of files) {
+                if (target === 'new') {
+                    selectedFilesForNew.push(f);
+                } else {
+                    editNewFiles.push(f);
+                }
+            }
+            renderImagePreviews(target);
+        }
+
+        function renderImagePreviews(target) {
+            if (target === 'new') {
+                const container = document.getElementById('projImagePreviews');
+                container.innerHTML = '';
+                selectedFilesForNew.forEach((file, idx) => {
+                    const url = URL.createObjectURL(file);
+                    container.innerHTML += `
+                        <div class="image-preview-item">
+                            <img src="${url}" alt="Önizleme">
+                            <button type="button" class="remove-img-btn" onclick="removeSelectedFile('new', ${idx})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+            } else {
+                const container = document.getElementById('editProjImagePreviews');
+                container.innerHTML = '';
+                // Mevcut URL'ler
+                editCurrentImages.forEach((url, idx) => {
+                    container.innerHTML += `
+                        <div class="image-preview-item">
+                            <img src="${url}" alt="Mevcut Görsel">
+                            <button type="button" class="remove-img-btn" onclick="removeSelectedFile('edit-existing', ${idx})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                // Yeni seçilen dosyalar
+                editNewFiles.forEach((file, idx) => {
+                    const url = URL.createObjectURL(file);
+                    container.innerHTML += `
+                        <div class="image-preview-item" style="border: 2px solid var(--primary);">
+                            <img src="${url}" alt="Yeni Dosya">
+                            <button type="button" class="remove-img-btn" onclick="removeSelectedFile('edit-new', ${idx})">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        window.removeSelectedFile = function(type, index) {
+            if (type === 'new') {
+                selectedFilesForNew.splice(index, 1);
+                renderImagePreviews('new');
+            } else if (type === 'edit-existing') {
+                editCurrentImages.splice(index, 1);
+                renderImagePreviews('edit');
+            } else if (type === 'edit-new') {
+                editNewFiles.splice(index, 1);
+                renderImagePreviews('edit');
+            }
+        };
+
+        // Dosyaları Supabase Storage'a yükleyen fonksiyon
+        async function uploadFilesToSupabase(files) {
+            const uploadedUrls = [];
+            for (let file of files) {
+                const ext = file.name.split('.').pop();
+                const cleanName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${ext}`;
+                const filePath = `projects/${cleanName}`;
+
+                const { data, error } = await sb.storage
+                    .from('portfolio')
+                    .upload(filePath, file, { cacheControl: '3600', upsert: false });
+
+                if (error) {
+                    console.error('Storage yükleme hatası:', error);
+                    throw new Error('Görsel yüklenemedi: ' + error.message + ' (Supabase Storage > portfolio bucket oluşturulduğundan emin olun)');
+                }
+
+                const { data: { publicUrl } } = sb.storage
+                    .from('portfolio')
+                    .getPublicUrl(filePath);
+
+                uploadedUrls.push(publicUrl);
+            }
+            return uploadedUrls;
+        }
+
+        // ================================================================
+        //  PROJE KAYDETME (SUBMIT)
+        // ================================================================
+        const projectForm = document.getElementById('projectForm');
         projectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            addSuccess.style.display = 'none';
-            addError.style.display = 'none';
+            const succ = document.getElementById('addProjectSuccess');
+            const err  = document.getElementById('addProjectError');
+            succ.style.display = 'none';
+            err.style.display  = 'none';
 
-            const submitBtn = document.getElementById('submitProjectBtn');
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
+            const btn = document.getElementById('submitProjectBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Görseller Yükleniyor...';
 
             try {
-                const data = {
+                // 1. Bilgisayardan seçilen görselleri yükle
+                let imageUrls = [];
+                if (selectedFilesForNew.length > 0) {
+                    imageUrls = await uploadFilesToSupabase(selectedFilesForNew);
+                }
+
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Veritabanına Kaydediliyor...';
+
+                // 2. Projeyi veritabanına kaydet
+                const row = {
                     title:       document.getElementById('projTitle').value.trim(),
                     status:      document.getElementById('projStatus').value,
                     tags:        document.getElementById('projTags').value.split(',').map(t => t.trim()).filter(t => t),
-                    order:       parseInt(document.getElementById('projOrder').value) || 0,
+                    sort_order:  parseInt(document.getElementById('projOrder').value) || 0,
                     description: document.getElementById('projDesc').value.trim(),
-                    images:      getImageUrls('imageUrlsContainer'),
-                    createdAt:   firebase.firestore.FieldValue.serverTimestamp(),
-                    updatedAt:   firebase.firestore.FieldValue.serverTimestamp()
+                    images:      imageUrls
                 };
 
-                await db.collection('projects').add(data);
+                const { error } = await sb.from('projects').insert([row]);
+                if (error) throw error;
 
-                addSuccess.textContent = '✓ Proje başarıyla eklendi!';
-                addSuccess.style.display = 'block';
+                succ.textContent = '✓ Proje ve görseller başarıyla yüklendi!';
+                succ.style.display = 'block';
                 projectForm.reset();
-                document.getElementById('imageUrlsContainer').innerHTML = `
-                    <div class="image-url-row">
-                        <input type="url" class="form-control image-url-input" placeholder="https://example.com/image1.png">
-                        <button type="button" class="remove-url-btn" title="Kaldır"><i class="fas fa-times"></i></button>
-                    </div>`;
-                bindRemoveUrlButtons(document.getElementById('imageUrlsContainer'));
+                selectedFilesForNew = [];
+                renderImagePreviews('new');
+                loadProjectsList();
 
-            } catch (err) {
-                console.error('Proje eklenirken hata:', err);
-                addError.textContent = 'Hata: ' + err.message;
-                addError.style.display = 'block';
+            } catch (errObj) {
+                err.textContent = errObj.message || 'Proje eklenemedi.';
+                err.style.display = 'block';
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-save"></i> Projeyi Kaydet';
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Projeyi Kaydet';
             }
         });
 
-        // ================================================================
-        //  PROJE LİSTESİ YÜKLEME
-        // ================================================================
         const STATUS_CLASS_MAP = {
             'Tamamlandı':            'completed',
             'Tasarım Doğrulandı':    'design-verified',
@@ -745,23 +897,24 @@
         async function loadProjectsList() {
             const body = document.getElementById('projectsListBody');
             const countEl = document.getElementById('projectCount');
-
             body.innerHTML = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Yükleniyor...</p></div>`;
 
             try {
-                const snapshot = await db.collection('projects').orderBy('order', 'asc').get();
-                countEl.textContent = snapshot.size;
+                const { data, error } = await sb.from('projects').select('*').order('sort_order', { ascending: true });
+                if (error) throw error;
+                countEl.textContent = data.length;
 
-                if (snapshot.empty) {
+                if (data.length === 0) {
                     body.innerHTML = `<div class="empty-state"><i class="fas fa-folder-open"></i><p>Henüz proje eklenmemiş.</p></div>`;
                     return;
                 }
 
-                let tableHTML = `
-                    <table class="projects-table">
+                let html = `
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Görsel</th>
                                 <th>Başlık</th>
                                 <th>Etiketler</th>
                                 <th>Durum</th>
@@ -771,25 +924,27 @@
                         </thead>
                         <tbody>`;
 
-                let index = 1;
-                snapshot.forEach(doc => {
-                    const p = doc.data();
+                data.forEach((p, idx) => {
                     const statusCls = STATUS_CLASS_MAP[p.status] || 'in-progress';
                     const tagsHTML = (p.tags || []).map(t => `<span class="table-tag">${t}</span>`).join('');
+                    const thumb = (p.images && p.images.length > 0)
+                        ? `<img src="${p.images[0]}" style="width:45px;height:35px;object-fit:cover;border-radius:4px;">`
+                        : `<i class="fas fa-image" style="color:var(--text-muted);font-size:1.4rem;"></i>`;
 
-                    tableHTML += `
+                    html += `
                         <tr>
-                            <td style="color:var(--text-muted);font-family:'Fira Code',monospace;">${index++}</td>
-                            <td class="table-title">${p.title || '—'}</td>
+                            <td style="color:var(--text-muted);font-family:'Fira Code',monospace;">${idx + 1}</td>
+                            <td>${thumb}</td>
+                            <td style="font-weight:600;">${p.title}</td>
                             <td><div class="table-tags">${tagsHTML}</div></td>
-                            <td><span class="table-status ${statusCls}">${p.status || '—'}</span></td>
-                            <td style="font-family:'Fira Code',monospace;">${p.order ?? 0}</td>
+                            <td><span class="table-status ${statusCls}">${p.status}</span></td>
+                            <td style="font-family:'Fira Code',monospace;">${p.sort_order ?? 0}</td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="btn btn-secondary btn-sm edit-btn" data-id="${doc.id}">
+                                    <button class="btn btn-secondary btn-sm" onclick="openEditProjectModal('${p.id}')">
                                         <i class="fas fa-pen"></i> Düzenle
                                     </button>
-                                    <button class="btn btn-danger btn-sm delete-btn" data-id="${doc.id}" data-title="${p.title || ''}">
+                                    <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${p.id}', '${p.title.replace(/'/g, "\\'")}', 'project')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </div>
@@ -797,133 +952,293 @@
                         </tr>`;
                 });
 
-                tableHTML += `</tbody></table>`;
-                body.innerHTML = tableHTML;
-
-                // Event Binding
-                body.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', () => openEditModal(btn.dataset.id));
-                });
-                body.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', () => openDeleteModal(btn.dataset.id, btn.dataset.title));
-                });
-
+                html += `</tbody></table>`;
+                body.innerHTML = html;
             } catch (err) {
-                console.error('Projeler listelenirken hata:', err);
                 body.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle" style="color:var(--danger);"></i><p>Yükleme hatası.</p></div>`;
             }
         }
 
-        document.getElementById('refreshListBtn').addEventListener('click', loadProjectsList);
+        document.getElementById('refreshProjectsBtn').addEventListener('click', loadProjectsList);
 
-        // ================================================================
-        //  DÜZENLEME MODAL
-        // ================================================================
-        const editModal      = document.getElementById('editModal');
-        const editForm       = document.getElementById('editForm');
-        const editError      = document.getElementById('editError');
-        const editSuccess    = document.getElementById('editSuccess');
-
-        async function openEditModal(docId) {
-            editError.style.display   = 'none';
-            editSuccess.style.display = 'none';
+        async function openEditProjectModal(projectId) {
+            document.getElementById('editProjectError').style.display   = 'none';
+            document.getElementById('editProjectSuccess').style.display = 'none';
 
             try {
-                const doc = await db.collection('projects').doc(docId).get();
-                if (!doc.exists) { alert('Proje bulunamadı.'); return; }
+                const { data, error } = await sb.from('projects').select('*').eq('id', projectId).single();
+                if (error) throw error;
 
-                const p = doc.data();
-                document.getElementById('editDocId').value  = docId;
-                document.getElementById('editTitle').value  = p.title || '';
-                document.getElementById('editStatus').value = p.status || 'Devam Ediyor';
-                document.getElementById('editTags').value   = (p.tags || []).join(', ');
-                document.getElementById('editOrder').value  = p.order ?? 0;
-                document.getElementById('editDesc').value   = p.description || '';
+                document.getElementById('editProjDocId').value  = data.id;
+                document.getElementById('editProjTitle').value  = data.title || '';
+                document.getElementById('editProjStatus').value = data.status || 'Devam Ediyor';
+                document.getElementById('editProjTags').value   = (data.tags || []).join(', ');
+                document.getElementById('editProjOrder').value  = data.sort_order ?? 0;
+                document.getElementById('editProjDesc').value   = data.description || '';
 
-                // Görseller
-                const container = document.getElementById('editImageUrlsContainer');
-                container.innerHTML = '';
-                const images = p.images || [];
-                if (images.length === 0) {
-                    addImageUrlRow(container);
-                } else {
-                    images.forEach(url => addImageUrlRow(container, url));
+                editCurrentImages = data.images ? [...data.images] : [];
+                editNewFiles      = [];
+                renderImagePreviews('edit');
+
+                openModal('editProjectModal');
+            } catch (err) {
+                alert('Proje bilgileri alınamadı.');
+            }
+        }
+
+        document.getElementById('editProjectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errEl  = document.getElementById('editProjectError');
+            const succEl = document.getElementById('editProjectSuccess');
+            errEl.style.display  = 'none';
+            succEl.style.display = 'none';
+
+            const btn = document.getElementById('editProjSubmitBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Güncelleniyor...';
+
+            const projectId = document.getElementById('editProjDocId').value;
+
+            try {
+                // Yeni seçilen dosyalar varsa önce onları yükle
+                let allImages = [...editCurrentImages];
+                if (editNewFiles.length > 0) {
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yeni Görseller Yükleniyor...';
+                    const uploaded = await uploadFilesToSupabase(editNewFiles);
+                    allImages = allImages.concat(uploaded);
                 }
 
-                editModal.classList.add('show');
-            } catch (err) {
-                console.error('Proje yüklenirken hata:', err);
-                alert('Proje yüklenemedi.');
-            }
-        }
+                const { error } = await sb.from('projects').update({
+                    title:       document.getElementById('editProjTitle').value.trim(),
+                    status:      document.getElementById('editProjStatus').value,
+                    tags:        document.getElementById('editProjTags').value.split(',').map(t => t.trim()).filter(t => t),
+                    sort_order:  parseInt(document.getElementById('editProjOrder').value) || 0,
+                    description: document.getElementById('editProjDesc').value.trim(),
+                    images:      allImages,
+                    updated_at:  new Date().toISOString()
+                }).eq('id', projectId);
 
-        document.getElementById('editModalClose').addEventListener('click', () => editModal.classList.remove('show'));
-        document.getElementById('editCancelBtn').addEventListener('click', () => editModal.classList.remove('show'));
-        editModal.addEventListener('click', (e) => { if (e.target === editModal) editModal.classList.remove('show'); });
+                if (error) throw error;
 
-        document.getElementById('editAddUrlBtn').addEventListener('click', () => {
-            addImageUrlRow(document.getElementById('editImageUrlsContainer'));
-        });
-
-        editForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            editError.style.display   = 'none';
-            editSuccess.style.display = 'none';
-
-            const docId = document.getElementById('editDocId').value;
-
-            try {
-                await db.collection('projects').doc(docId).update({
-                    title:       document.getElementById('editTitle').value.trim(),
-                    status:      document.getElementById('editStatus').value,
-                    tags:        document.getElementById('editTags').value.split(',').map(t => t.trim()).filter(t => t),
-                    order:       parseInt(document.getElementById('editOrder').value) || 0,
-                    description: document.getElementById('editDesc').value.trim(),
-                    images:      getImageUrls('editImageUrlsContainer'),
-                    updatedAt:   firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                editSuccess.textContent = '✓ Proje güncellendi!';
-                editSuccess.style.display = 'block';
+                succEl.textContent = '✓ Proje başarıyla güncellendi!';
+                succEl.style.display = 'block';
 
                 setTimeout(() => {
-                    editModal.classList.remove('show');
+                    closeModal('editProjectModal');
                     loadProjectsList();
-                }, 1000);
+                }, 800);
 
             } catch (err) {
-                console.error('Güncelleme hatası:', err);
-                editError.textContent = 'Hata: ' + err.message;
-                editError.style.display = 'block';
+                errEl.textContent = err.message || 'Güncellenemedi';
+                errEl.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Güncelle';
             }
         });
 
         // ================================================================
-        //  SİLME MODAL
+        //  YETENEKLER
         // ================================================================
-        const deleteModal = document.getElementById('deleteModal');
+        const skillForm = document.getElementById('skillForm');
+        document.getElementById('skillColorPicker').addEventListener('input', (e) => {
+            document.getElementById('skillColor').value = e.target.value;
+        });
+        document.getElementById('skillColor').addEventListener('input', (e) => {
+            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) document.getElementById('skillColorPicker').value = e.target.value;
+        });
 
-        function openDeleteModal(docId, title) {
-            document.getElementById('deleteDocId').value = docId;
-            document.getElementById('deleteProjectName').textContent = title;
-            deleteModal.classList.add('show');
+        skillForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const succ = document.getElementById('addSkillSuccess');
+            const err  = document.getElementById('addSkillError');
+            succ.style.display = 'none';
+            err.style.display  = 'none';
+
+            const btn = document.getElementById('submitSkillBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
+
+            try {
+                const row = {
+                    name:       document.getElementById('skillName').value.trim(),
+                    category:   document.getElementById('skillCategory').value.trim(),
+                    icon_url:   document.getElementById('skillIcon').value.trim() || null,
+                    color:      document.getElementById('skillColor').value.trim() || '#38BDF8',
+                    sort_order: parseInt(document.getElementById('skillOrder').value) || 0
+                };
+
+                const { error } = await sb.from('skills').insert([row]);
+                if (error) throw error;
+
+                succ.textContent = '✓ Yetenek başarıyla eklendi!';
+                succ.style.display = 'block';
+                skillForm.reset();
+                document.getElementById('skillColor').value = '#38BDF8';
+                document.getElementById('skillColorPicker').value = '#38BDF8';
+                loadSkillsList();
+
+            } catch (errObj) {
+                err.textContent = 'Hata: ' + (errObj.message || 'Eklenemedi');
+                err.style.display = 'block';
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-save"></i> Yeteneği Kaydet';
+            }
+        });
+
+        async function loadSkillsList() {
+            const body = document.getElementById('skillsListBody');
+            const countEl = document.getElementById('skillCount');
+            body.innerHTML = `<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Yükleniyor...</p></div>`;
+
+            try {
+                const { data, error } = await sb.from('skills').select('*').order('sort_order', { ascending: true });
+                if (error) throw error;
+                countEl.textContent = data.length;
+
+                if (data.length === 0) {
+                    body.innerHTML = `<div class="empty-state"><i class="fas fa-tools"></i><p>Henüz yetenek eklenmemiş.</p></div>`;
+                    return;
+                }
+
+                let html = `
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Logo</th>
+                                <th>Yetenek Adı</th>
+                                <th>Uzmanlık Alanı</th>
+                                <th>Renk</th>
+                                <th>Sıra</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+                data.forEach((s, idx) => {
+                    const iconPreview = s.icon_url 
+                        ? `<img src="${s.icon_url}" alt="${s.name}" style="height:30px; vertical-align:middle; object-fit:contain;">`
+                        : `<i class="fas fa-cog" style="color:${s.color || '#38BDF8'}; font-size:1.4rem;"></i>`;
+
+                    html += `
+                        <tr>
+                            <td style="color:var(--text-muted);font-family:'Fira Code',monospace;">${idx + 1}</td>
+                            <td>${iconPreview}</td>
+                            <td style="font-weight:600;">${s.name}</td>
+                            <td>${s.category || '—'}</td>
+                            <td>
+                                <span style="display:inline-flex; align-items:center; gap:6px;">
+                                    <span style="width:14px; height:14px; border-radius:50%; background:${s.color || '#38BDF8'}; display:inline-block;"></span>
+                                    <span style="font-family:'Fira Code',monospace; font-size:0.8rem;">${s.color || '#38BDF8'}</span>
+                                </span>
+                            </td>
+                            <td style="font-family:'Fira Code',monospace;">${s.sort_order ?? 0}</td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="btn btn-secondary btn-sm" onclick="openEditSkillModal('${s.id}')">
+                                        <i class="fas fa-pen"></i> Düzenle
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${s.id}', '${s.name.replace(/'/g, "\\'")}', 'skill')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`;
+                });
+
+                html += `</tbody></table>`;
+                body.innerHTML = html;
+
+            } catch (err) {
+                body.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle" style="color:var(--danger);"></i><p>Yetenekler yüklenemedi.</p></div>`;
+            }
         }
 
-        document.getElementById('deleteCancelBtn').addEventListener('click', () => deleteModal.classList.remove('show'));
-        deleteModal.addEventListener('click', (e) => { if (e.target === deleteModal) deleteModal.classList.remove('show'); });
+        document.getElementById('refreshSkillsBtn').addEventListener('click', loadSkillsList);
+
+        async function openEditSkillModal(skillId) {
+            document.getElementById('editSkillError').style.display   = 'none';
+            document.getElementById('editSkillSuccess').style.display = 'none';
+
+            try {
+                const { data, error } = await sb.from('skills').select('*').eq('id', skillId).single();
+                if (error) throw error;
+
+                document.getElementById('editSkillDocId').value    = data.id;
+                document.getElementById('editSkillName').value     = data.name || '';
+                document.getElementById('editSkillCategory').value = data.category || '';
+                document.getElementById('editSkillIcon').value     = data.icon_url || '';
+                document.getElementById('editSkillColor').value    = data.color || '#38BDF8';
+                document.getElementById('editSkillOrder').value    = data.sort_order ?? 0;
+
+                openModal('editSkillModal');
+            } catch (err) {
+                alert('Yetenek bilgileri alınamadı.');
+            }
+        }
+
+        document.getElementById('editSkillForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errEl  = document.getElementById('editSkillError');
+            const succEl = document.getElementById('editSkillSuccess');
+            errEl.style.display  = 'none';
+            succEl.style.display = 'none';
+
+            const skillId = document.getElementById('editSkillDocId').value;
+
+            try {
+                const { error } = await sb.from('skills').update({
+                    name:       document.getElementById('editSkillName').value.trim(),
+                    category:   document.getElementById('editSkillCategory').value.trim(),
+                    icon_url:   document.getElementById('editSkillIcon').value.trim() || null,
+                    color:      document.getElementById('editSkillColor').value.trim() || '#38BDF8',
+                    sort_order: parseInt(document.getElementById('editSkillOrder').value) || 0
+                }).eq('id', skillId);
+
+                if (error) throw error;
+
+                succEl.textContent = '✓ Yetenek güncellendi!';
+                succEl.style.display = 'block';
+
+                setTimeout(() => {
+                    closeModal('editSkillModal');
+                    loadSkillsList();
+                }, 800);
+
+            } catch (err) {
+                errEl.textContent = err.message || 'Güncellenemedi';
+                errEl.style.display = 'block';
+            }
+        });
+
+        // --- SILME ---
+        const deleteModal = document.getElementById('deleteModal');
+        function openDeleteModal(id, name, type) {
+            document.getElementById('deleteItemId').value = id;
+            document.getElementById('deleteItemType').value = type;
+            document.getElementById('deleteItemName').textContent = name;
+            openModal('deleteModal');
+        }
 
         document.getElementById('deleteConfirmBtn').addEventListener('click', async () => {
-            const docId = document.getElementById('deleteDocId').value;
-            const btn   = document.getElementById('deleteConfirmBtn');
+            const id   = document.getElementById('deleteItemId').value;
+            const type = document.getElementById('deleteItemType').value;
+            const btn  = document.getElementById('deleteConfirmBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Siliniyor...';
 
             try {
-                await db.collection('projects').doc(docId).delete();
-                deleteModal.classList.remove('show');
-                loadProjectsList();
+                const table = type === 'project' ? 'projects' : 'skills';
+                const { error } = await sb.from(table).delete().eq('id', id);
+                if (error) throw error;
+
+                closeModal('deleteModal');
+                if (type === 'project') loadProjectsList();
+                if (type === 'skill') loadSkillsList();
+
             } catch (err) {
-                console.error('Silme hatası:', err);
                 alert('Silme hatası: ' + err.message);
             } finally {
                 btn.disabled = false;
@@ -931,44 +1246,11 @@
             }
         });
 
-        // ================================================================
-        //  YARDIMCI FONKSİYONLAR
-        // ================================================================
-        function addImageUrlRow(container, value = '') {
-            const row = document.createElement('div');
-            row.className = 'image-url-row';
-            row.innerHTML = `
-                <input type="url" class="form-control image-url-input" placeholder="https://example.com/image.png" value="${value}">
-                <button type="button" class="remove-url-btn" title="Kaldır"><i class="fas fa-times"></i></button>
-            `;
-            container.appendChild(row);
-            bindRemoveUrlButtons(container);
-        }
-
-        function bindRemoveUrlButtons(container) {
-            container.querySelectorAll('.remove-url-btn').forEach(btn => {
-                btn.onclick = () => {
-                    if (container.querySelectorAll('.image-url-row').length > 1) {
-                        btn.closest('.image-url-row').remove();
-                    } else {
-                        btn.closest('.image-url-row').querySelector('input').value = '';
-                    }
-                };
-            });
-        }
-
-        function getImageUrls(containerId) {
-            const inputs = document.getElementById(containerId).querySelectorAll('.image-url-input');
-            const urls = [];
-            inputs.forEach(inp => {
-                const val = inp.value.trim();
-                if (val) urls.push(val);
-            });
-            return urls;
-        }
-
-        // İlk yüklemede remove butonlarını bağla
-        bindRemoveUrlButtons(document.getElementById('imageUrlsContainer'));
+        function openModal(id) { document.getElementById(id).classList.add('show'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+        window.onclick = function(e) {
+            if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('show');
+        };
     </script>
 </body>
 </html>
