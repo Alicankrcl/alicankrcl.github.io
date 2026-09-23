@@ -142,7 +142,6 @@
 </head>
 <body>
 
-<!-- ==================== LOGIN ==================== -->
 <div class="login-wrapper" id="loginScreen">
     <div class="login-card">
         <div class="lock-icon"><i class="fas fa-shield-halved"></i></div>
@@ -167,7 +166,6 @@
     </div>
 </div>
 
-<!-- ==================== ADMIN PANEL ==================== -->
 <div class="admin-wrapper" id="adminPanel">
     <div class="admin-header">
         <div class="brand">
@@ -188,7 +186,6 @@
             <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği</button>
         </div>
 
-        <!-- ==================== TAB: PROJELER ==================== -->
         <div class="tab-content active" id="tab-projects">
             <div class="admin-card">
                 <h3><i class="fas fa-plus-circle"></i> Yeni Proje Ekle</h3>
@@ -251,7 +248,6 @@
             </div>
         </div>
 
-        <!-- ==================== TAB: YETENEKLER ==================== -->
         <div class="tab-content" id="tab-skills">
             <div class="admin-card">
                 <h3><i class="fas fa-plus-circle"></i> Yeni Yetenek Ekle</h3>
@@ -304,7 +300,6 @@
             </div>
         </div>
 
-        <!-- ==================== TAB: SİTE İÇERİĞİ ==================== -->
         <div class="tab-content" id="tab-content">
             <div class="admin-card">
                 <h3><i class="fas fa-user-pen"></i> Hakkımda Bölümü</h3>
@@ -316,7 +311,7 @@
                         <h4><i class="fas fa-heading"></i> Hero Başlık</h4>
                         <div class="form-group" style="margin-bottom:0">
                             <label>Ana Başlık (Büyük Yazı)</label>
-                            <input type="text" id="heroTitle" class="form-control" placeholder="Otomotiv Aday Mühendisi">
+                            <input type="text" id="heroTitle" class="form-control" placeholder="Mühendislik Öğrencisi & Tasarım Tutkunu">
                         </div>
                     </div>
 
@@ -355,7 +350,6 @@
                     <div class="content-section">
                         <h4><i class="fas fa-star"></i> Öne Çıkan Kartlar (Hakkımda Bölümü)</h4>
                         <div id="highlightCards">
-                            <!-- JS ile doldurulacak -->
                         </div>
                         <button type="button" class="btn btn-secondary btn-sm" id="addHighlightBtn" style="margin-top:10px">
                             <i class="fas fa-plus"></i> Kart Ekle
@@ -371,7 +365,6 @@
     </div>
 </div>
 
-<!-- ==================== PROJE DÜZENLEME MODAL ==================== -->
 <div class="modal-overlay" id="editProjectModal">
     <div class="modal">
         <div class="modal-header">
@@ -429,7 +422,6 @@
     </div>
 </div>
 
-<!-- ==================== YETENEK DÜZENLEME MODAL ==================== -->
 <div class="modal-overlay" id="editSkillModal">
     <div class="modal">
         <div class="modal-header">
@@ -472,7 +464,6 @@
     </div>
 </div>
 
-<!-- ==================== SİLME ONAY MODAL ==================== -->
 <div class="modal-overlay confirm-modal" id="deleteModal">
     <div class="modal">
         <i class="fas fa-trash-alt warn-icon"></i>
@@ -493,7 +484,6 @@ const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eHptZGRwa2tuYWZpcWlrd3BnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNDk3MjcsImV4cCI6MjEwNTcyNTcyN30.vOjB1ZjSHI81ARL-udAKO_-USY9KJj2MxgdnVVznOfA';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-/* ── AUTH ── */
 const loginScreen = document.getElementById('loginScreen');
 const adminPanel  = document.getElementById('adminPanel');
 
@@ -539,7 +529,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
 document.getElementById('logoutBtn').addEventListener('click', () => sb.auth.signOut());
 
-/* ── TABS ── */
 document.querySelectorAll('.admin-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -552,12 +541,10 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
-/* ── FILE UPLOAD STATE ── */
 let newProjFiles  = [];
 let editCurImages = [];
 let editNewFiles  = [];
 
-// Drag & drop
 const dz = document.getElementById('projDropZone');
 ['dragenter','dragover'].forEach(n => dz.addEventListener(n, e => { e.preventDefault(); dz.classList.add('dragover'); }));
 ['dragleave','drop'].forEach(n => dz.addEventListener(n, e => { e.preventDefault(); dz.classList.remove('dragover'); }));
@@ -605,7 +592,6 @@ async function uploadFiles(files) {
     return urls;
 }
 
-/* ══════════════════ PROJELER ══════════════════ */
 document.getElementById('projectForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const succEl = document.getElementById('addProjectSuccess');
@@ -710,17 +696,17 @@ document.getElementById('editProjectForm').addEventListener('submit', async (e) 
     }
 });
 
-/* ══════════════════ YETENEKLER ══════════════════ */
 document.getElementById('skillColorPicker').addEventListener('input', e => { document.getElementById('skillColor').value = e.target.value; });
 document.getElementById('skillColor').addEventListener('input', e => { if(/^#[0-9A-F]{6}$/i.test(e.target.value)) document.getElementById('skillColorPicker').value = e.target.value; });
 
 document.getElementById('skillForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const succ = document.getElementById('addSkillSuccess');
-    const err  = document.getElementById('addSkillError');
-    succ.style.display = err.style.display = 'none';
+    const succEl = document.getElementById('addSkillSuccess');
+    const errEl  = document.getElementById('addSkillError');
+    succEl.style.display = errEl.style.display = 'none';
     const btn = document.getElementById('submitSkillBtn');
     btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
+
     try {
         const { error } = await sb.from('skills').insert([{
             name:       document.getElementById('skillName').value.trim(),
@@ -730,13 +716,12 @@ document.getElementById('skillForm').addEventListener('submit', async (e) => {
             sort_order: +document.getElementById('skillOrder').value || 0
         }]);
         if (error) throw error;
-        succ.textContent = '✓ Yetenek eklendi!'; succ.style.display = 'block';
+        succEl.textContent = '✓ Yetenek eklendi!'; succEl.style.display = 'block';
         document.getElementById('skillForm').reset();
-        document.getElementById('skillColor').value = '#38BDF8';
         document.getElementById('skillColorPicker').value = '#38BDF8';
         loadSkillsList();
-    } catch (errObj) {
-        err.textContent = errObj.message; err.style.display = 'block';
+    } catch (err) {
+        errEl.textContent = err.message; errEl.style.display = 'block';
     } finally {
         btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Yeteneği Kaydet';
     }
@@ -751,11 +736,11 @@ async function loadSkillsList() {
         if (error) throw error;
         cntEl.textContent = data.length;
         if (!data.length) { body.innerHTML = '<div class="empty-state"><i class="fas fa-tools"></i><p>Henüz yetenek eklenmemiş.</p></div>'; return; }
-        let html = `<table class="data-table"><thead><tr><th>#</th><th>Logo</th><th>Yetenek Adı</th><th>Uzmanlık</th><th>Renk</th><th>Sıra</th><th>İşlem</th></tr></thead><tbody>`;
-        data.forEach((s, i) => {
-            const icon = s.icon_url ? `<img src="${s.icon_url}" style="height:30px;object-fit:contain">` : `<i class="fas fa-cog" style="color:${s.color||'#38BDF8'};font-size:1.4rem"></i>`;
+
+        let html = `<table class="data-table"><thead><tr><th>Sıra</th><th>İkon</th><th>Adı</th><th>Kategori</th><th>İşlem</th></tr></thead><tbody>`;
+        data.forEach(s => {
             const safeName = s.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-            html += `<tr><td style="color:var(--text-muted);font-family:'Fira Code',monospace">${i+1}</td><td>${icon}</td><td style="font-weight:600">${s.name}</td><td>${s.category||'—'}</td><td><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:14px;height:14px;border-radius:50%;background:${s.color||'#38BDF8'};display:inline-block"></span><span style="font-family:'Fira Code',monospace;font-size:0.8rem">${s.color||'#38BDF8'}</span></span></td><td style="font-family:'Fira Code',monospace">${s.sort_order??0}</td><td><div class="table-actions"><button class="btn btn-secondary btn-sm" onclick="openEditSkill('${s.id}')"><i class="fas fa-pen"></i> Düzenle</button><button class="btn btn-danger btn-sm" onclick="openDeleteModal('${s.id}','${safeName}','skill')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            html += `<tr><td style="font-family:'Fira Code',monospace">${s.sort_order??0}</td><td><div style="width:30px;height:30px;border-radius:6px;background:var(--bg-surface-hover);display:flex;align-items:center;justify-content:center;color:${s.color||'#fff'}">${s.icon_url ? `<img src="${s.icon_url}" style="max-width:20px;max-height:20px">`:'<i class="fas fa-cogs"></i>'}</div></td><td style="font-weight:600;color:${s.color||'inherit'}">${s.name}</td><td>${s.category||'-'}</td><td><div class="table-actions"><button class="btn btn-secondary btn-sm" onclick="openEditSkill('${s.id}')"><i class="fas fa-pen"></i> Düzenle</button><button class="btn btn-danger btn-sm" onclick="openDeleteModal('${s.id}','${safeName}','skill')"><i class="fas fa-trash"></i></button></div></td></tr>`;
         });
         html += '</tbody></table>';
         body.innerHTML = html;
@@ -799,7 +784,6 @@ document.getElementById('editSkillForm').addEventListener('submit', async (e) =>
     } catch (err) { errEl.textContent = err.message; errEl.style.display = 'block'; }
 });
 
-/* ══════════════════ SİTE İÇERİĞİ ══════════════════ */
 let highlightList = [];
 
 function renderHighlightCards() {
@@ -822,7 +806,6 @@ document.getElementById('addHighlightBtn').addEventListener('click', () => {
     renderHighlightCards();
 });
 
-// Karakter sayacı
 ['aboutP1','aboutP2'].forEach((id, i) => {
     document.getElementById(id).addEventListener('input', function() {
         document.getElementById(['p1Count','p2Count'][i]).textContent = this.value.length + ' karakter';
@@ -844,12 +827,11 @@ async function loadContentForm() {
         if (map.contact_text)    document.getElementById('contactText').value     = map.contact_text;
         if (map.highlights)      { highlightList = JSON.parse(map.highlights); renderHighlightCards(); }
 
-        // char counts
         ['aboutP1','aboutP2'].forEach((id,i) => {
             document.getElementById(['p1Count','p2Count'][i]).textContent = document.getElementById(id).value.length + ' karakter';
         });
     } catch (err) {
-        console.log('site_content tablosu henüz oluşturulmamış olabilir:', err.message);
+        console.log('site_content tablosu yüklenemedi:', err.message);
     }
 }
 
@@ -886,7 +868,6 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
     }
 });
 
-/* ── SILME ── */
 window.openDeleteModal = function(id, name, type) {
     document.getElementById('deleteItemId').value   = id;
     document.getElementById('deleteItemType').value = type;
@@ -909,7 +890,6 @@ document.getElementById('deleteConfirmBtn').addEventListener('click', async () =
     finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-trash"></i> Evet, Sil'; }
 });
 
-/* ── MODAL HELPERS ── */
 function openModal(id)  { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 window.closeModal = closeModal;
