@@ -6,137 +6,209 @@
     <title>Admin Panel | Alican Karcılı Portfolyo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main:#07090F; --bg-surface:#0E121F; --bg-surface-hover:#151B2E;
-            --primary:#38BDF8; --primary-glow:rgba(56,189,248,0.15); --accent:#818CF8;
-            --gradient-1:linear-gradient(135deg,var(--primary),var(--accent));
-            --text-main:#F1F5F9; --text-muted:#94A3B8;
-            --border-color:rgba(255,255,255,0.05);
-            --glass-bg:rgba(7,9,15,0.7); --glass-border:rgba(255,255,255,0.03);
-            --transition-smooth:all 0.4s cubic-bezier(0.16,1,0.3,1);
+            --bg-main:#04070F; --bg-surface:#0B111E; --bg-surface-hover:#111A2E; --bg-elevated:#162038;
+            --primary:#38BDF8; --primary-glow:rgba(56,189,248,0.14); --accent:#6366F1;
+            --gradient-1:linear-gradient(135deg,#00E5FF 0%,var(--primary) 50%,var(--accent) 100%);
+            --text-main:#F1F5F9; --text-muted:#8E9BAE;
+            --border-color:rgba(255,255,255,0.065);
+            --border-highlight:rgba(56,189,248,0.34);
+            --glass-bg:rgba(4,7,15,0.88); --glass-border:rgba(255,255,255,0.06);
+            --transition-smooth:transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease, color 0.25s ease;
             --danger:#EF4444; --success:#10B981; --warning:#F59E0B;
         }
         *{box-sizing:border-box;margin:0;padding:0}
-        body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg-main);color:var(--text-main);line-height:1.6;overflow-x:hidden;min-height:100vh}
+        body{
+            font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+            background:var(--bg-main);
+            color:var(--text-main);
+            line-height:1.6;
+            font-size:14.5px;
+            overflow-x:hidden;
+            min-height:100vh;
+            -webkit-font-smoothing:antialiased;
+            background-image:
+                radial-gradient(circle at 12% 18%, rgba(0,229,255,0.045), transparent 32%),
+                radial-gradient(circle at 88% 82%, rgba(99,102,241,0.055), transparent 35%),
+                radial-gradient(rgba(148,163,184,0.09) 1px, transparent 1px);
+            background-size:100% 100%, 100% 100%, 28px 28px;
+        }
         a{text-decoration:none;color:inherit}
-        ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg-main)}::-webkit-scrollbar-thumb{background:var(--bg-surface-hover);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+        h1,h2,h3,h4{font-family:'Space Grotesk','Plus Jakarta Sans',sans-serif;font-weight:600;letter-spacing:-0.02em}
+        ::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:var(--bg-main)}::-webkit-scrollbar-thumb{background:var(--bg-surface-hover);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--primary)}
         .gradient-text{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
         /* LOGIN */
         .login-wrapper{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
-        .login-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:50px 40px;width:100%;max-width:420px;box-shadow:0 30px 60px rgba(0,0,0,0.5);text-align:center}
-        .lock-icon{width:60px;height:60px;border-radius:50%;background:var(--primary-glow);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--primary);font-size:1.5rem}
-        .logo-area h1{font-size:1.6rem;font-weight:800;letter-spacing:-0.03em;margin-bottom:5px}
-        .logo-area p{color:var(--text-muted);font-size:0.9rem;margin-bottom:30px}
+        .login-card{
+            background:var(--bg-surface);
+            border:1px solid var(--border-color);
+            border-radius:20px;
+            padding:42px 36px;
+            width:100%;
+            max-width:400px;
+            box-shadow:0 24px 60px rgba(0,0,0,0.6);
+            text-align:center;
+            position:relative;
+            overflow:hidden;
+        }
+        .login-card::before{
+            content:'';
+            position:absolute;
+            top:0;left:0;width:100%;height:2.5px;
+            background:var(--gradient-1);
+        }
+        .lock-icon{width:54px;height:54px;border-radius:14px;background:var(--primary-glow);border:1px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--primary);font-size:1.35rem}
+        .logo-area h1{font-size:1.38rem;font-weight:600;letter-spacing:-0.025em;margin-bottom:5px}
+        .logo-area p{color:var(--text-muted);font-size:0.84rem;margin-bottom:26px}
 
         /* FORMS */
-        .form-group{display:flex;flex-direction:column;gap:6px;text-align:left;margin-bottom:18px}
-        .form-group label{font-size:0.8rem;font-weight:600;color:var(--text-muted);font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.05em}
-        .form-control{background:var(--bg-main);border:1px solid var(--border-color);padding:13px 15px;border-radius:8px;color:var(--text-main);font-family:'Inter',sans-serif;font-size:0.95rem;transition:var(--transition-smooth);width:100%}
-        .form-control:focus{outline:none;border-color:var(--primary);box-shadow:0 0 15px rgba(56,189,248,0.1)}
-        .form-control::placeholder{color:rgba(148,163,184,0.5)}
-        textarea.form-control{resize:vertical;min-height:120px}
-        select.form-control{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394A3B8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:40px}
+        .form-group{display:flex;flex-direction:column;gap:6px;text-align:left;margin-bottom:16px}
+        .form-group label{font-size:0.7rem;font-weight:600;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.05em;display:flex;justify-content:space-between;align-items:center}
+        .form-control{background:var(--bg-main);border:1px solid var(--border-color);padding:11px 13px;border-radius:9px;color:var(--text-main);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;transition:border-color 0.25s ease;width:100%}
+        .form-control:focus{outline:none;border-color:var(--primary)}
+        .form-control::placeholder{color:rgba(148,163,184,0.45)}
+        textarea.form-control{resize:vertical;min-height:110px}
+        select.form-control{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394A3B8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 
         /* BUTTONS */
-        .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 28px;border:none;border-radius:8px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600;font-size:0.95rem;transition:var(--transition-smooth)}
-        .btn-primary{background:var(--gradient-1);color:white}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(56,189,248,0.2)}
-        .btn-danger{background:rgba(239,68,68,0.15);color:var(--danger);border:1px solid rgba(239,68,68,0.2)}
+        .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;border:none;border-radius:9px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.82rem;transition:var(--transition-smooth)}
+        .btn-primary{background:var(--gradient-1);color:#fff;box-shadow:0 6px 18px rgba(56,189,248,0.18)}
+        .btn-primary:hover{transform:translateY(-1.5px)}
+        .btn-danger{background:rgba(239,68,68,0.12);color:var(--danger);border:1px solid rgba(239,68,68,0.22)}
         .btn-danger:hover{background:var(--danger);color:white}
         .btn-secondary{background:var(--bg-surface-hover);color:var(--text-main);border:1px solid var(--border-color)}
         .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
-        .btn-sm{padding:8px 16px;font-size:0.85rem}
+        .btn-sm{padding:7px 13px;font-size:0.76rem;border-radius:8px}
+        .btn-xs{padding:4px 8px;font-size:0.7rem;border-radius:6px}
         .btn-full{width:100%}
-        .alert{padding:12px 16px;border-radius:8px;font-size:0.9rem;margin-bottom:15px;display:none}
-        .alert-error{background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.2)}
-        .alert-success{background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.2)}
+        .alert{padding:10px 14px;border-radius:9px;font-size:0.82rem;margin-bottom:14px;display:none}
+        .alert-error{background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.22)}
+        .alert-success{background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.22)}
 
         /* ADMIN LAYOUT */
         .admin-wrapper{display:none}
-        .admin-header{position:sticky;top:0;z-index:100;background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:15px 30px;display:flex;justify-content:space-between;align-items:center}
-        .admin-header .brand{display:flex;align-items:center;gap:12px}
-        .admin-header .brand h2{font-size:1.1rem;font-weight:700;letter-spacing:-0.02em}
-        .admin-header .brand .badge{font-size:0.7rem;font-weight:600;background:var(--primary-glow);color:var(--primary);padding:3px 10px;border-radius:20px;font-family:'Fira Code',monospace}
-        .admin-header .header-actions{display:flex;align-items:center;gap:15px}
-        .admin-header .user-email{font-size:0.85rem;color:var(--text-muted);font-family:'Fira Code',monospace}
-        .admin-content{max-width:1100px;margin:0 auto;padding:40px 30px}
+        .admin-header{position:sticky;top:0;z-index:100;background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:13px 28px;display:flex;justify-content:space-between;align-items:center}
+        .admin-header .brand{display:flex;align-items:center;gap:10px}
+        .admin-header .brand-icon{width:30px;height:30px;border-radius:8px;background:var(--primary-glow);border:1px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.76rem}
+        .admin-header .brand h2{font-size:0.98rem;font-weight:600;letter-spacing:-0.01em}
+        .admin-header .brand .badge{font-size:0.66rem;font-weight:500;background:var(--primary-glow);color:var(--primary);padding:2px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(56,189,248,0.2)}
+        .admin-header .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .admin-header .user-email{font-size:0.74rem;color:var(--text-muted);font-family:'JetBrains Mono',monospace;background:var(--bg-surface);padding:5px 11px;border-radius:7px;border:1px solid var(--border-color)}
+        .admin-content{max-width:1180px;margin:0 auto;padding:30px 24px}
+
+        /* KPI DASHBOARD STRIP */
+        .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px}
+        .kpi-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:14px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;transition:var(--transition-smooth)}
+        .kpi-card:hover{border-color:var(--border-highlight);transform:translateY(-2px)}
+        .kpi-info span{font-size:0.68rem;font-family:'JetBrains Mono',monospace;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em}
+        .kpi-info h4{font-size:1.35rem;font-weight:600;margin-top:3px;color:var(--text-main)}
+        .kpi-icon{width:40px;height:40px;border-radius:10px;background:var(--primary-glow);border:1px solid rgba(56,189,248,0.18);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.05rem}
 
         /* TABS */
-        .admin-tabs{display:flex;gap:0;margin-bottom:35px;border-bottom:1px solid var(--border-color);overflow-x:auto}
-        .admin-tab{padding:14px 22px;cursor:pointer;font-weight:600;font-size:0.9rem;color:var(--text-muted);border-bottom:2px solid transparent;transition:var(--transition-smooth);display:flex;align-items:center;gap:8px;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;white-space:nowrap}
-        .admin-tab:hover{color:var(--text-main)}
-        .admin-tab.active{color:var(--primary);border-bottom-color:var(--primary)}
+        .admin-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--border-color);padding-bottom:10px;overflow-x:auto}
+        .admin-tab{padding:9px 16px;cursor:pointer;font-weight:500;font-size:0.8rem;color:var(--text-muted);border-radius:9px;border:1px solid transparent;transition:var(--transition-smooth);display:flex;align-items:center;gap:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap}
+        .admin-tab:hover{color:var(--text-main);background:var(--bg-surface)}
+        .admin-tab.active{color:var(--primary);background:var(--primary-glow);border-color:var(--border-highlight)}
         .tab-content{display:none}
         .tab-content.active{display:block}
 
-        /* CARDS */
-        .admin-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:35px;margin-bottom:30px}
-        .admin-card h3{font-size:1.3rem;font-weight:700;margin-bottom:25px;letter-spacing:-0.02em;display:flex;align-items:center;gap:10px}
+        /* CARDS & SPLIT PREVIEW LAYOUT */
+        .admin-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:26px;margin-bottom:26px;box-shadow:0 14px 34px rgba(0,0,0,0.3)}
+        .admin-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+        .admin-card h3{font-size:1.08rem;font-weight:600;letter-spacing:-0.015em;display:flex;align-items:center;gap:9px;margin:0}
         .admin-card h3 i{color:var(--primary)}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-        @media(max-width:768px){.form-row{grid-template-columns:1fr}}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .builder-grid{display:grid;grid-template-columns:1.45fr 1fr;gap:24px;align-items:start}
 
-        /* FILE UPLOAD */
-        .file-upload-zone{border:2px dashed rgba(56,189,248,0.3);border-radius:12px;background:rgba(56,189,248,0.02);padding:30px 20px;text-align:center;cursor:pointer;transition:var(--transition-smooth)}
-        .file-upload-zone:hover,.file-upload-zone.dragover{border-color:var(--primary);background:rgba(56,189,248,0.06);transform:translateY(-2px)}
-        .file-upload-zone i{font-size:2.2rem;color:var(--primary);margin-bottom:10px;display:block}
-        .file-upload-zone h4{font-size:0.95rem;font-weight:600;margin-bottom:4px}
-        .file-upload-zone p{font-size:0.8rem;color:var(--text-muted)}
-        .image-previews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;margin-top:15px}
-        .image-preview-item{position:relative;height:100px;border-radius:8px;overflow:hidden;border:1px solid var(--border-color);background:#000}
+        /* LIVE PREVIEW CARD */
+        .live-preview-panel{background:var(--bg-main);border:1px solid var(--border-color);border-radius:14px;padding:18px;position:sticky;top:82px}
+        .live-preview-header{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--primary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+        .preview-project-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:14px;overflow:hidden}
+        .preview-project-img{height:155px;background:#030509;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+        .preview-project-img img{width:100%;height:100%;object-fit:cover}
+        .preview-project-body{padding:16px}
+        .preview-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+        .preview-tag{font-size:0.64rem;padding:2px 8px;border-radius:999px;background:var(--primary-glow);color:var(--primary);font-family:'JetBrains Mono',monospace}
+
+        /* FILE UPLOAD & IMAGE REORDERING */
+        .file-upload-zone{border:1.5px dashed rgba(56,189,248,0.3);border-radius:11px;background:rgba(56,189,248,0.02);padding:22px 18px;text-align:center;cursor:pointer;transition:var(--transition-smooth)}
+        .file-upload-zone:hover,.file-upload-zone.dragover{border-color:var(--primary);background:rgba(56,189,248,0.06)}
+        .file-upload-zone i{font-size:1.65rem;color:var(--primary);margin-bottom:6px;display:block}
+        .file-upload-zone h4{font-size:0.84rem;font-weight:600;margin-bottom:3px}
+        .file-upload-zone p{font-size:0.74rem;color:var(--text-muted)}
+        .image-previews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:10px;margin-top:12px}
+        .image-preview-item{position:relative;height:96px;border-radius:9px;overflow:hidden;border:1px solid var(--border-color);background:#000}
         .image-preview-item img{width:100%;height:100%;object-fit:cover}
-        .image-preview-item .remove-img-btn{position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(239,68,68,0.9);color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.75rem;transition:var(--transition-smooth)}
-        .image-preview-item .remove-img-btn:hover{transform:scale(1.15);background:var(--danger)}
+        .cover-badge{position:absolute;top:4px;left:4px;background:var(--primary);color:#04070F;font-size:0.58rem;font-weight:700;font-family:'JetBrains Mono',monospace;padding:2px 5px;border-radius:4px}
+        .image-preview-item .remove-img-btn{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(239,68,68,0.92);color:white;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.68rem}
+        .image-preview-item .remove-img-btn:hover{background:var(--danger)}
+        .img-reorder-bar{position:absolute;bottom:0;left:0;width:100%;background:rgba(4,7,15,0.8);display:flex;justify-content:space-between;padding:2px 5px}
+        .img-move-btn{background:none;border:none;color:var(--text-main);cursor:pointer;font-size:0.68rem;padding:2px 4px}
+        .img-move-btn:hover{color:var(--primary)}
 
-        /* TABLES */
-        .table-wrapper{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;margin-top:30px}
-        .table-header{padding:20px 25px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color)}
-        .table-header h3{font-size:1.1rem;font-weight:700;display:flex;align-items:center;gap:10px}
-        .table-header h3 .count{font-size:0.8rem;background:var(--primary-glow);color:var(--primary);padding:2px 10px;border-radius:20px;font-family:'Fira Code',monospace}
+        /* TABLES & SEARCH FILTER BAR */
+        .table-wrapper{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;margin-top:26px;box-shadow:0 14px 34px rgba(0,0,0,0.3)}
+        .table-header{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);flex-wrap:wrap;gap:12px}
+        .table-header h3{font-size:0.98rem;font-weight:600;display:flex;align-items:center;gap:8px}
+        .table-header h3 .count{font-size:0.7rem;background:var(--primary-glow);color:var(--primary);padding:2px 8px;border-radius:20px;font-family:'JetBrains Mono',monospace}
+        .table-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .table-search{background:var(--bg-main);border:1px solid var(--border-color);border-radius:8px;padding:7px 12px;color:var(--text-main);font-size:0.78rem;min-width:195px;font-family:'Plus Jakarta Sans',sans-serif}
+        .table-search:focus{outline:none;border-color:var(--primary)}
+
         .data-table{width:100%;border-collapse:collapse}
-        .data-table th{padding:12px 20px;font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border-color);font-family:'Fira Code',monospace;background:rgba(0,0,0,0.2)}
-        .data-table td{padding:16px 20px;font-size:0.9rem;border-bottom:1px solid var(--border-color);vertical-align:middle}
+        .data-table th{padding:11px 18px;font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border-color);font-family:'JetBrains Mono',monospace;background:rgba(0,0,0,0.2)}
+        .data-table td{padding:13px 18px;font-size:0.83rem;border-bottom:1px solid var(--border-color);vertical-align:middle}
         .data-table tr:hover td{background:var(--bg-surface-hover)}
         .data-table tr:last-child td{border-bottom:none}
-        .table-tags{display:flex;gap:5px;flex-wrap:wrap}
-        .table-tag{font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:3px;background:rgba(56,189,248,0.1);color:var(--primary);font-family:'Fira Code',monospace}
-        .table-status{font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:4px;display:inline-block;font-family:'Fira Code',monospace}
-        .table-status.completed{background:rgba(16,185,129,0.1);color:#10B981}
-        .table-status.in-progress{background:rgba(245,158,11,0.1);color:#F59E0B}
-        .table-status.design-verified{background:rgba(56,189,248,0.1);color:var(--primary)}
-        .table-status.manufacturing{background:rgba(168,85,247,0.1);color:#A855F7}
-        .table-actions{display:flex;gap:8px}
-        .table-actions button{padding:6px 12px;font-size:0.8rem}
-        .empty-state{text-align:center;padding:60px 20px;color:var(--text-muted)}
-        .empty-state i{font-size:3rem;margin-bottom:15px;opacity:0.3;display:block}
+        .table-tags{display:flex;gap:4px;flex-wrap:wrap}
+        .table-tag{font-size:0.66rem;font-weight:500;padding:2px 7px;border-radius:4px;background:rgba(56,189,248,0.1);color:var(--primary);font-family:'JetBrains Mono',monospace}
+        .table-status{font-size:0.68rem;font-weight:500;padding:3px 9px;border-radius:6px;display:inline-block;font-family:'JetBrains Mono',monospace}
+        .table-status.completed{background:rgba(16,185,129,0.12);color:#10B981}
+        .table-status.in-progress{background:rgba(245,158,11,0.12);color:#F59E0B}
+        .table-status.design-verified{background:rgba(56,189,248,0.12);color:var(--primary)}
+        .table-status.manufacturing{background:rgba(168,85,247,0.12);color:#A855F7}
+        .table-actions{display:flex;gap:6px;align-items:center}
+        .order-Controls{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:0.78rem}
+        .empty-state{text-align:center;padding:48px 20px;color:var(--text-muted);font-size:0.84rem}
+        .empty-state i{font-size:2.3rem;margin-bottom:12px;opacity:0.35;display:block}
 
         /* MODALS */
-        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:999;justify-content:center;align-items:flex-start;padding:40px 20px;overflow-y:auto}
+        .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:999;justify-content:center;align-items:flex-start;padding:36px 20px;overflow-y:auto}
         .modal-overlay.show{display:flex}
-        .modal{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;width:100%;max-width:680px;padding:35px;box-shadow:0 30px 60px rgba(0,0,0,0.5);margin-top:20px}
-        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px}
-        .modal-header h3{font-size:1.2rem;font-weight:700}
-        .modal-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--border-color);background:var(--bg-main);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:var(--transition-smooth)}
+        .modal{background:var(--bg-surface);border:1px solid var(--border-highlight);border-radius:16px;width:100%;max-width:650px;padding:28px;box-shadow:0 26px 65px rgba(0,0,0,0.65);margin-top:20px}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+        .modal-header h3{font-size:1.08rem;font-weight:600}
+        .modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border-color);background:var(--bg-main);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.88rem;transition:var(--transition-smooth)}
         .modal-close:hover{border-color:var(--danger);color:var(--danger)}
-        .confirm-modal .modal{max-width:420px;text-align:center}
-        .confirm-modal .modal i.warn-icon{font-size:3rem;color:var(--danger);margin-bottom:15px;display:block}
-        .confirm-modal .modal p{color:var(--text-muted);margin-bottom:25px;font-size:0.95rem}
-        .confirm-modal .modal .btn-group{display:flex;gap:12px;justify-content:center}
+        .confirm-modal .modal{max-width:390px;text-align:center}
+        .confirm-modal .modal i.warn-icon{font-size:2.5rem;color:var(--danger);margin-bottom:12px;display:block}
+        .confirm-modal .modal p{color:var(--text-muted);margin-bottom:22px;font-size:0.86rem}
+        .confirm-modal .modal .btn-group{display:flex;gap:10px;justify-content:center}
 
         /* CONTENT EDITOR */
-        .content-section{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:12px;padding:25px;margin-bottom:20px}
-        .content-section h4{font-size:1rem;font-weight:700;margin-bottom:15px;display:flex;align-items:center;gap:8px;color:var(--primary)}
-        .char-count{font-size:0.75rem;color:var(--text-muted);text-align:right;margin-top:4px;font-family:'Fira Code',monospace}
+        .content-section{background:var(--bg-main);border:1px solid var(--border-color);border-radius:12px;padding:20px;margin-bottom:16px}
+        .content-section h4{font-size:0.88rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--primary)}
+        .char-count{font-size:0.68rem;color:var(--text-muted);text-align:right;margin-top:4px;font-family:'JetBrains Mono',monospace}
 
+        /* TOAST NOTIFICATION */
+        .admin-toast{position:fixed;bottom:24px;right:24px;background:var(--bg-elevated);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:10px;font-size:0.78rem;font-family:'JetBrains Mono',monospace;box-shadow:0 12px 30px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity 0.25s ease, transform 0.25s ease}
+        .admin-toast.show{opacity:1;visibility:visible;transform:translateY(0)}
+
+        @media(max-width:992px){
+            .builder-grid{grid-template-columns:1fr}
+            .kpi-grid{grid-template-columns:1fr 1fr}
+            .live-preview-panel{position:static}
+        }
         @media(max-width:768px){
-            .admin-header{flex-direction:column;gap:10px;padding:15px}
-            .admin-content{padding:20px 15px}
-            .data-table{font-size:0.85rem}
-            .data-table th,.data-table td{padding:10px 12px}
+            .form-row,.kpi-grid{grid-template-columns:1fr}
+            .admin-header{flex-direction:column;gap:10px;padding:14px}
+            .admin-content{padding:18px 14px}
+            .data-table{font-size:0.78rem}
+            .data-table th,.data-table td{padding:9px 10px}
         }
     </style>
 </head>
@@ -169,88 +241,171 @@
 <div class="admin-wrapper" id="adminPanel">
     <div class="admin-header">
         <div class="brand">
+            <div class="brand-icon">AK</div>
             <h2><span class="gradient-text">Portfolyo Admin</span></h2>
-            <span class="badge">v2.2</span>
+            <span class="badge">v3.0 PRO</span>
         </div>
         <div class="header-actions">
             <span class="user-email" id="adminEmail"></span>
-            <a href="index.html" class="btn btn-secondary btn-sm"><i class="fas fa-external-link-alt"></i> Site</a>
+            <button class="btn btn-secondary btn-sm" id="exportBackupBtn" title="Tüm Verileri JSON Olarak İndir">
+                <i class="fas fa-download"></i> JSON Yedek Al
+            </button>
+            <a href="index.html" target="_blank" class="btn btn-secondary btn-sm"><i class="fas fa-external-link-alt"></i> Siteyi Gör</a>
             <button class="btn btn-danger btn-sm" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Çıkış</button>
         </div>
     </div>
 
     <div class="admin-content">
+        <!-- DASHBOARD KPI CARDS -->
+        <div class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-info">
+                    <span>Toplam Proje</span>
+                    <h4 id="kpiTotalProjects">0</h4>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-cubes"></i></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-info">
+                    <span>Tamamlanan / Doğrulanan</span>
+                    <h4 id="kpiCompletedProjects">0</h4>
+                </div>
+                <div class="kpi-icon" style="color:#10B981;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.25)"><i class="fas fa-check-double"></i></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-info">
+                    <span>Kayıtlı Yetenek</span>
+                    <h4 id="kpiTotalSkills">0</h4>
+                </div>
+                <div class="kpi-icon" style="color:#3B82F6;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.25)"><i class="fas fa-microchip"></i></div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-info">
+                    <span>Yüklü Proje Görseli</span>
+                    <h4 id="kpiTotalImages">0</h4>
+                </div>
+                <div class="kpi-icon" style="color:#A855F7;background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)"><i class="fas fa-images"></i></div>
+            </div>
+        </div>
+
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="projects"><i class="fas fa-rocket"></i> Projeler</button>
             <button class="admin-tab" data-tab="skills"><i class="fas fa-tools"></i> Yetenekler</button>
             <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği</button>
         </div>
 
+        <!-- TAB 1: PROJECTS -->
         <div class="tab-content active" id="tab-projects">
             <div class="admin-card">
-                <h3><i class="fas fa-plus-circle"></i> Yeni Proje Ekle</h3>
+                <div class="admin-card-header">
+                    <h3><i class="fas fa-plus-circle"></i> Yeni Proje Ekle</h3>
+                </div>
                 <div class="alert alert-success" id="addProjectSuccess"></div>
                 <div class="alert alert-error" id="addProjectError"></div>
-                <form id="projectForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Proje Başlığı *</label>
-                            <input type="text" id="projTitle" class="form-control" placeholder="Örn. Go-Kart Şasi Tasarımı" required>
+
+                <div class="builder-grid">
+                    <form id="projectForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Proje Başlığı *</label>
+                                <input type="text" id="projTitle" class="form-control" placeholder="Örn. Go-Kart Şasi Tasarımı" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Proje Durumu *</label>
+                                <select id="projStatus" class="form-control" required>
+                                    <option value="">Durum Seçin</option>
+                                    <option value="Tamamlandı">Tamamlandı</option>
+                                    <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
+                                    <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
+                                    <option value="Devam Ediyor">Devam Ediyor</option>
+                                    <option value="İmalatta">İmalatta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Etiketler (Virgülle Ayırın)</label>
+                                <input type="text" id="projTags" class="form-control" placeholder="SolidWorks, Kinematik, FEA">
+                            </div>
+                            <div class="form-group">
+                                <label>Sıralama Değeri *</label>
+                                <input type="number" id="projOrder" class="form-control" value="0" min="0" required>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label>Proje Durumu *</label>
-                            <select id="projStatus" class="form-control" required>
-                                <option value="">Durum Seçin</option>
-                                <option value="Tamamlandı">Tamamlandı</option>
-                                <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
-                                <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
-                                <option value="Devam Ediyor">Devam Ediyor</option>
-                                <option value="İmalatta">İmalatta</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Etiketler (Virgülle Ayırın)</label>
-                            <input type="text" id="projTags" class="form-control" placeholder="SolidWorks, Kinematik, FEA">
+                            <label>Detaylı Açıklama *</label>
+                            <textarea id="projDesc" class="form-control" placeholder="Projenin teknik detaylarını, sınır şartlarını ve sonuçlarını açıklayın..." required></textarea>
                         </div>
                         <div class="form-group">
-                            <label>Sıralama Değeri *</label>
-                            <input type="number" id="projOrder" class="form-control" value="0" min="0" required>
+                            <label>
+                                <span>Proje Görselleri (Çoklu Seçim &amp; Sıralama)</span>
+                                <span style="font-size:0.66rem;color:var(--primary)">İlk görsel kapak olur</span>
+                            </label>
+                            <div class="file-upload-zone" id="projDropZone" onclick="document.getElementById('projFileInput').click()">
+                                <i class="fas fa-cloud-arrow-up"></i>
+                                <h4>Görselleri Seçmek İçin Tıklayın</h4>
+                                <p>veya sürükleyip bırakın (PNG, JPG, WEBP)</p>
+                                <input type="file" id="projFileInput" multiple accept="image/*" style="display:none">
+                            </div>
+                            <div class="image-previews-grid" id="projImagePreviews"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submitProjectBtn">
+                            <i class="fas fa-save"></i> Projeyi Kaydet
+                        </button>
+                    </form>
+
+                    <!-- LIVE PROJECT CARD PREVIEW -->
+                    <div class="live-preview-panel">
+                        <div class="live-preview-header">
+                            <span><i class="fas fa-eye"></i> Canlı Kart Önizlemesi</span>
+                            <span>ANASAYFA GÖRÜNÜMÜ</span>
+                        </div>
+                        <div class="preview-project-card">
+                            <div class="preview-project-img" id="livePreviewImgBox">
+                                <i class="fas fa-cube" style="font-size:2.4rem;color:var(--text-muted);opacity:0.3"></i>
+                            </div>
+                            <div class="preview-project-body">
+                                <div class="preview-tags" id="livePreviewTags">
+                                    <span class="preview-tag">SolidWorks</span>
+                                    <span class="preview-tag">FEA</span>
+                                </div>
+                                <h4 id="livePreviewTitle" style="font-size:0.96rem;margin-bottom:6px">Örnek Proje Başlığı</h4>
+                                <p id="livePreviewDesc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.</p>
+                                <div style="border-top:1px solid var(--border-color);padding-top:10px">
+                                    <span class="table-status design-verified" id="livePreviewStatus">Tasarım Doğrulandı</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label>Detaylı Açıklama *</label>
-                        <textarea id="projDesc" class="form-control" placeholder="Projenin teknik detaylarını açıklayın..." required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Proje Görselleri (Bilgisayardan Çoklu Seçilebilir)</label>
-                        <div class="file-upload-zone" id="projDropZone" onclick="document.getElementById('projFileInput').click()">
-                            <i class="fas fa-cloud-arrow-up"></i>
-                            <h4>Görselleri Seçmek İçin Tıklayın</h4>
-                            <p>veya sürükleyip bırakın (PNG, JPG, WEBP)</p>
-                            <input type="file" id="projFileInput" multiple accept="image/*" style="display:none">
-                        </div>
-                        <div class="image-previews-grid" id="projImagePreviews"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="submitProjectBtn">
-                        <i class="fas fa-save"></i> Projeyi Kaydet
-                    </button>
-                </form>
+                </div>
             </div>
 
             <div class="table-wrapper">
                 <div class="table-header">
                     <h3><i class="fas fa-layer-group" style="color:var(--primary)"></i> Kayıtlı Projeler <span class="count" id="projectCount">0</span></h3>
-                    <button class="btn btn-secondary btn-sm" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
+                    <div class="table-controls">
+                        <input type="text" id="adminProjSearch" class="table-search" placeholder="Tabloda proje veya etiket ara...">
+                        <select id="adminProjStatusFilter" class="table-search" style="min-width:150px">
+                            <option value="all">Tüm Durumlar</option>
+                            <option value="Tamamlandı">Tamamlandı</option>
+                            <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
+                            <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
+                            <option value="Devam Ediyor">Devam Ediyor</option>
+                            <option value="İmalatta">İmalatta</option>
+                        </select>
+                        <button class="btn btn-secondary btn-sm" id="refreshProjectsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
+                    </div>
                 </div>
                 <div id="projectsListBody"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Yükleniyor...</p></div></div>
             </div>
         </div>
 
+        <!-- TAB 2: SKILLS -->
         <div class="tab-content" id="tab-skills">
             <div class="admin-card">
-                <h3><i class="fas fa-plus-circle"></i> Yeni Yetenek Ekle</h3>
+                <div class="admin-card-header">
+                    <h3><i class="fas fa-plus-circle"></i> Yeni Yetenek Ekle</h3>
+                </div>
                 <div class="alert alert-success" id="addSkillSuccess"></div>
                 <div class="alert alert-error" id="addSkillError"></div>
                 <form id="skillForm">
@@ -272,7 +427,7 @@
                         <div class="form-group">
                             <label>Vurgu Rengi</label>
                             <div style="display:flex;gap:10px">
-                                <input type="color" id="skillColorPicker" value="#38BDF8" style="width:50px;height:48px;border:none;background:none;cursor:pointer;border-radius:8px">
+                                <input type="color" id="skillColorPicker" value="#38BDF8" style="width:46px;height:42px;border:none;background:none;cursor:pointer;border-radius:8px">
                                 <input type="text" id="skillColor" class="form-control" value="#38BDF8">
                             </div>
                         </div>
@@ -294,15 +449,21 @@
             <div class="table-wrapper">
                 <div class="table-header">
                     <h3><i class="fas fa-tools" style="color:var(--primary)"></i> Kayıtlı Yetenekler <span class="count" id="skillCount">0</span></h3>
-                    <button class="btn btn-secondary btn-sm" id="refreshSkillsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
+                    <div class="table-controls">
+                        <input type="text" id="adminSkillSearch" class="table-search" placeholder="Yetenek veya kategori ara...">
+                        <button class="btn btn-secondary btn-sm" id="refreshSkillsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
+                    </div>
                 </div>
                 <div id="skillsListBody"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Yükleniyor...</p></div></div>
             </div>
         </div>
 
+        <!-- TAB 3: SITE CONTENT -->
         <div class="tab-content" id="tab-content">
             <div class="admin-card">
-                <h3><i class="fas fa-user-pen"></i> Hakkımda Bölümü</h3>
+                <div class="admin-card-header">
+                    <h3><i class="fas fa-user-pen"></i> Hakkımda &amp; İletişim Bölümü Yönetimi</h3>
+                </div>
                 <div class="alert alert-success" id="contentSuccess"></div>
                 <div class="alert alert-error" id="contentError"></div>
 
@@ -319,12 +480,12 @@
                         <h4><i class="fas fa-paragraph"></i> Hakkımda Paragrafları</h4>
                         <div class="form-group">
                             <label>1. Paragraf</label>
-                            <textarea id="aboutP1" class="form-control" style="min-height:130px" placeholder="CAD ve mühendislik deneyimlerinizi anlatın..."></textarea>
+                            <textarea id="aboutP1" class="form-control" style="min-height:115px" placeholder="CAD ve mühendislik deneyimlerinizi anlatın..."></textarea>
                             <div class="char-count" id="p1Count">0 karakter</div>
                         </div>
                         <div class="form-group" style="margin-bottom:0">
                             <label>2. Paragraf</label>
-                            <textarea id="aboutP2" class="form-control" style="min-height:130px" placeholder="Mekatronik, yazılım ve hedeflerinizi anlatın..."></textarea>
+                            <textarea id="aboutP2" class="form-control" style="min-height:115px" placeholder="Mekatronik, yazılım ve hedeflerinizi anlatın..."></textarea>
                             <div class="char-count" id="p2Count">0 karakter</div>
                         </div>
                     </div>
@@ -343,15 +504,14 @@
                         </div>
                         <div class="form-group" style="margin-bottom:0">
                             <label>İletişim Bölümü Alt Yazısı</label>
-                            <textarea id="contactText" class="form-control" style="min-height:90px" placeholder="Ziyaretçilere göstermek istediğiniz kısa mesaj..."></textarea>
+                            <textarea id="contactText" class="form-control" style="min-height:85px" placeholder="Ziyaretçilere göstermek istediğiniz kısa mesaj..."></textarea>
                         </div>
                     </div>
 
                     <div class="content-section">
                         <h4><i class="fas fa-star"></i> Öne Çıkan Kartlar (Hakkımda Bölümü)</h4>
-                        <div id="highlightCards">
-                        </div>
-                        <button type="button" class="btn btn-secondary btn-sm" id="addHighlightBtn" style="margin-top:10px">
+                        <div id="highlightCards"></div>
+                        <button type="button" class="btn btn-secondary btn-sm" id="addHighlightBtn" style="margin-top:8px">
                             <i class="fas fa-plus"></i> Kart Ekle
                         </button>
                     </div>
@@ -365,6 +525,7 @@
     </div>
 </div>
 
+<!-- EDIT PROJECT MODAL -->
 <div class="modal-overlay" id="editProjectModal">
     <div class="modal">
         <div class="modal-header">
@@ -406,15 +567,18 @@
                 <textarea id="editProjDesc" class="form-control" required></textarea>
             </div>
             <div class="form-group">
-                <label>Mevcut + Yeni Görseller</label>
-                <div class="file-upload-zone" onclick="document.getElementById('editProjFileInput').click()" style="padding:15px">
-                    <i class="fas fa-plus" style="font-size:1.4rem"></i>
+                <label>
+                    <span>Mevcut + Yeni Görseller</span>
+                    <span style="font-size:0.66rem;color:var(--primary)">Oklarla sıralamayı / kapağı değiştirebilirsiniz</span>
+                </label>
+                <div class="file-upload-zone" onclick="document.getElementById('editProjFileInput').click()" style="padding:14px">
+                    <i class="fas fa-plus" style="font-size:1.25rem"></i>
                     <h4>Yeni Görsel Ekle (Bilgisayardan)</h4>
                     <input type="file" id="editProjFileInput" multiple accept="image/*" style="display:none">
                 </div>
                 <div class="image-previews-grid" id="editProjImagePreviews"></div>
             </div>
-            <div style="display:flex;gap:12px;margin-top:10px">
+            <div style="display:flex;gap:10px;margin-top:10px">
                 <button type="submit" class="btn btn-primary" id="editProjSubmitBtn"><i class="fas fa-save"></i> Güncelle</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('editProjectModal')">İptal</button>
             </div>
@@ -422,6 +586,7 @@
     </div>
 </div>
 
+<!-- EDIT SKILL MODAL -->
 <div class="modal-overlay" id="editSkillModal">
     <div class="modal">
         <div class="modal-header">
@@ -456,7 +621,7 @@
                 <label>Sıralama Değeri *</label>
                 <input type="number" id="editSkillOrder" class="form-control" min="0" required>
             </div>
-            <div style="display:flex;gap:12px;margin-top:10px">
+            <div style="display:flex;gap:10px;margin-top:10px">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Güncelle</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('editSkillModal')">İptal</button>
             </div>
@@ -464,10 +629,11 @@
     </div>
 </div>
 
+<!-- DELETE CONFIRM MODAL -->
 <div class="modal-overlay confirm-modal" id="deleteModal">
     <div class="modal">
         <i class="fas fa-trash-alt warn-icon"></i>
-        <h3 style="margin-bottom:10px">Kaydı Sil</h3>
+        <h3 style="margin-bottom:8px">Kaydı Sil</h3>
         <p>Bu öğeyi kalıcı olarak silmek istiyor musunuz?<br><strong id="deleteItemName"></strong></p>
         <input type="hidden" id="deleteItemId">
         <input type="hidden" id="deleteItemType">
@@ -478,6 +644,11 @@
     </div>
 </div>
 
+<div class="admin-toast" id="adminToast">
+    <i class="fas fa-check-circle" style="color:var(--primary)"></i>
+    <span id="adminToastText">İşlem başarılı</span>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
@@ -486,6 +657,17 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 const loginScreen = document.getElementById('loginScreen');
 const adminPanel  = document.getElementById('adminPanel');
+
+let cachedProjects = [];
+let cachedSkills   = [];
+
+function notifyToast(msg) {
+    const t = document.getElementById('adminToast');
+    document.getElementById('adminToastText').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._admToast);
+    window._admToast = setTimeout(() => t.classList.remove('show'), 2600);
+}
 
 (async () => {
     const { data: { session } } = await sb.auth.getSession();
@@ -507,6 +689,15 @@ function showAdmin(user) {
 function showLogin() {
     loginScreen.style.display = 'flex';
     adminPanel.style.display  = 'none';
+}
+
+function updateKPIs() {
+    document.getElementById('kpiTotalProjects').textContent = cachedProjects.length;
+    const doneCount = cachedProjects.filter(p => p.status === 'Tamamlandı' || p.status === 'Tasarım Doğrulandı').length;
+    document.getElementById('kpiCompletedProjects').textContent = doneCount;
+    document.getElementById('kpiTotalSkills').textContent = cachedSkills.length;
+    const imgCount = cachedProjects.reduce((acc, p) => acc + ((p.images && p.images.length) || 0), 0);
+    document.getElementById('kpiTotalImages').textContent = imgCount;
 }
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -541,6 +732,30 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
+/* --- LIVE PREVIEW UPDATER --- */
+const STATUS_CLS = { 'Tamamlandı':'completed','Tasarım Doğrulandı':'design-verified','Geliştirme Aşamasında':'in-progress','Devam Ediyor':'in-progress','İmalatta':'manufacturing' };
+
+function updateLiveProjectPreview() {
+    const title = document.getElementById('projTitle').value.trim() || 'Örnek Proje Başlığı';
+    const status = document.getElementById('projStatus').value || 'Tasarım Doğrulandı';
+    const tagsRaw = document.getElementById('projTags').value;
+    const desc = document.getElementById('projDesc').value.trim() || 'Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.';
+
+    document.getElementById('livePreviewTitle').textContent = title;
+    document.getElementById('livePreviewDesc').textContent = desc;
+    const stEl = document.getElementById('livePreviewStatus');
+    stEl.textContent = status;
+    stEl.className = 'table-status ' + (STATUS_CLS[status] || 'in-progress');
+
+    const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
+    document.getElementById('livePreviewTags').innerHTML = (tags.length ? tags : ['SolidWorks', 'FEA'])
+        .map(t => `<span class="preview-tag">${t}</span>`).join('');
+}
+['projTitle', 'projStatus', 'projTags', 'projDesc'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updateLiveProjectPreview);
+});
+
+/* --- IMAGE MANAGEMENT & REORDERING --- */
 let newProjFiles  = [];
 let editCurImages = [];
 let editNewFiles  = [];
@@ -563,15 +778,53 @@ function renderPreviews(target) {
     container.innerHTML = '';
     if (!isNew) {
         editCurImages.forEach((url, i) => {
-            container.innerHTML += `<div class="image-preview-item"><img src="${url}"><button type="button" class="remove-img-btn" onclick="removeImg('existing',${i})"><i class="fas fa-times"></i></button></div>`;
+            container.innerHTML += `
+                <div class="image-preview-item">
+                    ${i === 0 ? '<span class="cover-badge">KAPAK</span>' : ''}
+                    <img src="${url}" loading="lazy">
+                    <button type="button" class="remove-img-btn" onclick="removeImg('existing',${i})"><i class="fas fa-times"></i></button>
+                    <div class="img-reorder-bar">
+                        <button type="button" class="img-move-btn" onclick="moveImg('existing',${i},-1)" title="Sola Taşı"><i class="fas fa-chevron-left"></i></button>
+                        <button type="button" class="img-move-btn" onclick="moveImg('existing',${i},1)" title="Sağa Taşı"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>`;
         });
     }
     const arr = isNew ? newProjFiles : editNewFiles;
     arr.forEach((f, i) => {
         const url = URL.createObjectURL(f);
-        container.innerHTML += `<div class="image-preview-item" style="border:2px solid var(--primary)"><img src="${url}"><button type="button" class="remove-img-btn" onclick="removeImg('${isNew ? 'new' : 'edit-new'}',${i})"><i class="fas fa-times"></i></button></div>`;
+        const showCover = isNew && i === 0;
+        container.innerHTML += `
+            <div class="image-preview-item" style="border:2px solid var(--primary)">
+                ${showCover ? '<span class="cover-badge">KAPAK</span>' : ''}
+                <img src="${url}">
+                <button type="button" class="remove-img-btn" onclick="removeImg('${isNew ? 'new' : 'edit-new'}',${i})"><i class="fas fa-times"></i></button>
+                <div class="img-reorder-bar">
+                    <button type="button" class="img-move-btn" onclick="moveImg('${isNew ? 'new' : 'edit-new'}',${i},-1)"><i class="fas fa-chevron-left"></i></button>
+                    <button type="button" class="img-move-btn" onclick="moveImg('${isNew ? 'new' : 'edit-new'}',${i},1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>`;
     });
+
+    if (isNew) {
+        const liveImgBox = document.getElementById('livePreviewImgBox');
+        if (newProjFiles.length > 0) {
+            liveImgBox.innerHTML = `<img src="${URL.createObjectURL(newProjFiles[0])}">`;
+        } else {
+            liveImgBox.innerHTML = `<i class="fas fa-cube" style="font-size:2.4rem;color:var(--text-muted);opacity:0.3"></i>`;
+        }
+    }
 }
+
+window.moveImg = function(type, idx, dir) {
+    const arr = type === 'new' ? newProjFiles : (type === 'edit-new' ? editNewFiles : editCurImages);
+    const targetIdx = idx + dir;
+    if (targetIdx < 0 || targetIdx >= arr.length) return;
+    const temp = arr[idx];
+    arr[idx] = arr[targetIdx];
+    arr[targetIdx] = temp;
+    renderPreviews(type === 'new' ? 'new' : 'edit');
+};
 
 window.removeImg = function(type, idx) {
     if (type === 'new')        { newProjFiles.splice(idx, 1);  renderPreviews('new');  }
@@ -612,16 +865,15 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
         }]);
         if (error) throw error;
         succEl.textContent = '✓ Proje başarıyla eklendi!'; succEl.style.display = 'block';
+        notifyToast('Yeni proje başarıyla kaydedildi');
         document.getElementById('projectForm').reset();
-        newProjFiles = []; renderPreviews('new'); loadProjectsList();
+        newProjFiles = []; renderPreviews('new'); updateLiveProjectPreview(); loadProjectsList();
     } catch (err) {
         errEl.textContent = err.message; errEl.style.display = 'block';
     } finally {
         btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Projeyi Kaydet';
     }
 });
-
-const STATUS_CLS = { 'Tamamlandı':'completed','Tasarım Doğrulandı':'design-verified','Geliştirme Aşamasında':'in-progress','Devam Ediyor':'in-progress','İmalatta':'manufacturing' };
 
 async function loadProjectsList() {
     const body = document.getElementById('projectsListBody');
@@ -630,24 +882,99 @@ async function loadProjectsList() {
     try {
         const { data, error } = await sb.from('projects').select('*').order('sort_order');
         if (error) throw error;
-        cntEl.textContent = data.length;
-        if (!data.length) { body.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>Henüz proje eklenmemiş.</p></div>'; return; }
-
-        let html = `<table class="data-table"><thead><tr><th>#</th><th>Görsel</th><th>Başlık</th><th>Etiketler</th><th>Durum</th><th>Sıra</th><th>İşlem</th></tr></thead><tbody>`;
-        data.forEach((p, i) => {
-            const cls   = STATUS_CLS[p.status] || 'in-progress';
-            const tags  = (p.tags||[]).map(t=>`<span class="table-tag">${t}</span>`).join('');
-            const thumb = p.images?.length ? `<img src="${p.images[0]}" style="width:45px;height:35px;object-fit:cover;border-radius:4px">` : '<i class="fas fa-image" style="color:var(--text-muted);font-size:1.4rem"></i>';
-            const safeTitle = p.title.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-            html += `<tr><td style="color:var(--text-muted);font-family:'Fira Code',monospace">${i+1}</td><td>${thumb}</td><td style="font-weight:600">${p.title}</td><td><div class="table-tags">${tags}</div></td><td><span class="table-status ${cls}">${p.status}</span></td><td style="font-family:'Fira Code',monospace">${p.sort_order??0}</td><td><div class="table-actions"><button class="btn btn-secondary btn-sm" onclick="openEditProject('${p.id}')"><i class="fas fa-pen"></i> Düzenle</button><button class="btn btn-danger btn-sm" onclick="openDeleteModal('${p.id}','${safeTitle}','project')"><i class="fas fa-trash"></i></button></div></td></tr>`;
-        });
-        html += '</tbody></table>';
-        body.innerHTML = html;
+        cachedProjects = data || [];
+        cntEl.textContent = cachedProjects.length;
+        updateKPIs();
+        renderProjectsTable();
     } catch (err) {
         body.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i><p>${err.message}</p></div>`;
     }
 }
+
+function renderProjectsTable() {
+    const body = document.getElementById('projectsListBody');
+    const q = (document.getElementById('adminProjSearch')?.value || '').toLowerCase().trim();
+    const stFilter = document.getElementById('adminProjStatusFilter')?.value || 'all';
+
+    const filtered = cachedProjects.filter(p => {
+        const matchStatus = stFilter === 'all' || p.status === stFilter;
+        const matchQuery = !q || (p.title || '').toLowerCase().includes(q) || (p.tags || []).some(t => t.toLowerCase().includes(q));
+        return matchStatus && matchQuery;
+    });
+
+    if (!filtered.length) {
+        body.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i><p>Gösterilecek proje bulunamadı.</p></div>';
+        return;
+    }
+
+    let html = `<table class="data-table"><thead><tr><th>#</th><th>Görsel</th><th>Başlık</th><th>Etiketler</th><th>Durum</th><th>Sıra</th><th>İşlem</th></tr></thead><tbody>`;
+    filtered.forEach((p, i) => {
+        const cls   = STATUS_CLS[p.status] || 'in-progress';
+        const tags  = (p.tags||[]).map(t=>`<span class="table-tag">${t}</span>`).join('');
+        const thumb = p.images?.length ? `<img src="${p.images[0]}" loading="lazy" style="width:44px;height:33px;object-fit:cover;border-radius:6px;border:1px solid var(--border-color)">` : '<i class="fas fa-image" style="color:var(--text-muted);font-size:1.25rem"></i>';
+        const safeTitle = p.title.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+        html += `
+            <tr>
+                <td style="color:var(--text-muted);font-family:'JetBrains Mono',monospace">${i+1}</td>
+                <td>${thumb}</td>
+                <td style="font-weight:600">${p.title}</td>
+                <td><div class="table-tags">${tags}</div></td>
+                <td><span class="table-status ${cls}">${p.status}</span></td>
+                <td>
+                    <div class="order-Controls">
+                        <span>${p.sort_order??0}</span>
+                        <button class="btn btn-secondary btn-xs" onclick="quickAdjustOrder('projects','${p.id}',${(p.sort_order??0)-1})" title="Sırayı Azalt">-</button>
+                        <button class="btn btn-secondary btn-xs" onclick="quickAdjustOrder('projects','${p.id}',${(p.sort_order??0)+1})" title="Sırayı Artır">+</button>
+                    </div>
+                </td>
+                <td>
+                    <div class="table-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="openEditProject('${p.id}')"><i class="fas fa-pen"></i> Düzenle</button>
+                        <button class="btn btn-secondary btn-sm" onclick="duplicateProject('${p.id}')" title="Projeyi Kopyala"><i class="fas fa-copy"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="openDeleteModal('${p.id}','${safeTitle}','project')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            </tr>`;
+    });
+    html += '</tbody></table>';
+    body.innerHTML = html;
+}
+
+document.getElementById('adminProjSearch')?.addEventListener('input', renderProjectsTable);
+document.getElementById('adminProjStatusFilter')?.addEventListener('change', renderProjectsTable);
 document.getElementById('refreshProjectsBtn').addEventListener('click', loadProjectsList);
+
+window.quickAdjustOrder = async function(table, id, newOrder) {
+    if (newOrder < 0) newOrder = 0;
+    try {
+        const { error } = await sb.from(table).update({ sort_order: newOrder }).eq('id', id);
+        if (error) throw error;
+        notifyToast('Sıralama güncellendi');
+        if (table === 'projects') loadProjectsList(); else loadSkillsList();
+    } catch (e) {
+        alert('Sıralama güncellenemedi: ' + e.message);
+    }
+};
+
+window.duplicateProject = async function(id) {
+    const orig = cachedProjects.find(p => String(p.id) === String(id));
+    if (!orig) return;
+    try {
+        const { error } = await sb.from('projects').insert([{
+            title: orig.title + ' (Kopya)',
+            status: orig.status,
+            tags: orig.tags || [],
+            sort_order: (orig.sort_order ?? 0) + 1,
+            description: orig.description || '',
+            images: orig.images || []
+        }]);
+        if (error) throw error;
+        notifyToast('Proje kopyalandı');
+        loadProjectsList();
+    } catch (e) {
+        alert('Kopyalama hatası: ' + e.message);
+    }
+};
 
 window.openEditProject = async function(id) {
     document.getElementById('editProjectError').style.display = document.getElementById('editProjectSuccess').style.display = 'none';
@@ -688,7 +1015,8 @@ document.getElementById('editProjectForm').addEventListener('submit', async (e) 
         }).eq('id', document.getElementById('editProjDocId').value);
         if (error) throw error;
         succEl.textContent = '✓ Güncellendi!'; succEl.style.display = 'block';
-        setTimeout(() => { closeModal('editProjectModal'); loadProjectsList(); }, 800);
+        notifyToast('Proje başarıyla güncellendi');
+        setTimeout(() => { closeModal('editProjectModal'); loadProjectsList(); }, 600);
     } catch (err) {
         errEl.textContent = err.message; errEl.style.display = 'block';
     } finally {
@@ -696,6 +1024,7 @@ document.getElementById('editProjectForm').addEventListener('submit', async (e) 
     }
 });
 
+/* --- SKILLS MANAGEMENT --- */
 document.getElementById('skillColorPicker').addEventListener('input', e => { document.getElementById('skillColor').value = e.target.value; });
 document.getElementById('skillColor').addEventListener('input', e => { if(/^#[0-9A-F]{6}$/i.test(e.target.value)) document.getElementById('skillColorPicker').value = e.target.value; });
 
@@ -717,6 +1046,7 @@ document.getElementById('skillForm').addEventListener('submit', async (e) => {
         }]);
         if (error) throw error;
         succEl.textContent = '✓ Yetenek eklendi!'; succEl.style.display = 'block';
+        notifyToast('Yeni yetenek eklendi');
         document.getElementById('skillForm').reset();
         document.getElementById('skillColorPicker').value = '#38BDF8';
         loadSkillsList();
@@ -734,20 +1064,48 @@ async function loadSkillsList() {
     try {
         const { data, error } = await sb.from('skills').select('*').order('sort_order');
         if (error) throw error;
-        cntEl.textContent = data.length;
-        if (!data.length) { body.innerHTML = '<div class="empty-state"><i class="fas fa-tools"></i><p>Henüz yetenek eklenmemiş.</p></div>'; return; }
-
-        let html = `<table class="data-table"><thead><tr><th>Sıra</th><th>İkon</th><th>Adı</th><th>Kategori</th><th>İşlem</th></tr></thead><tbody>`;
-        data.forEach(s => {
-            const safeName = s.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
-            html += `<tr><td style="font-family:'Fira Code',monospace">${s.sort_order??0}</td><td><div style="width:30px;height:30px;border-radius:6px;background:var(--bg-surface-hover);display:flex;align-items:center;justify-content:center;color:${s.color||'#fff'}">${s.icon_url ? `<img src="${s.icon_url}" style="max-width:20px;max-height:20px">`:'<i class="fas fa-cogs"></i>'}</div></td><td style="font-weight:600;color:${s.color||'inherit'}">${s.name}</td><td>${s.category||'-'}</td><td><div class="table-actions"><button class="btn btn-secondary btn-sm" onclick="openEditSkill('${s.id}')"><i class="fas fa-pen"></i> Düzenle</button><button class="btn btn-danger btn-sm" onclick="openDeleteModal('${s.id}','${safeName}','skill')"><i class="fas fa-trash"></i></button></div></td></tr>`;
-        });
-        html += '</tbody></table>';
-        body.innerHTML = html;
+        cachedSkills = data || [];
+        cntEl.textContent = cachedSkills.length;
+        updateKPIs();
+        renderSkillsTable();
     } catch (err) {
         body.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-triangle" style="color:var(--danger)"></i><p>${err.message}</p></div>`;
     }
 }
+
+function renderSkillsTable() {
+    const body = document.getElementById('skillsListBody');
+    const q = (document.getElementById('adminSkillSearch')?.value || '').toLowerCase().trim();
+    const filtered = cachedSkills.filter(s => !q || (s.name || '').toLowerCase().includes(q) || (s.category || '').toLowerCase().includes(q));
+
+    if (!filtered.length) {
+        body.innerHTML = '<div class="empty-state"><i class="fas fa-tools"></i><p>Gösterilecek yetenek bulunamadı.</p></div>';
+        return;
+    }
+
+    let html = `<table class="data-table"><thead><tr><th>Sıra</th><th>İkon</th><th>Adı</th><th>Kategori</th><th>İşlem</th></tr></thead><tbody>`;
+    filtered.forEach(s => {
+        const safeName = s.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+        html += `
+            <tr>
+                <td>
+                    <div class="order-Controls">
+                        <span>${s.sort_order??0}</span>
+                        <button class="btn btn-secondary btn-xs" onclick="quickAdjustOrder('skills','${s.id}',${(s.sort_order??0)-1})">-</button>
+                        <button class="btn btn-secondary btn-xs" onclick="quickAdjustOrder('skills','${s.id}',${(s.sort_order??0)+1})">+</button>
+                    </div>
+                </td>
+                <td><div style="width:32px;height:32px;border-radius:8px;background:var(--bg-surface-hover);display:flex;align-items:center;justify-content:center;color:${s.color||'#fff'}">${s.icon_url ? `<img src="${s.icon_url}" loading="lazy" style="max-width:20px;max-height:20px">`:'<i class="fas fa-cogs"></i>'}</div></td>
+                <td style="font-weight:600;color:${s.color||'inherit'}">${s.name}</td>
+                <td>${s.category||'-'}</td>
+                <td><div class="table-actions"><button class="btn btn-secondary btn-sm" onclick="openEditSkill('${s.id}')"><i class="fas fa-pen"></i> Düzenle</button><button class="btn btn-danger btn-sm" onclick="openDeleteModal('${s.id}','${safeName}','skill')"><i class="fas fa-trash"></i></button></div></td>
+            </tr>`;
+    });
+    html += '</tbody></table>';
+    body.innerHTML = html;
+}
+
+document.getElementById('adminSkillSearch')?.addEventListener('input', renderSkillsTable);
 document.getElementById('refreshSkillsBtn').addEventListener('click', loadSkillsList);
 
 window.openEditSkill = async function(id) {
@@ -780,10 +1138,12 @@ document.getElementById('editSkillForm').addEventListener('submit', async (e) =>
         }).eq('id', document.getElementById('editSkillDocId').value);
         if (error) throw error;
         succEl.textContent = '✓ Yetenek güncellendi!'; succEl.style.display = 'block';
-        setTimeout(() => { closeModal('editSkillModal'); loadSkillsList(); }, 800);
+        notifyToast('Yetenek güncellendi');
+        setTimeout(() => { closeModal('editSkillModal'); loadSkillsList(); }, 600);
     } catch (err) { errEl.textContent = err.message; errEl.style.display = 'block'; }
 });
 
+/* --- SITE CONTENT MANAGEMENT --- */
 let highlightList = [];
 
 function renderHighlightCards() {
@@ -791,7 +1151,7 @@ function renderHighlightCards() {
     container.innerHTML = '';
     highlightList.forEach((h, i) => {
         container.innerHTML += `
-            <div style="background:var(--bg-main);border:1px solid var(--border-color);border-radius:10px;padding:15px;margin-bottom:12px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:center">
+            <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:10px;padding:13px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:center">
                 <input type="text" class="form-control" placeholder="İkon (fas fa-drafting-compass)" value="${h.icon||''}" oninput="highlightList[${i}].icon=this.value" style="margin-bottom:0">
                 <input type="text" class="form-control" placeholder="Başlık" value="${h.title||''}" oninput="highlightList[${i}].title=this.value" style="margin-bottom:0">
                 <input type="text" class="form-control" placeholder="Alt Yazı" value="${h.sub||''}" oninput="highlightList[${i}].sub=this.value" style="margin-bottom:0">
@@ -859,6 +1219,7 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
 
         succ.textContent = '✓ Site içeriği başarıyla kaydedildi! Değişiklikler anasayfaya yansıdı.';
         succ.style.display = 'block';
+        notifyToast('Site içeriği güncellendi');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch(errObj) {
         err.textContent = errObj.message || 'Kayıt hatası.';
@@ -868,6 +1229,30 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
     }
 });
 
+/* --- JSON BACKUP EXPORT --- */
+document.getElementById('exportBackupBtn').addEventListener('click', async () => {
+    try {
+        const { data: contentData } = await sb.from('site_content').select('*');
+        const payload = {
+            exported_at: new Date().toISOString(),
+            projects: cachedProjects,
+            skills: cachedSkills,
+            site_content: contentData || []
+        };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `alican_karcili_portfolio_backup_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        notifyToast('JSON yedek dosyası indirildi');
+    } catch (e) {
+        alert('Yedek alınamadı: ' + e.message);
+    }
+});
+
+/* --- DELETE MODAL --- */
 window.openDeleteModal = function(id, name, type) {
     document.getElementById('deleteItemId').value   = id;
     document.getElementById('deleteItemType').value = type;
@@ -884,6 +1269,7 @@ document.getElementById('deleteConfirmBtn').addEventListener('click', async () =
         const { error } = await sb.from(type === 'project' ? 'projects' : 'skills').delete().eq('id', id);
         if (error) throw error;
         closeModal('deleteModal');
+        notifyToast('Kayıt silindi');
         if (type === 'project') loadProjectsList();
         if (type === 'skill')   loadSkillsList();
     } catch (err) { alert('Silme hatası: ' + err.message); }
