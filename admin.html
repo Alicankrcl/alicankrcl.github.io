@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel | Alican Karcılı Portfolyo</title>
+    <title>Admin Panel | Alican Karcılı Mühendislik Portfolyosu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -243,10 +243,13 @@
         <div class="brand">
             <div class="brand-icon">AK</div>
             <h2><span class="gradient-text">Portfolyo Admin</span></h2>
-            <span class="badge">v3.0 PRO</span>
+            <span class="badge">v4.0 KURUMSAL</span>
         </div>
         <div class="header-actions">
             <span class="user-email" id="adminEmail"></span>
+            <button class="btn btn-secondary btn-sm" id="syncCorporateBtn" title="Kurumsal 4 Proje ve Metinleri Veritabanına Eşitle">
+                <i class="fas fa-wand-magic-sparkles"></i> Kurumsal Verileri Eşitle
+            </button>
             <button class="btn btn-secondary btn-sm" id="exportBackupBtn" title="Tüm Verileri JSON Olarak İndir">
                 <i class="fas fa-download"></i> JSON Yedek Al
             </button>
@@ -274,7 +277,7 @@
             </div>
             <div class="kpi-card">
                 <div class="kpi-info">
-                    <span>Kayıtlı Yetenek</span>
+                    <span>Kayıtlı Yetkinlik</span>
                     <h4 id="kpiTotalSkills">0</h4>
                 </div>
                 <div class="kpi-icon" style="color:#3B82F6;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.25)"><i class="fas fa-microchip"></i></div>
@@ -290,8 +293,8 @@
 
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="projects"><i class="fas fa-rocket"></i> Projeler</button>
-            <button class="admin-tab" data-tab="skills"><i class="fas fa-tools"></i> Yetenekler</button>
-            <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği</button>
+            <button class="admin-tab" data-tab="skills"><i class="fas fa-tools"></i> Yetkinlikler</button>
+            <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği &amp; CV</button>
         </div>
 
         <!-- TAB 1: PROJECTS -->
@@ -308,7 +311,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Proje Başlığı *</label>
-                                <input type="text" id="projTitle" class="form-control" placeholder="Örn. Go-Kart Şasi Tasarımı" required>
+                                <input type="text" id="projTitle" class="form-control" placeholder="Örn. PAÜTECH Hidromobil — Aerodinamik Dış Kabuk Tasarımı" required>
                             </div>
                             <div class="form-group">
                                 <label>Proje Durumu *</label>
@@ -316,6 +319,7 @@
                                     <option value="">Durum Seçin</option>
                                     <option value="Tamamlandı">Tamamlandı</option>
                                     <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
+                                    <option value="Devam Eden Ar-Ge">Devam Eden Ar-Ge</option>
                                     <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
                                     <option value="Devam Ediyor">Devam Ediyor</option>
                                     <option value="İmalatta">İmalatta</option>
@@ -325,7 +329,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Etiketler (Virgülle Ayırın)</label>
-                                <input type="text" id="projTags" class="form-control" placeholder="SolidWorks, Kinematik, FEA">
+                                <input type="text" id="projTags" class="form-control" placeholder="CATIA V5, ANSYS Mechanical, FEA">
                             </div>
                             <div class="form-group">
                                 <label>Sıralama Değeri *</label>
@@ -333,8 +337,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Detaylı Açıklama *</label>
-                            <textarea id="projDesc" class="form-control" placeholder="Projenin teknik detaylarını, sınır şartlarını ve sonuçlarını açıklayın..." required></textarea>
+                            <label>Proje Açıklaması (Kart Özeti + Teknik Detay) *</label>
+                            <textarea id="projDesc" class="form-control" placeholder="İlk paragraf kart üzerinde özet olarak görünür, devamı ise Teknik Detay penceresinde gösterilir..." required></textarea>
                         </div>
                         <div class="form-group">
                             <label>
@@ -366,11 +370,11 @@
                             </div>
                             <div class="preview-project-body">
                                 <div class="preview-tags" id="livePreviewTags">
-                                    <span class="preview-tag">SolidWorks</span>
-                                    <span class="preview-tag">FEA</span>
+                                    <span class="preview-tag">CATIA V5</span>
+                                    <span class="preview-tag">ANSYS Mechanical</span>
                                 </div>
                                 <h4 id="livePreviewTitle" style="font-size:0.96rem;margin-bottom:6px">Örnek Proje Başlığı</h4>
-                                <p id="livePreviewDesc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.</p>
+                                <p id="livePreviewDesc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;line-height:1.6">Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.</p>
                                 <div style="border-top:1px solid var(--border-color);padding-top:10px">
                                     <span class="table-status design-verified" id="livePreviewStatus">Tasarım Doğrulandı</span>
                                 </div>
@@ -389,6 +393,7 @@
                             <option value="all">Tüm Durumlar</option>
                             <option value="Tamamlandı">Tamamlandı</option>
                             <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
+                            <option value="Devam Eden Ar-Ge">Devam Eden Ar-Ge</option>
                             <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
                             <option value="Devam Ediyor">Devam Ediyor</option>
                             <option value="İmalatta">İmalatta</option>
@@ -404,18 +409,18 @@
         <div class="tab-content" id="tab-skills">
             <div class="admin-card">
                 <div class="admin-card-header">
-                    <h3><i class="fas fa-plus-circle"></i> Yeni Yetenek Ekle</h3>
+                    <h3><i class="fas fa-plus-circle"></i> Yeni Yetkinlik Ekle</h3>
                 </div>
                 <div class="alert alert-success" id="addSkillSuccess"></div>
                 <div class="alert alert-error" id="addSkillError"></div>
                 <form id="skillForm">
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Yetenek / Program Adı *</label>
-                            <input type="text" id="skillName" class="form-control" placeholder="Örn. ANSYS, SolidWorks, Python" required>
+                            <label>Yetkinlik / Yazılım Adı *</label>
+                            <input type="text" id="skillName" class="form-control" placeholder="Örn. CATIA V5, ANSYS Mechanical, SolidWorks" required>
                         </div>
                         <div class="form-group">
-                            <label>Uzmanlık / Açıklama *</label>
+                            <label>Uzmanlık / Modül Açıklaması *</label>
                             <input type="text" id="skillCategory" class="form-control" placeholder="Örn. Sonlu Elemanlar Analizi (FEA)" required>
                         </div>
                     </div>
@@ -439,7 +444,7 @@
                         </div>
                         <div class="form-group" style="display:flex;align-items:flex-end">
                             <button type="submit" class="btn btn-primary btn-full" id="submitSkillBtn">
-                                <i class="fas fa-save"></i> Yeteneği Kaydet
+                                <i class="fas fa-save"></i> Yetkinliği Kaydet
                             </button>
                         </div>
                     </div>
@@ -448,9 +453,9 @@
 
             <div class="table-wrapper">
                 <div class="table-header">
-                    <h3><i class="fas fa-tools" style="color:var(--primary)"></i> Kayıtlı Yetenekler <span class="count" id="skillCount">0</span></h3>
+                    <h3><i class="fas fa-tools" style="color:var(--primary)"></i> Kayıtlı Yetkinlikler <span class="count" id="skillCount">0</span></h3>
                     <div class="table-controls">
-                        <input type="text" id="adminSkillSearch" class="table-search" placeholder="Yetenek veya kategori ara...">
+                        <input type="text" id="adminSkillSearch" class="table-search" placeholder="Yetkinlik veya açıklama ara...">
                         <button class="btn btn-secondary btn-sm" id="refreshSkillsBtn"><i class="fas fa-sync-alt"></i> Yenile</button>
                     </div>
                 </div>
@@ -462,30 +467,49 @@
         <div class="tab-content" id="tab-content">
             <div class="admin-card">
                 <div class="admin-card-header">
-                    <h3><i class="fas fa-user-pen"></i> Hakkımda &amp; İletişim Bölümü Yönetimi</h3>
+                    <h3><i class="fas fa-user-pen"></i> Kurumsal İçerik, CV &amp; İletişim Yönetimi</h3>
                 </div>
                 <div class="alert alert-success" id="contentSuccess"></div>
                 <div class="alert alert-error" id="contentError"></div>
 
                 <form id="contentForm">
                     <div class="content-section">
-                        <h4><i class="fas fa-heading"></i> Hero Başlık</h4>
-                        <div class="form-group" style="margin-bottom:0">
-                            <label>Ana Başlık (Büyük Yazı)</label>
-                            <input type="text" id="heroTitle" class="form-control" placeholder="Mühendislik Öğrencisi & Tasarım Tutkunu">
+                        <h4><i class="fas fa-heading"></i> Hero Bölümü &amp; Özgeçmiş (CV PDF)</h4>
+                        <div class="form-group">
+                            <label>Hero Ana Başlık</label>
+                            <input type="text" id="heroTitle" class="form-control" placeholder="Mekanik Tasarım & Yapısal Analiz Portfolyosu">
+                        </div>
+                        <div class="form-group">
+                            <label>Hero Alt Açıklama Metni</label>
+                            <textarea id="heroDesc" class="form-control" style="min-height:85px" placeholder="Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="margin-bottom:0">
+                                <label>CV (PDF) Dosya Bağlantısı</label>
+                                <input type="text" id="cvUrl" class="form-control" placeholder="cv.pdf veya Supabase PDF bağlantısı">
+                            </div>
+                            <div class="form-group" style="margin-bottom:0">
+                                <label>Bilgisayardan CV (PDF) Yükle</label>
+                                <div style="display:flex;gap:8px;align-items:center">
+                                    <input type="file" id="cvFileInput" accept=".pdf,application/pdf" class="form-control" style="padding:7px 10px">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="uploadCvBtn" style="white-space:nowrap;padding:11px 14px">
+                                        <i class="fas fa-file-upload"></i> PDF Yükle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="content-section">
                         <h4><i class="fas fa-paragraph"></i> Hakkımda Paragrafları</h4>
                         <div class="form-group">
-                            <label>1. Paragraf</label>
+                            <label>1. Paragraf (Mühendislik Odağı &amp; PAÜTECH Hidromobil)</label>
                             <textarea id="aboutP1" class="form-control" style="min-height:115px" placeholder="CAD ve mühendislik deneyimlerinizi anlatın..."></textarea>
                             <div class="char-count" id="p1Count">0 karakter</div>
                         </div>
                         <div class="form-group" style="margin-bottom:0">
-                            <label>2. Paragraf</label>
-                            <textarea id="aboutP2" class="form-control" style="min-height:115px" placeholder="Mekatronik, yazılım ve hedeflerinizi anlatın..."></textarea>
+                            <label>2. Paragraf (Yazılım Yetkinlikleri &amp; Kariyer Hedefi)</label>
+                            <textarea id="aboutP2" class="form-control" style="min-height:115px" placeholder="Tasarım ve doğrulama hedeflerinizi anlatın..."></textarea>
                             <div class="char-count" id="p2Count">0 karakter</div>
                         </div>
                     </div>
@@ -495,16 +519,16 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>E-Posta Adresi</label>
-                                <input type="email" id="contactEmail" class="form-control" placeholder="ornek@gmail.com">
+                                <input type="email" id="contactEmail" class="form-control" placeholder="alicankarcili20@gmail.com">
                             </div>
                             <div class="form-group">
                                 <label>LinkedIn URL</label>
-                                <input type="url" id="contactLinkedin" class="form-control" placeholder="https://linkedin.com/in/...">
+                                <input type="url" id="contactLinkedin" class="form-control" placeholder="https://www.linkedin.com/in/alican-karcılı-772b78364/">
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom:0">
                             <label>İletişim Bölümü Alt Yazısı</label>
-                            <textarea id="contactText" class="form-control" style="min-height:85px" placeholder="Ziyaretçilere göstermek istediğiniz kısa mesaj..."></textarea>
+                            <textarea id="contactText" class="form-control" style="min-height:85px" placeholder="Savunma sanayii ve otomotiv Ar-Ge staj programları..."></textarea>
                         </div>
                     </div>
 
@@ -546,6 +570,7 @@
                     <select id="editProjStatus" class="form-control" required>
                         <option value="Tamamlandı">Tamamlandı</option>
                         <option value="Tasarım Doğrulandı">Tasarım Doğrulandı</option>
+                        <option value="Devam Eden Ar-Ge">Devam Eden Ar-Ge</option>
                         <option value="Geliştirme Aşamasında">Geliştirme Aşamasında</option>
                         <option value="Devam Ediyor">Devam Ediyor</option>
                         <option value="İmalatta">İmalatta</option>
@@ -563,7 +588,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label>Detaylı Açıklama *</label>
+                <label>Proje Açıklaması *</label>
                 <textarea id="editProjDesc" class="form-control" required></textarea>
             </div>
             <div class="form-group">
@@ -590,7 +615,7 @@
 <div class="modal-overlay" id="editSkillModal">
     <div class="modal">
         <div class="modal-header">
-            <h3><i class="fas fa-pen" style="color:var(--primary)"></i> Yetenek Düzenle</h3>
+            <h3><i class="fas fa-pen" style="color:var(--primary)"></i> Yetkinlik Düzenle</h3>
             <button class="modal-close" onclick="closeModal('editSkillModal')"><i class="fas fa-times"></i></button>
         </div>
         <div class="alert alert-error" id="editSkillError"></div>
@@ -599,7 +624,7 @@
             <input type="hidden" id="editSkillDocId">
             <div class="form-row">
                 <div class="form-group">
-                    <label>Yetenek Adı *</label>
+                    <label>Yetkinlik Adı *</label>
                     <input type="text" id="editSkillName" class="form-control" required>
                 </div>
                 <div class="form-group">
@@ -661,12 +686,36 @@ const adminPanel  = document.getElementById('adminPanel');
 let cachedProjects = [];
 let cachedSkills   = [];
 
+/* --- CORPORATE V4 DEFAULTS --- */
+const CORPORATE_DEFAULTS = {
+    hero_title: 'Mekanik Tasarım & Yapısal Analiz Portfolyosu',
+    hero_desc: 'Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim. CATIA V5 ve SolidWorks ile mekanik sistem ve A-sınıfı yüzey tasarımları geliştiriyor, ANSYS Mechanical ile yapısal doğrulama analizleri yürütüyorum.',
+    cv_url: 'cv.pdf',
+    about_p1: 'Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi olarak; mekanik sistem tasarımı, A-sınıfı (Class-A) yüzey modelleme ve sonlu elemanlar analizi (FEA) alanlarında mühendislik çözümleri geliştiriyorum. PAÜTECH Hidromobil Takımı bünyesinde aerodinamik dış kabuk tasarımı sorumluluğu üstlenerek, düşük sürükleme katsayısı (Cd) ve kalıplanabilirlik kriterlerine uygun Ar-Ge çalışmaları yürütüyorum.',
+    about_p2: 'Tasarım süreçlerinde CATIA V5 (Generative Shape Design, Part & Assembly Design) ve SolidWorks (3D Sketch, Weldments) modüllerini etkin şekilde kullanıyor; geliştirdiğim mekanik bileşenlerin statik, gerilme ve yorulma doğrulamalarını ANSYS Mechanical ortamında gerçekleştiriyorum. Savunma sanayii ve otomotiv Ar-Ge projelerinde tasarım ile doğrulama süreçlerini bütünleşik yürüten bir mühendis olarak değer üretmeyi hedefliyorum.',
+    contact_email: 'alicankarcili20@gmail.com',
+    contact_linkedin: 'https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/',
+    contact_text: 'Savunma sanayii ve otomotiv Ar-Ge staj programları, mekanik tasarım projeleri veya yapısal analiz çalışmaları hakkında doğrudan iletişime geçebilirsiniz.',
+    highlights: [
+        {
+            icon: 'fas fa-cube',
+            title: 'Mekanik Tasarım & FEA Uygulamaları',
+            sub: 'CATIA V5 & SolidWorks ile 3B modelleme, ANSYS Mechanical ile yapısal doğrulama'
+        },
+        {
+            icon: 'fas fa-wind',
+            title: 'PAÜTECH Hidromobil — Kabuk Ar-Ge',
+            sub: 'Yarış aracı aerodinamik dış kabuk tasarımı ve G1/G2 yüzey sürekliliği geliştirme'
+        }
+    ]
+};
+
 function notifyToast(msg) {
     const t = document.getElementById('adminToast');
     document.getElementById('adminToastText').textContent = msg;
     t.classList.add('show');
     clearTimeout(window._admToast);
-    window._admToast = setTimeout(() => t.classList.remove('show'), 2600);
+    window._admToast = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 (async () => {
@@ -678,10 +727,11 @@ sb.auth.onAuthStateChange((_, session) => {
     if (session) showAdmin(session.user); else showLogin();
 });
 
-function showAdmin(user) {
+async function showAdmin(user) {
     loginScreen.style.display = 'none';
     adminPanel.style.display  = 'block';
     document.getElementById('adminEmail').textContent = user.email;
+    await autoEnsureCorporateData();
     loadProjectsList();
     loadSkillsList();
     loadContentForm();
@@ -690,6 +740,88 @@ function showLogin() {
     loginScreen.style.display = 'flex';
     adminPanel.style.display  = 'none';
 }
+
+/* --- AUTO-SYNC CORPORATE PROJECTS & DESCRIPTIONS TO SUPABASE --- */
+async function syncCorporateDatabase(forceContent = false) {
+    try {
+        const { data: existingProjects } = await sb.from('projects').select('*');
+        const list = existingProjects || [];
+
+        // 1. Update Audi R8 & Go-Kart descriptions so they don't repeat title on line 1
+        for (const p of list) {
+            const t = (p.title || '').toLowerCase();
+            if (t.includes('audi r8') && (p.description || '').toLowerCase().startsWith('audi r8')) {
+                const cleanAudiDesc = `CATIA V5 Generative Shape Design (GSD) modülü kullanılarak G1/G2 yüzey sürekliliği kriterlerine uygun şekilde sıfırdan modellenen aerodinamik dış kabuk geometrisi.\n\nProje kapsamında referans blueprint'ler (ön, üst, yan ve arka görünüşler) uzaysal düzlemlere ölçeklendirilerek yerleştirilmiş, ana karakter hatları 3D spline eğrileri ile oluşturulmuştur. Multi-sections surface, sweep ve blend komutları kullanılarak yüzey geçişlerindeki teğetsellik (G1) ve eğrilik (G2) süreklilikleri korunmuştur.\n\nSimetri düzlemi üzerinden yürütülen yarı-model çalışması birleştirilerek kaput, tavan, yan hava kanalları ve çamurluk geçişlerini içeren bütünsel aerodinamik dış kabuk formu elde edilmiştir.`;
+                await sb.from('projects').update({ description: cleanAudiDesc, sort_order: 1 }).eq('id', p.id);
+            }
+            if (t.includes('go-kart') && (p.description || '').toLowerCase().startsWith('space frame')) {
+                const cleanKartDesc = `Yüksek burulma rijitliği ve düşük kütle hedefleri doğrultusunda SolidWorks 3D Sketch ve Weldments modülleriyle tasarlanan boru uzay kafes (space frame) şasi mimarisi.\n\nŞasi geometrisi, sürücü ergonomisi, ağırlık merkezi dağılımı ve ön/arka aks iz genişliği kriterleri referans alınarak 3 boyutlu eskiz (3D Sketch) ortamında kurgulanmıştır. SolidWorks Weldments modülü kullanılarak dairesel kesitli çelik profiller atanmış; düğüm noktalarındaki boru birleşim ve budama (trim/extend) işlemleri imalata uygun şekilde tanımlanmıştır.\n\nTasarım sürecinde şasinin yanal viraj yükleri ve frenleme kuvvetleri altındaki yük iletim yolları optimize edilerek burulma direnci yüksek bir kafes yapı oluşturulmuştur.`;
+                await sb.from('projects').update({ description: cleanKartDesc, sort_order: 2 }).eq('id', p.id);
+            }
+        }
+
+        // 2. Ensure Project 3 (PAÜTECH Hidromobil) exists
+        const hasPautech = list.some(p => (p.title || '').toLowerCase().includes('hidromobil'));
+        if (!hasPautech) {
+            await sb.from('projects').insert([{
+                title: 'PAÜTECH Hidromobil — Aerodinamik Dış Kabuk Tasarımı',
+                status: 'Devam Eden Ar-Ge',
+                tags: ['CATIA GSD', 'Aerodinamik', 'Kabuk Tasarımı', 'PAÜTECH'],
+                description: 'PAÜTECH Hidromobil yarış aracı için düşük sürükleme katsayısı (Cd) ve üretim kalıplamasına uygunluk kriterleriyle yürütülen dış kabuk yüzey modelleme çalışması.',
+                images: [],
+                sort_order: 3
+            }]);
+        }
+
+        // 3. Ensure Project 4 (Piston - Biyel Kolu FEA) exists
+        const hasPiston = list.some(p => (p.title || '').toLowerCase().includes('piston'));
+        if (!hasPiston) {
+            await sb.from('projects').insert([{
+                title: 'Piston - Biyel Kolu Mekanizması CAD & Yapısal Analiz (FEA)',
+                status: 'Devam Eden Ar-Ge',
+                tags: ['CATIA V5', 'ANSYS Mechanical', 'FEA', 'İçten Yanmalı Motor'],
+                description: '4 zamanlı motor piston-biyel kolu mekanizmasının 3B katı modellemesi ve maksimum yanma basıncı ile atalet yükleri altında ANSYS Mechanical gerilme/yorulma analizi.',
+                images: [],
+                sort_order: 4
+            }]);
+        }
+
+        // 4. Sync corporate site_content if not yet v4_corporate or if forced
+        const { data: scData } = await sb.from('site_content').select('*');
+        const scMap = {};
+        (scData || []).forEach(r => { scMap[r.key] = r.value; });
+
+        if (forceContent || scMap.content_version !== 'v4_corporate') {
+            await upsertContent('content_version', 'v4_corporate');
+            await upsertContent('hero_title', CORPORATE_DEFAULTS.hero_title);
+            await upsertContent('hero_desc', CORPORATE_DEFAULTS.hero_desc);
+            await upsertContent('about_p1', CORPORATE_DEFAULTS.about_p1);
+            await upsertContent('about_p2', CORPORATE_DEFAULTS.about_p2);
+            await upsertContent('contact_email', CORPORATE_DEFAULTS.contact_email);
+            await upsertContent('contact_linkedin', CORPORATE_DEFAULTS.contact_linkedin);
+            await upsertContent('contact_text', CORPORATE_DEFAULTS.contact_text);
+            await upsertContent('highlights', JSON.stringify(CORPORATE_DEFAULTS.highlights));
+        }
+    } catch (e) {
+        console.log('Sync info:', e.message);
+    }
+}
+
+async function autoEnsureCorporateData() {
+    await syncCorporateDatabase(false);
+}
+
+document.getElementById('syncCorporateBtn').addEventListener('click', async () => {
+    const btn = document.getElementById('syncCorporateBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Eşitleniyor...';
+    await syncCorporateDatabase(true);
+    await loadProjectsList();
+    await loadContentForm();
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Kurumsal Verileri Eşitle';
+    notifyToast('4 Proje ve kurumsal metinler Supabase ile eşitlendi!');
+});
 
 function updateKPIs() {
     document.getElementById('kpiTotalProjects').textContent = cachedProjects.length;
@@ -733,22 +865,30 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
 });
 
 /* --- LIVE PREVIEW UPDATER --- */
-const STATUS_CLS = { 'Tamamlandı':'completed','Tasarım Doğrulandı':'design-verified','Geliştirme Aşamasında':'in-progress','Devam Ediyor':'in-progress','İmalatta':'manufacturing' };
+const STATUS_CLS = {
+    'Tamamlandı': 'completed',
+    'Tasarım Doğrulandı': 'design-verified',
+    'Devam Eden Ar-Ge': 'in-progress',
+    'Geliştirme Aşamasında': 'in-progress',
+    'Devam Ediyor': 'in-progress',
+    'İmalatta': 'manufacturing'
+};
 
 function updateLiveProjectPreview() {
     const title = document.getElementById('projTitle').value.trim() || 'Örnek Proje Başlığı';
     const status = document.getElementById('projStatus').value || 'Tasarım Doğrulandı';
     const tagsRaw = document.getElementById('projTags').value;
-    const desc = document.getElementById('projDesc').value.trim() || 'Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.';
+    const descRaw = document.getElementById('projDesc').value.trim();
+    const firstParagraph = descRaw ? descRaw.split('\n').filter(Boolean)[0] : 'Proje açıklaması girdiğinizde burada gerçek zamanlı olarak nasıl görüneceğini inceleyebilirsiniz.';
 
     document.getElementById('livePreviewTitle').textContent = title;
-    document.getElementById('livePreviewDesc').textContent = desc;
+    document.getElementById('livePreviewDesc').textContent = firstParagraph;
     const stEl = document.getElementById('livePreviewStatus');
     stEl.textContent = status;
     stEl.className = 'table-status ' + (STATUS_CLS[status] || 'in-progress');
 
     const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean);
-    document.getElementById('livePreviewTags').innerHTML = (tags.length ? tags : ['SolidWorks', 'FEA'])
+    document.getElementById('livePreviewTags').innerHTML = (tags.length ? tags : ['CATIA V5', 'ANSYS Mechanical'])
         .map(t => `<span class="preview-tag">${t}</span>`).join('');
 }
 ['projTitle', 'projStatus', 'projTags', 'projDesc'].forEach(id => {
@@ -911,7 +1051,7 @@ function renderProjectsTable() {
     filtered.forEach((p, i) => {
         const cls   = STATUS_CLS[p.status] || 'in-progress';
         const tags  = (p.tags||[]).map(t=>`<span class="table-tag">${t}</span>`).join('');
-        const thumb = p.images?.length ? `<img src="${p.images[0]}" loading="lazy" style="width:44px;height:33px;object-fit:cover;border-radius:6px;border:1px solid var(--border-color)">` : '<i class="fas fa-image" style="color:var(--text-muted);font-size:1.25rem"></i>';
+        const thumb = p.images?.length ? `<img src="${p.images[0]}" loading="lazy" style="width:44px;height:33px;object-fit:cover;border-radius:6px;border:1px solid var(--border-color)">` : '<i class="fas fa-drafting-compass" style="color:var(--primary);font-size:1.15rem"></i>';
         const safeTitle = p.title.replace(/'/g,"\\'").replace(/"/g,'&quot;');
         html += `
             <tr>
@@ -983,7 +1123,7 @@ window.openEditProject = async function(id) {
         if (error) throw error;
         document.getElementById('editProjDocId').value  = data.id;
         document.getElementById('editProjTitle').value  = data.title || '';
-        document.getElementById('editProjStatus').value = data.status || 'Devam Ediyor';
+        document.getElementById('editProjStatus').value = data.status || 'Devam Eden Ar-Ge';
         document.getElementById('editProjTags').value   = (data.tags||[]).join(', ');
         document.getElementById('editProjOrder').value  = data.sort_order ?? 0;
         document.getElementById('editProjDesc').value   = data.description || '';
@@ -1045,15 +1185,15 @@ document.getElementById('skillForm').addEventListener('submit', async (e) => {
             sort_order: +document.getElementById('skillOrder').value || 0
         }]);
         if (error) throw error;
-        succEl.textContent = '✓ Yetenek eklendi!'; succEl.style.display = 'block';
-        notifyToast('Yeni yetenek eklendi');
+        succEl.textContent = '✓ Yetkinlik eklendi!'; succEl.style.display = 'block';
+        notifyToast('Yeni yetkinlik eklendi');
         document.getElementById('skillForm').reset();
         document.getElementById('skillColorPicker').value = '#38BDF8';
         loadSkillsList();
     } catch (err) {
         errEl.textContent = err.message; errEl.style.display = 'block';
     } finally {
-        btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Yeteneği Kaydet';
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Yetkinliği Kaydet';
     }
 });
 
@@ -1079,11 +1219,11 @@ function renderSkillsTable() {
     const filtered = cachedSkills.filter(s => !q || (s.name || '').toLowerCase().includes(q) || (s.category || '').toLowerCase().includes(q));
 
     if (!filtered.length) {
-        body.innerHTML = '<div class="empty-state"><i class="fas fa-tools"></i><p>Gösterilecek yetenek bulunamadı.</p></div>';
+        body.innerHTML = '<div class="empty-state"><i class="fas fa-tools"></i><p>Gösterilecek yetkinlik bulunamadı.</p></div>';
         return;
     }
 
-    let html = `<table class="data-table"><thead><tr><th>Sıra</th><th>İkon</th><th>Adı</th><th>Kategori</th><th>İşlem</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>Sıra</th><th>İkon</th><th>Adı</th><th>Kategori / Modül</th><th>İşlem</th></tr></thead><tbody>`;
     filtered.forEach(s => {
         const safeName = s.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
         html += `
@@ -1137,13 +1277,13 @@ document.getElementById('editSkillForm').addEventListener('submit', async (e) =>
             sort_order: +document.getElementById('editSkillOrder').value || 0
         }).eq('id', document.getElementById('editSkillDocId').value);
         if (error) throw error;
-        succEl.textContent = '✓ Yetenek güncellendi!'; succEl.style.display = 'block';
-        notifyToast('Yetenek güncellendi');
+        succEl.textContent = '✓ Yetkinlik güncellendi!'; succEl.style.display = 'block';
+        notifyToast('Yetkinlik güncellendi');
         setTimeout(() => { closeModal('editSkillModal'); loadSkillsList(); }, 600);
     } catch (err) { errEl.textContent = err.message; errEl.style.display = 'block'; }
 });
 
-/* --- SITE CONTENT MANAGEMENT --- */
+/* --- SITE CONTENT & CV UPLOAD MANAGEMENT --- */
 let highlightList = [];
 
 function renderHighlightCards() {
@@ -1152,7 +1292,7 @@ function renderHighlightCards() {
     highlightList.forEach((h, i) => {
         container.innerHTML += `
             <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:10px;padding:13px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:center">
-                <input type="text" class="form-control" placeholder="İkon (fas fa-drafting-compass)" value="${h.icon||''}" oninput="highlightList[${i}].icon=this.value" style="margin-bottom:0">
+                <input type="text" class="form-control" placeholder="İkon (fas fa-cube)" value="${h.icon||''}" oninput="highlightList[${i}].icon=this.value" style="margin-bottom:0">
                 <input type="text" class="form-control" placeholder="Başlık" value="${h.title||''}" oninput="highlightList[${i}].title=this.value" style="margin-bottom:0">
                 <input type="text" class="form-control" placeholder="Alt Yazı" value="${h.sub||''}" oninput="highlightList[${i}].sub=this.value" style="margin-bottom:0">
                 <button type="button" class="btn btn-danger btn-sm" onclick="removeHighlight(${i})"><i class="fas fa-trash"></i></button>
@@ -1162,7 +1302,7 @@ function renderHighlightCards() {
 
 window.removeHighlight = function(i) { highlightList.splice(i,1); renderHighlightCards(); };
 document.getElementById('addHighlightBtn').addEventListener('click', () => {
-    highlightList.push({ icon:'fas fa-star', title:'', sub:'' });
+    highlightList.push({ icon:'fas fa-cube', title:'', sub:'' });
     renderHighlightCards();
 });
 
@@ -1172,20 +1312,54 @@ document.getElementById('addHighlightBtn').addEventListener('click', () => {
     });
 });
 
+document.getElementById('uploadCvBtn').addEventListener('click', async () => {
+    const fileInput = document.getElementById('cvFileInput');
+    if (!fileInput.files || !fileInput.files.length) {
+        alert('Lütfen önce bir PDF dosyası seçin.');
+        return;
+    }
+    const file = fileInput.files[0];
+    const btn = document.getElementById('uploadCvBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yükleniyor...';
+    try {
+        const path = `cv/Alican_Karcili_CV_${Date.now()}.pdf`;
+        const { error } = await sb.storage.from('portfolio').upload(path, file, { cacheControl: '3600', upsert: true });
+        if (error) throw error;
+        const { data: { publicUrl } } = sb.storage.from('portfolio').getPublicUrl(path);
+        document.getElementById('cvUrl').value = publicUrl;
+        await upsertContent('cv_url', publicUrl);
+        notifyToast('CV PDF yüklendi ve kaydedildi!');
+    } catch (err) {
+        alert('CV yükleme hatası: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-file-upload"></i> PDF Yükle';
+    }
+});
+
 async function loadContentForm() {
     try {
         const { data } = await sb.from('site_content').select('*');
-        if (!data) return;
         const map = {};
-        data.forEach(row => { map[row.key] = row.value; });
+        (data || []).forEach(row => { map[row.key] = row.value; });
 
-        if (map.hero_title)      document.getElementById('heroTitle').value       = map.hero_title;
-        if (map.about_p1)        document.getElementById('aboutP1').value         = map.about_p1;
-        if (map.about_p2)        document.getElementById('aboutP2').value         = map.about_p2;
-        if (map.contact_email)   document.getElementById('contactEmail').value    = map.contact_email;
-        if (map.contact_linkedin)document.getElementById('contactLinkedin').value = map.contact_linkedin;
-        if (map.contact_text)    document.getElementById('contactText').value     = map.contact_text;
-        if (map.highlights)      { highlightList = JSON.parse(map.highlights); renderHighlightCards(); }
+        const isV4 = map.content_version === 'v4_corporate';
+        document.getElementById('heroTitle').value       = (isV4 && map.hero_title)       ? map.hero_title       : CORPORATE_DEFAULTS.hero_title;
+        document.getElementById('heroDesc').value        = (isV4 && map.hero_desc)        ? map.hero_desc        : CORPORATE_DEFAULTS.hero_desc;
+        document.getElementById('cvUrl').value           = map.cv_url || CORPORATE_DEFAULTS.cv_url;
+        document.getElementById('aboutP1').value         = (isV4 && map.about_p1)         ? map.about_p1         : CORPORATE_DEFAULTS.about_p1;
+        document.getElementById('aboutP2').value         = (isV4 && map.about_p2)         ? map.about_p2         : CORPORATE_DEFAULTS.about_p2;
+        document.getElementById('contactEmail').value    = map.contact_email    || CORPORATE_DEFAULTS.contact_email;
+        document.getElementById('contactLinkedin').value = map.contact_linkedin || CORPORATE_DEFAULTS.contact_linkedin;
+        document.getElementById('contactText').value     = (isV4 && map.contact_text)     ? map.contact_text     : CORPORATE_DEFAULTS.contact_text;
+
+        if (isV4 && map.highlights) {
+            try { highlightList = JSON.parse(map.highlights); } catch(e) { highlightList = [...CORPORATE_DEFAULTS.highlights]; }
+        } else {
+            highlightList = [...CORPORATE_DEFAULTS.highlights];
+        }
+        renderHighlightCards();
 
         ['aboutP1','aboutP2'].forEach((id,i) => {
             document.getElementById(['p1Count','p2Count'][i]).textContent = document.getElementById(id).value.length + ' karakter';
@@ -1209,7 +1383,10 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
     btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kaydediliyor...';
 
     try {
+        await upsertContent('content_version',  'v4_corporate');
         await upsertContent('hero_title',       document.getElementById('heroTitle').value.trim());
+        await upsertContent('hero_desc',        document.getElementById('heroDesc').value.trim());
+        await upsertContent('cv_url',           document.getElementById('cvUrl').value.trim() || 'cv.pdf');
         await upsertContent('about_p1',         document.getElementById('aboutP1').value.trim());
         await upsertContent('about_p2',         document.getElementById('aboutP2').value.trim());
         await upsertContent('contact_email',    document.getElementById('contactEmail').value.trim());
