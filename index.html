@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alican Karcılı | Mühendislik Portfolyosu</title>
-    <meta name="description" content="Alican Karcılı - Otomotiv Mühendisliği öğrencisi. Yapısal analiz (FEA), Hesaplamalı Akışkanlar Dinamiği (CFD), Termal Sistemler ve CAD Tasarım Portfolyosu.">
+    <title>Alican Karcılı | Otomotiv Mühendisliği — Mekanik Tasarım & Yapısal Analiz</title>
+    <meta name="description" content="Alican Karcılı - Otomotiv Mühendisliği portfolyosu. CATIA V5 & SolidWorks ile ileri yüzey ve mekanik sistem tasarımı, ANSYS Mechanical ile yapısal analiz (FEA) ve PAÜTECH Hidromobil aerodinamik kabuk Ar-Ge çalışmaları.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- GPU-OPTIMIZED DARK & LIGHT ENGINEERING THEME --- */
+        /* --- GPU-OPTIMIZED DARK ENGINEERING THEME --- */
         :root {
             --bg-main: #04070F;
             --bg-elevated: #090E1A;
-            --bg-surface: rgba(13, 20, 36, 0.82);
-            --bg-surface-hover: rgba(20, 30, 52, 0.94);
+            --bg-surface: rgba(13, 20, 36, 0.84);
+            --bg-surface-hover: rgba(20, 30, 52, 0.95);
             --bg-card-solid: #0A101D;
             
             --primary: #38BDF8;
@@ -29,44 +29,16 @@
             
             --text-main: #F1F5F9;
             --text-secondary: #CBD5E1;
-            --text-muted: #8E9BAE;
-            --border-color: rgba(255, 255, 255, 0.07);
-            --border-highlight: rgba(56, 189, 248, 0.35);
+            --text-muted: #94A3B8;
+            --border-color: rgba(255, 255, 255, 0.075);
+            --border-highlight: rgba(56, 189, 248, 0.36);
             --dot-color: rgba(148, 163, 184, 0.11);
             
-            --glass-bg: rgba(4, 7, 15, 0.84);
-            --glass-border: rgba(255, 255, 255, 0.07);
-            --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.42);
+            --glass-bg: rgba(4, 7, 15, 0.86);
+            --glass-border: rgba(255, 255, 255, 0.075);
+            --shadow-card: 0 14px 34px rgba(0, 0, 0, 0.44);
             --shadow-glow: 0 0 24px rgba(56, 189, 248, 0.14);
             --transition-smooth: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        [data-theme="light"] {
-            --bg-main: #F8FAFC;
-            --bg-elevated: #FFFFFF;
-            --bg-surface: rgba(255, 255, 255, 0.92);
-            --bg-surface-hover: #FFFFFF;
-            --bg-card-solid: #FFFFFF;
-
-            --primary: #0284C7;
-            --primary-bright: #0369A1;
-            --primary-glow: rgba(2, 132, 199, 0.13);
-            --primary-soft: rgba(2, 132, 199, 0.06);
-            --accent: #4F46E5;
-            --accent-secondary: #2563EB;
-            --gradient-1: linear-gradient(135deg, #0284C7 0%, #2563EB 55%, #4F46E5 100%);
-
-            --text-main: #0F172A;
-            --text-secondary: #334155;
-            --text-muted: #64748B;
-            --border-color: rgba(15, 23, 42, 0.085);
-            --border-highlight: rgba(2, 132, 199, 0.38);
-            --dot-color: rgba(15, 23, 42, 0.1);
-
-            --glass-bg: rgba(248, 250, 252, 0.88);
-            --glass-border: rgba(15, 23, 42, 0.07);
-            --shadow-card: 0 12px 28px rgba(15, 23, 42, 0.06);
-            --shadow-glow: 0 8px 22px rgba(2, 132, 199, 0.12);
         }
 
         /* --- ZERO-LAG STATIC AMBIENT BACKGROUND + GPU CURSOR SPOTLIGHT --- */
@@ -84,7 +56,6 @@
             background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
         }
 
-        /* Hardware-accelerated Cursor Spotlight (Pure GPU translate3d, 0 repaint lag) */
         .cursor-spotlight {
             position: fixed;
             top: 0;
@@ -100,18 +71,10 @@
             transform: translate3d(-9999px, -9999px, 0);
             background: radial-gradient(
                 circle,
-                rgba(0, 229, 255, 0.11) 0%,
-                rgba(56, 189, 248, 0.055) 35%,
+                rgba(0, 229, 255, 0.10) 0%,
+                rgba(56, 189, 248, 0.05) 35%,
                 rgba(99, 102, 241, 0.02) 60%,
                 transparent 72%
-            );
-        }
-        [data-theme="light"] .cursor-spotlight {
-            background: radial-gradient(
-                circle,
-                rgba(2, 132, 199, 0.09) 0%,
-                rgba(37, 99, 235, 0.045) 38%,
-                transparent 70%
             );
         }
 
@@ -176,7 +139,7 @@
             transform: translateY(0);
         }
 
-        /* --- NAVIGATION & CLASSY WORDMARK --- */
+        /* --- NAVIGATION & ARCHITECTURAL WORDMARK --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: transparent;
@@ -188,7 +151,7 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
         }
 
         nav {
@@ -196,7 +159,6 @@
             padding: 18px 5%; max-width: 1280px; margin: 0 auto;
         }
 
-        /* CLASSY ARCHITECTURAL WORDMARK (DOT REMOVED) */
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.05rem;
@@ -210,13 +172,8 @@
             padding: 4px 0;
             transition: opacity 0.25s ease;
         }
-        .logo:hover {
-            opacity: 0.9;
-        }
-        .logo .first-name {
-            font-weight: 300;
-            color: var(--text-main);
-        }
+        .logo:hover { opacity: 0.9; }
+        .logo .first-name { font-weight: 300; color: var(--text-main); }
         .logo .last-name {
             font-weight: 700;
             background: var(--gradient-1);
@@ -224,9 +181,9 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-links { display: flex; gap: 26px; align-items: center; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links li a {
-            font-size: 0.78rem; font-weight: 500; color: var(--text-muted);
+            font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
             transition: color 0.25s ease; letter-spacing: 0.02em;
             position: relative;
             padding: 5px 0;
@@ -242,45 +199,12 @@
         }
         .nav-links li a:hover, .nav-links li a.active { color: var(--text-main); }
         .nav-links li a:hover::after, .nav-links li a.active::after { width: 100%; }
-        .nav-links li a.admin-link::after { display: none; }
 
         .nav-actions {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
-        .icon-btn {
-            border: 1px solid var(--border-color);
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: var(--bg-surface);
-            color: var(--text-muted);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            font-size: 0.82rem;
-        }
-        .icon-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            background: var(--primary-glow);
-            transform: translateY(-1px);
-        }
-
-        .admin-link {
-            border: 1px solid var(--border-color);
-            padding: 6px 13px !important;
-            border-radius: 999px;
-            background: var(--bg-surface);
-            display: flex; align-items: center; gap: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.72rem !important;
-        }
-        .admin-link:hover { border-color: var(--primary); color: var(--primary) !important; background: var(--primary-glow); }
 
         .menu-toggle { display: none; font-size: 1.25rem; cursor: pointer; color: var(--text-main); }
 
@@ -291,7 +215,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 110px 5% 70px;
+            padding: 115px 5% 75px;
             overflow: hidden;
         }
 
@@ -300,20 +224,21 @@
             background: var(--primary);
             box-shadow: 0 0 8px var(--primary);
             display: inline-block;
+            flex-shrink: 0;
         }
 
-        .hero-content { text-align: center; max-width: 780px; z-index: 2; position: relative; }
+        .hero-content { text-align: center; max-width: 860px; z-index: 2; position: relative; }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 5px 14px;
+            gap: 9px;
+            padding: 6px 16px;
             border-radius: 999px;
             background: var(--bg-surface);
             border: 1px solid var(--border-highlight);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.71rem;
             font-weight: 500;
             letter-spacing: 0.04em;
             color: var(--primary);
@@ -333,18 +258,22 @@
         }
 
         .typewriter-container {
-            height: 32px;
-            margin-bottom: 20px;
-            display: flex;
+            min-height: 36px;
+            margin-bottom: 22px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            padding: 5px 16px;
+            border-radius: 8px;
+            background: rgba(56, 189, 248, 0.045);
+            border: 1px solid var(--border-color);
         }
         .typewriter {
             font-family: 'JetBrains Mono', monospace;
             color: var(--primary);
-            font-size: clamp(0.84rem, 1.45vw, 0.96rem);
+            font-size: clamp(0.82rem, 1.45vw, 0.95rem);
             font-weight: 500;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.015em;
         }
         .cursor {
             display: inline-block;
@@ -358,18 +287,18 @@
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         .hero-content p { 
-            font-size: clamp(0.9rem, 1.35vw, 0.98rem); 
-            color: var(--text-muted); 
-            margin-bottom: 32px; 
-            max-width: 620px;
+            font-size: clamp(0.92rem, 1.35vw, 1rem); 
+            color: var(--text-secondary); 
+            margin-bottom: 34px; 
+            max-width: 720px;
             margin-left: auto; margin-right: auto;
             font-weight: 400;
-            line-height: 1.75;
+            line-height: 1.78;
         }
 
         .hero-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         .btn {
-            padding: 11px 24px;
+            padding: 12px 24px;
             border-radius: 999px;
             font-weight: 600;
             font-size: 0.78rem;
@@ -391,6 +320,18 @@
             transform: translateY(-2px);
             box-shadow: 0 12px 30px rgba(56, 189, 248, 0.34);
         }
+        .btn-cv {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--border-highlight);
+            color: var(--primary);
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.1);
+        }
+        .btn-cv:hover {
+            background: var(--primary);
+            color: #04070F;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(56, 189, 248, 0.28);
+        }
         .btn-outline {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -403,38 +344,43 @@
             transform: translateY(-2px);
         }
 
-        /* Hero Quick Metrics */
+        /* Hero Prestige Expertise Cards */
         .hero-metrics {
-            margin-top: 46px;
+            margin-top: 48px;
             display: grid;
-            grid-template-columns: repeat(3, minmax(140px, 195px));
+            grid-template-columns: repeat(3, minmax(210px, 265px));
             justify-content: center;
-            gap: 14px;
+            gap: 16px;
         }
         .metric-pill {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 13px 16px;
+            padding: 15px 18px;
             transition: var(--transition-smooth);
+            text-align: center;
         }
         .metric-pill:hover {
             border-color: var(--border-highlight);
             transform: translateY(-3px);
+            box-shadow: var(--shadow-card);
         }
         .metric-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.02rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.98rem;
             font-weight: 600;
             color: var(--primary);
-            line-height: 1.2;
+            line-height: 1.3;
+            letter-spacing: -0.01em;
         }
         .metric-label {
-            font-size: 0.67rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-top: 4px;
+            letter-spacing: 0.04em;
+            margin-top: 6px;
+            line-height: 1.35;
         }
 
         /* --- SECTION LAYOUTS --- */
@@ -460,7 +406,7 @@
         /* --- ABOUT SECTION --- */
         .about-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 55px; align-items: center; }
         .about-text p { color: var(--text-secondary); margin-bottom: 18px; font-size: 0.94rem; line-height: 1.78; }
-        .about-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 28px; }
+        .about-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 28px; }
         .highlight-card { 
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -498,14 +444,14 @@
             align-items: center;
             justify-content: center;
         }
-        .highlight-card h3 { font-size: 0.96rem; font-weight: 600; margin-bottom: 5px; }
+        .highlight-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
         .highlight-card p { color: var(--text-muted); font-size: 0.82rem; margin: 0; line-height: 1.55; }
         
         /* Clean Engineering Visual Card */
         .about-visual { position: relative; display: flex; justify-content: center; }
         .engineering-hud-card {
             width: 100%;
-            max-width: 400px;
+            max-width: 410px;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 20px;
@@ -515,8 +461,8 @@
         }
         .visual-box {
             position: relative;
-            width: 175px;
-            height: 175px;
+            width: 168px;
+            height: 168px;
             margin: 0 auto 24px;
             border-radius: 50%; 
             border: 1px dashed var(--border-highlight);
@@ -532,7 +478,7 @@
             border-radius: 50%;
             border: 1px solid var(--border-color);
         }
-        .visual-box i { font-size: 3.6rem; color: var(--primary); opacity: 0.88; }
+        .visual-box i { font-size: 3.4rem; color: var(--primary); opacity: 0.9; }
 
         .hud-specs {
             display: grid;
@@ -540,29 +486,26 @@
             gap: 10px;
         }
         .hud-spec-item {
-            background: rgba(0, 0, 0, 0.16);
+            background: rgba(0, 0, 0, 0.2);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 10px 12px;
         }
-        [data-theme="light"] .hud-spec-item {
-            background: rgba(15, 23, 42, 0.03);
-        }
         .hud-spec-label {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.64rem;
+            font-size: 0.63rem;
             color: var(--text-muted);
             text-transform: uppercase;
         }
         .hud-spec-val {
-            font-size: 0.8rem;
+            font-size: 0.79rem;
             font-weight: 600;
             color: var(--text-main);
             margin-top: 2px;
         }
 
         /* --- SKILLS SECTION --- */
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 18px; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 18px; }
         .skill-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -590,11 +533,11 @@
         }
         .skill-card:hover::after { opacity: 1; height: 3px; }
         .skill-icon {
-            width: 52px;
-            height: 52px;
+            width: 54px;
+            height: 54px;
             margin: 0 auto 14px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.025);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
@@ -605,36 +548,34 @@
             transform: scale(1.06);
             border-color: var(--skill-color, var(--primary));
         }
-        .skill-icon img { max-height: 30px; max-width: 30px; object-fit: contain; }
+        .skill-icon img { max-height: 30px; max-width: 34px; object-fit: contain; }
         .skill-icon i { font-size: 1.65rem; color: var(--skill-color, var(--primary)); }
-        .skill-card h3 { font-size: 0.92rem; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.02em; }
+        .skill-card h3 { font-size: 0.94rem; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.01em; }
         .skill-card p { font-size: 0.76rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
 
-        /* --- PROJECTS SECTION & FILTER TOOLBAR --- */
+        /* --- PROJECTS SECTION & CLEAN FILTER PILLS --- */
         .projects-toolbar {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 28px;
+            margin-bottom: 32px;
+        }
+        .filter-pills {
+            display: inline-flex;
+            gap: 8px;
             flex-wrap: wrap;
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
-            padding: 12px 16px;
-            border-radius: 14px;
-        }
-        .filter-pills {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
+            padding: 7px 10px;
+            border-radius: 999px;
         }
         .filter-btn {
             background: transparent;
-            border: 1px solid var(--border-color);
+            border: 1px solid transparent;
             color: var(--text-muted);
-            padding: 6px 13px;
+            padding: 7px 18px;
             border-radius: 999px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 500;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
@@ -642,43 +583,11 @@
         }
         .filter-btn:hover, .filter-btn.active {
             background: var(--primary-glow);
-            border-color: var(--primary);
+            border-color: var(--border-highlight);
             color: var(--primary);
         }
-        .project-search-box {
-            position: relative;
-            min-width: 220px;
-            flex: 1;
-            max-width: 290px;
-        }
-        .project-search-box i {
-            position: absolute;
-            left: 13px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 0.78rem;
-        }
-        .project-search-input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.18);
-            border: 1px solid var(--border-color);
-            border-radius: 999px;
-            padding: 7px 14px 7px 34px;
-            color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.8rem;
-            transition: border-color 0.25s ease;
-        }
-        [data-theme="light"] .project-search-input {
-            background: rgba(15, 23, 42, 0.03);
-        }
-        .project-search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
 
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 26px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 28px; }
         .project-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -694,13 +603,58 @@
             box-shadow: var(--shadow-card);
         }
         
-        .project-image-slider { position: relative; width: 100%; height: 225px; background: #050811; overflow: hidden; cursor: pointer; }
+        .project-image-slider { position: relative; width: 100%; height: 245px; background: #050811; overflow: hidden; cursor: pointer; }
         .project-image-slider img {
             transition: opacity 0.4s ease, transform 0.45s ease;
         }
         .project-card:hover .project-image-slider img {
             transform: scale(1.03);
         }
+
+        /* Technical Blueprint Placeholder for Ongoing Ar-Ge Projects without Photos */
+        .tech-blueprint-cover {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.14), transparent 68%),
+                linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px),
+                #050914;
+            background-size: 100% 100%, 22px 22px, 22px 22px, 100% 100%;
+            position: relative;
+        }
+        .tech-blueprint-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: rgba(56, 189, 248, 0.09);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.75rem;
+            margin-bottom: 12px;
+            box-shadow: 0 0 24px rgba(56, 189, 248, 0.15);
+        }
+        .tech-blueprint-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(4, 7, 15, 0.75);
+            padding: 4px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.22);
+        }
+
         .slider-counter {
             position: absolute;
             top: 12px;
@@ -752,34 +706,25 @@
         .slider-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.35); cursor: pointer; transition: 0.25s; }
         .slider-dot.active { background: var(--primary); transform: scale(1.25); }
 
-        .project-content { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; }
+        .project-content { padding: 26px; flex-grow: 1; display: flex; flex-direction: column; }
         .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
         .tag {
             font-size: 0.68rem;
-            padding: 3px 9px;
+            padding: 3px 10px;
             border-radius: 999px;
             background: var(--primary-soft);
-            border: 1px solid rgba(56, 189, 248, 0.16);
+            border: 1px solid rgba(56, 189, 248, 0.18);
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
             transition: var(--transition-smooth);
         }
-        .tag:hover {
-            background: var(--primary);
-            color: #04070F;
-        }
-        .project-title { font-size: 1.08rem; font-weight: 600; margin-bottom: 9px; }
+        .project-title { font-size: 1.12rem; font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
         .project-desc {
-            color: var(--text-muted);
-            font-size: 0.86rem;
-            line-height: 1.65;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.7;
             flex-grow: 1;
-            margin-bottom: 18px;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            margin-bottom: 20px;
         }
         .project-footer {
             margin-top: auto;
@@ -794,15 +739,15 @@
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 5px 11px;
+            padding: 6px 13px;
             border-radius: 999px;
-            font-size: 0.7rem;
+            font-size: 0.71rem;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
             transition: var(--transition-smooth);
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
         }
         .project-detail-btn:hover {
             border-color: var(--primary);
@@ -811,10 +756,10 @@
         }
         
         .status-badge { font-size: 0.68rem; font-weight: 500; padding: 4px 11px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.03em; border: 1px solid transparent; }
-        .status-badge.completed { background: rgba(16, 185, 129, 0.08); color: #10B981; border-color: rgba(16, 185, 129, 0.22); }
-        .status-badge.design-verified { background: rgba(56, 189, 248, 0.08); color: var(--primary); border-color: rgba(56, 189, 248, 0.22); }
-        .status-badge.in-progress { background: rgba(245, 158, 11, 0.08); color: #F59E0B; border-color: rgba(245, 158, 11, 0.22); }
-        .status-badge.manufacturing { background: rgba(168, 85, 247, 0.08); color: #A855F7; border-color: rgba(168, 85, 247, 0.22); }
+        .status-badge.completed { background: rgba(16, 185, 129, 0.09); color: #10B981; border-color: rgba(16, 185, 129, 0.24); }
+        .status-badge.design-verified { background: rgba(56, 189, 248, 0.09); color: var(--primary); border-color: rgba(56, 189, 248, 0.24); }
+        .status-badge.in-progress { background: rgba(245, 158, 11, 0.09); color: #F59E0B; border-color: rgba(245, 158, 11, 0.24); }
+        .status-badge.manufacturing { background: rgba(168, 85, 247, 0.09); color: #A855F7; border-color: rgba(168, 85, 247, 0.24); }
 
         /* --- PROJECT DETAIL LIGHTBOX MODAL --- */
         .project-modal-overlay {
@@ -879,6 +824,7 @@
         .project-modal-body {
             padding: 26px 28px;
             overflow-y: auto;
+            position: relative;
         }
         .project-modal-header {
             display: flex;
@@ -903,7 +849,7 @@
         }
         .contact-info h3 { font-size: 0.72rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--primary); font-family: 'JetBrains Mono', monospace; }
         .contact-info h2 { font-size: clamp(1.45rem, 2.4vw, 1.95rem); font-weight: 600; margin-bottom: 14px; }
-        .contact-info p { color: var(--text-muted); margin-bottom: 30px; font-size: 0.92rem; line-height: 1.72; }
+        .contact-info p { color: var(--text-secondary); margin-bottom: 30px; font-size: 0.92rem; line-height: 1.72; }
         .contact-meta { display: flex; flex-direction: column; gap: 14px; }
         .meta-item {
             display: flex; align-items: center; justify-content: space-between; gap: 14px;
@@ -955,7 +901,6 @@
             font-size: 0.88rem;
             transition: border-color 0.25s ease;
         }
-        [data-theme="light"] .form-control { background: rgba(15, 23, 42, 0.02); }
         .form-control:focus { outline: none; border-color: var(--primary); }
         textarea.form-control { resize: vertical; min-height: 105px; }
         .form-status-msg {
@@ -1053,7 +998,8 @@
 
         @media (max-width: 1024px) {
             .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
-            .projects-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+            .projects-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+            .hero-metrics { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (max-width: 768px) {
@@ -1066,7 +1012,8 @@
             }
             .nav-links.active { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
             .contact-wrapper { padding: 30px 20px; }
-            .hero-metrics { grid-template-columns: 1fr; max-width: 240px; margin-left: auto; margin-right: auto; }
+            .hero-metrics { grid-template-columns: 1fr; max-width: 310px; margin-left: auto; margin-right: auto; }
+            .projects-grid { grid-template-columns: 1fr; }
             .project-modal-gallery { height: 240px; }
             .cursor-spotlight { display: none; }
         }
@@ -1089,14 +1036,10 @@
                 <ul class="nav-links" id="navLinks">
                     <li><a href="#home" class="active">Anasayfa</a></li>
                     <li><a href="#about">Hakkımda</a></li>
-                    <li><a href="#skills">İlgi Alanları</a></li>
+                    <li><a href="#skills">Yetkinlikler</a></li>
                     <li><a href="#projects">Projeler</a></li>
                     <li><a href="#contact">İletişim</a></li>
-                    <li><a href="admin.html" class="admin-link" title="Yönetim Paneli"><i class="fas fa-shield-alt"></i></a></li>
                 </ul>
-                <button class="icon-btn" id="themeToggleBtn" title="Koyu / Açık Görünüm" aria-label="Tema Değiştir">
-                    <i class="fas fa-sun" id="themeIcon"></i>
-                </button>
                 <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
             </div>
         </nav>
@@ -1106,30 +1049,31 @@
         <div class="hero-content reveal visible">
             <div class="hero-badge">
                 <span class="hud-dot"></span>
-                <span>OTOMOTİV MÜHENDİSLİĞİ &bull; TASARIM &amp; ANALİZ PORTFOLYOSU</span>
+                <span>&bull; OTOMOTİV MÜHENDİSLİĞİ &bull; MEKANİK TASARIM &amp; YAPISAL ANALİZ</span>
             </div>
-            <h1 class="hero-title">Mühendislik Öğrencisi &amp; Tasarım Tutkunu</h1>
+            <h1 class="hero-title">Mekanik Tasarım &amp; Yapısal Analiz Portfolyosu</h1>
             <div class="typewriter-container">
-                <span id="typewriter" class="typewriter"></span><span class="cursor"></span>
+                <span id="typewriter" class="typewriter">CAD &amp; Yüzey Modelleme (CATIA V5 / SolidWorks)</span><span class="cursor"></span>
             </div>
-            <p>Otomotiv Mühendisliği 2. sınıf öğrencisi olarak; yapısal analizler, termal sistemler ve akışkanlar dinamiği (CFD) alanlarında kendimi geliştiriyor, öğrenme tutkusuyla projeler üretiyorum.</p>
+            <p class="hero-desc">Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim. CATIA V5 ve SolidWorks ile mekanik sistem ve A-sınıfı yüzey tasarımları geliştiriyor, ANSYS Mechanical ile yapısal doğrulama analizleri yürütüyorum.</p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary"><i class="fas fa-cubes"></i> Çalışmalarımı İncele</a>
+                <a href="cv.pdf" id="heroCvBtn" target="_blank" rel="noopener noreferrer" download class="btn btn-cv"><i class="fas fa-file-pdf"></i> CV İndir (PDF)</a>
                 <a href="#contact" class="btn btn-outline"><i class="fas fa-paper-plane"></i> İletişime Geç</a>
             </div>
 
             <div class="hero-metrics">
                 <div class="metric-pill">
-                    <div class="metric-value" id="statProjectCount">CAD / CAE</div>
-                    <div class="metric-label">Aktif Ar-Ge &amp; Proje</div>
+                    <div class="metric-value">CATIA V5 &amp; SolidWorks</div>
+                    <div class="metric-label">İLERİ YÜZEY &amp; MEKANİK TASARIM</div>
                 </div>
                 <div class="metric-pill">
-                    <div class="metric-value" id="statSkillCount">CFD &amp; FEA</div>
-                    <div class="metric-label">Teknik Odak &amp; Yazılım</div>
+                    <div class="metric-value">ANSYS Mechanical</div>
+                    <div class="metric-label">YAPISAL ANALİZ (FEA) &amp; DOĞRULAMA</div>
                 </div>
                 <div class="metric-pill">
-                    <div class="metric-value" id="statMethodCount">CAD &bull; CFD &bull; FEA</div>
-                    <div class="metric-label">Tasarım &amp; Simülasyon</div>
+                    <div class="metric-value">PAÜTECH Hidromobil</div>
+                    <div class="metric-label">AERODİNAMİK KABUK AR-GE EKİBİ</div>
                 </div>
             </div>
         </div>
@@ -1141,43 +1085,43 @@
         </div>
         <div class="about-grid">
             <div class="about-text">
-                <p>Henüz mühendislik eğitimimin 2. yılında olmama rağmen, sadece teorik derslerle yetinmeyip gerçek dünya problemlerine odaklanıyorum. Özellikle ısı transferi, akışkanlar dinamiği ve mekanik optimizasyonlar en büyük ilgi alanlarım.</p>
-                <p>Kariyer hedefim; tasarımlarımı CAD programlarında geliştirip, analiz yazılımlarıyla sınır şartlarını test etmek ve MATLAB ile verileri işleyerek sistemleri en verimli hale getirmektir. Yeni teknolojileri araştırmaya ve öğrenmeye aralıksız devam ediyorum.</p>
+                <p>Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi olarak; mekanik sistem tasarımı, A-sınıfı (Class-A) yüzey modelleme ve sonlu elemanlar analizi (FEA) alanlarında mühendislik çözümleri geliştiriyorum. PAÜTECH Hidromobil Takımı bünyesinde aerodinamik dış kabuk tasarımı sorumluluğu üstlenerek, düşük sürükleme katsayısı (Cd) ve kalıplanabilirlik kriterlerine uygun Ar-Ge çalışmaları yürütüyorum.</p>
+                <p>Tasarım süreçlerinde CATIA V5 (Generative Shape Design, Part &amp; Assembly Design) ve SolidWorks (3D Sketch, Weldments) modüllerini etkin şekilde kullanıyor; geliştirdiğim mekanik bileşenlerin statik, gerilme ve yorulma doğrulamalarını ANSYS Mechanical ortamında gerçekleştiriyorum. Savunma sanayii ve otomotiv Ar-Ge projelerinde tasarım ile doğrulama süreçlerini bütünleşik yürüten bir mühendis olarak değer üretmeyi hedefliyorum.</p>
                 
                 <div class="about-highlights">
                     <div class="highlight-card">
-                        <i class="fas fa-wind"></i>
-                        <h3>CFD &amp; Termal</h3>
-                        <p>Aerodinamik ve ısı transferine duyulan ilgi</p>
+                        <i class="fas fa-cube"></i>
+                        <h3>Mekanik Tasarım &amp; FEA Uygulamaları</h3>
+                        <p>CATIA V5 &amp; SolidWorks ile 3B modelleme, ANSYS Mechanical ile yapısal doğrulama</p>
                     </div>
                     <div class="highlight-card">
-                        <i class="fas fa-cube"></i>
-                        <h3>Tasarım &amp; Analiz</h3>
-                        <p>CAD modelleme ve statik test öğrenimleri</p>
+                        <i class="fas fa-wind"></i>
+                        <h3>PAÜTECH Hidromobil &mdash; Kabuk Ar-Ge</h3>
+                        <p>Yarış aracı aerodinamik dış kabuk tasarımı ve G1/G2 yüzey sürekliliği geliştirme</p>
                     </div>
                 </div>
             </div>
             <div class="about-visual">
                 <div class="engineering-hud-card">
                     <div class="visual-box">
-                        <i class="fas fa-atom"></i>
+                        <i class="fas fa-cogs"></i>
                     </div>
                     <div class="hud-specs">
                         <div class="hud-spec-item">
-                            <div class="hud-spec-label">Disiplin</div>
-                            <div class="hud-spec-val">Otomotiv Müh.</div>
+                            <div class="hud-spec-label">Bölüm &amp; GANO</div>
+                            <div class="hud-spec-val">Otomotiv Müh. (3.09)</div>
                         </div>
                         <div class="hud-spec-item">
-                            <div class="hud-spec-label">Analiz Odağı</div>
-                            <div class="hud-spec-val">CFD / FEA / Termal</div>
+                            <div class="hud-spec-label">Ar-Ge Takımı</div>
+                            <div class="hud-spec-val">PAÜTECH Hidromobil</div>
                         </div>
                         <div class="hud-spec-item">
-                            <div class="hud-spec-label">Modelleme</div>
-                            <div class="hud-spec-val">3D CAD &amp; Yüzey</div>
+                            <div class="hud-spec-label">CAD &amp; Yüzey</div>
+                            <div class="hud-spec-val">CATIA V5 &amp; SolidWorks</div>
                         </div>
                         <div class="hud-spec-item">
-                            <div class="hud-spec-label">Optimizasyon</div>
-                            <div class="hud-spec-val">MATLAB &amp; Veri</div>
+                            <div class="hud-spec-label">Yapısal Doğrulama</div>
+                            <div class="hud-spec-val">ANSYS Mechanical</div>
                         </div>
                     </div>
                 </div>
@@ -1187,7 +1131,7 @@
 
     <section id="skills" class="reveal">
         <div class="section-header">
-            <h2 class="section-title">Üzerine Çalıştığım Alanlar</h2>
+            <h2 class="section-title">Teknik Yetkinlikler &amp; Mühendislik Yazılımları</h2>
         </div>
         <div class="skills-grid" id="skillsGrid">
             <div class="skeleton-card"><div class="skeleton-line" style="width:45%;margin:0 auto 14px;height:42px;"></div><div class="skeleton-line" style="width:65%;margin:0 auto 8px;"></div><div class="skeleton-line" style="width:40%;margin:0 auto;"></div></div>
@@ -1199,16 +1143,14 @@
 
     <section id="projects" class="reveal">
         <div class="section-header">
-            <h2 class="section-title">Projeler &amp; Denemeler</h2>
+            <h2 class="section-title">Mühendislik Projeleri &amp; Ar-Ge Çalışmaları</h2>
         </div>
 
-        <div class="projects-toolbar" id="projectsToolbar" style="display:none;">
+        <div class="projects-toolbar" id="projectsToolbar">
             <div class="filter-pills" id="projectFilterPills">
                 <button class="filter-btn active" data-filter="all">Tümü</button>
-            </div>
-            <div class="project-search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" id="projectSearchInput" class="project-search-input" placeholder="Proje, etiket veya yöntem ara...">
+                <button class="filter-btn" data-filter="completed">Tamamlananlar</button>
+                <button class="filter-btn" data-filter="ongoing">Devam Eden Ar-Ge</button>
             </div>
         </div>
 
@@ -1223,8 +1165,8 @@
         <div class="contact-wrapper">
             <div class="contact-info">
                 <h3>İletişim</h3>
-                <h2>Fikir Alışverişi İçin Ulaşın</h2>
-                <p class="contact-text">Mühendislik projeleri, analiz üzerine araştırmalar veya ortak çalışmalar için bana her zaman yazabilirsiniz. Birlikte öğrenmekten mutluluk duyarım.</p>
+                <h2>Staj, Proje ve Ar-Ge İletişimi</h2>
+                <p class="contact-text">Savunma sanayii ve otomotiv Ar-Ge staj programları, mekanik tasarım projeleri veya yapısal analiz çalışmaları hakkında doğrudan iletişime geçebilirsiniz.</p>
                 
                 <div class="contact-meta">
                     <div class="meta-item">
@@ -1237,9 +1179,9 @@
                         </button>
                     </div>
                     <div class="meta-item">
-                        <a href="https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/" target="_blank" rel="noopener noreferrer" class="meta-left" style="width:100%;">
+                        <a href="https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/" target="_blank" rel="noopener noreferrer" class="meta-left" id="contactLinkedinLink" style="width:100%;">
                             <div class="meta-icon"><i class="fab fa-linkedin-in"></i></div>
-                            <span>LinkedIn / alicankarcili</span>
+                            <span>linkedin.com/in/alican-karcılı-772b78364</span>
                         </a>
                     </div>
                 </div>
@@ -1247,16 +1189,16 @@
             
             <form class="contact-form" id="contactForm" action="https://formspree.io/f/xgoqqayr" method="POST">
                 <div class="form-group">
-                    <label for="name">AD SOYAD</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Adınız ve Soyadınız" required>
+                    <label for="name">AD SOYAD / KURUM</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Adınız Soyadınız / Kurum Adı" required>
                 </div>
                 <div class="form-group">
-                    <label for="email">E-POSTA ADRESİ</label>
-                    <input type="email" id="email" name="_replyto" class="form-control" placeholder="ornek@eposta.com" required>
+                    <label for="email">KURUMSAL VEYA KİŞİSEL E-POSTA</label>
+                    <input type="email" id="email" name="_replyto" class="form-control" placeholder="ornek@kurum.com" required>
                 </div>
                 <div class="form-group">
                     <label for="message">MESAJINIZ</label>
-                    <textarea id="message" name="message" class="form-control" placeholder="Proje fikriniz, sorunuz veya mesajınız..." required></textarea>
+                    <textarea id="message" name="message" class="form-control" placeholder="Staj, Ar-Ge projesi veya teknik iş birliği mesajınız..." required></textarea>
                 </div>
                 <input type="text" name="_gotcha" style="display:none">
                 <div class="form-status-msg" id="contactFormStatus"></div>
@@ -1280,6 +1222,7 @@
                 <div class="slider-counter" id="modalSlideCounter">1 / 1</div>
             </div>
             <div class="project-modal-body">
+                <button class="modal-close-btn" id="closeProjectModalBodyBtn" aria-label="Kapat" style="display:none;top:18px;right:18px;"><i class="fas fa-times"></i></button>
                 <div class="project-modal-header">
                     <div>
                         <div class="project-tags" id="modalProjectTags" style="margin-bottom:8px;"></div>
@@ -1302,7 +1245,7 @@
     </div>
 
     <footer>
-        <p>Alican Karcılı &copy; 2026. Tasarım, analiz ve mühendislik serüveni.</p>
+        <p>Alican Karcılı &copy; 2026 &mdash; Otomotiv Mühendisliği | Mekanik Tasarım &amp; Yapısal Analiz Portfolyosu</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -1316,6 +1259,70 @@
         let activeFilter = 'all';
         let modalImages = [];
         let modalCurrentSlide = 0;
+
+        /* --- DEFAULT AR-GE PROJECTS & CURATED SUMMARIES --- */
+        const SUPPLEMENTAL_ARGE_PROJECTS = [
+            {
+                id: 'default-pautech-hidromobil',
+                title: 'PAÜTECH Hidromobil — Aerodinamik Dış Kabuk Tasarımı',
+                status: 'Devam Eden Ar-Ge',
+                tags: ['CATIA GSD', 'Aerodinamik', 'Kabuk Tasarımı', 'PAÜTECH'],
+                description: 'PAÜTECH Hidromobil yarış aracı için düşük sürükleme katsayısı (Cd) ve üretim kalıplamasına uygunluk kriterleriyle yürütülen dış kabuk yüzey modelleme çalışması.',
+                images: [],
+                sort_order: 3,
+                placeholderIcon: 'fa-wind',
+                placeholderLabel: 'CATIA GSD • AERODİNAMİK KABUK AR-GE'
+            },
+            {
+                id: 'default-piston-biyel-fea',
+                title: 'Piston - Biyel Kolu Mekanizması CAD & Yapısal Analiz (FEA)',
+                status: 'Devam Eden Ar-Ge',
+                tags: ['CATIA V5', 'ANSYS Mechanical', 'FEA', 'İçten Yanmalı Motor'],
+                description: '4 zamanlı motor piston-biyel kolu mekanizmasının 3B katı modellemesi ve maksimum yanma basıncı ile atalet yükleri altında ANSYS Mechanical gerilme/yorulma analizi.',
+                images: [],
+                sort_order: 4,
+                placeholderIcon: 'fa-project-diagram',
+                placeholderLabel: 'ANSYS MECHANICAL • YAPISAL DOĞRULAMA (FEA)'
+            }
+        ];
+
+        function formatCardDescription(project) {
+            const title = (project.title || '').trim();
+            const rawDesc = (project.description || '').trim();
+
+            if (title.toLowerCase().includes('audi r8') && rawDesc.toLowerCase().includes('catia generative shape design modülü kullanılarak sıfırdan')) {
+                return 'CATIA V5 Generative Shape Design (GSD) modülü kullanılarak G1/G2 yüzey sürekliliği kriterlerine uygun şekilde sıfırdan modellenen aerodinamik dış kabuk geometrisi.';
+            }
+            if (title.toLowerCase().includes('go-kart') && rawDesc.toLowerCase().includes('solidworks weldments modülü ve 3d sketch')) {
+                return 'Yüksek burulma rijitliği ve düşük kütle hedefleri doğrultusunda SolidWorks 3D Sketch ve Weldments modülleriyle tasarlanan boru uzay kafes (space frame) şasi mimarisi.';
+            }
+
+            // Strip duplicate title line if description starts with the title
+            const lines = rawDesc.split('\n').map(l => l.trim()).filter(Boolean);
+            if (lines.length > 1) {
+                const firstLine = lines[0].toLowerCase();
+                const cleanTitle = title.toLowerCase().split('-')[0].trim();
+                if (cleanTitle && firstLine.includes(cleanTitle)) {
+                    return lines[1];
+                }
+                return lines[0];
+            }
+            return rawDesc;
+        }
+
+        function formatModalDescription(project) {
+            const title = (project.title || '').trim();
+            const rawDesc = (project.description || '').trim();
+            const lines = rawDesc.split('\n');
+            if (lines.length > 1) {
+                const firstLine = lines[0].trim().toLowerCase();
+                const cleanTitle = title.toLowerCase().split('-')[0].trim();
+                if (cleanTitle && firstLine.includes(cleanTitle)) {
+                    return lines.slice(1).join('\n').trim();
+                }
+            }
+            return rawDesc;
+        }
 
         /* --- ZERO-LAG HARDWARE-ACCELERATED CURSOR SPOTLIGHT --- */
         const spotlightEl = document.getElementById('cursorSpotlight');
@@ -1335,22 +1342,6 @@
                 });
             }
         }, { passive: true });
-
-        /* --- THEME TOGGLE --- */
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeIcon = document.getElementById('themeIcon');
-        const savedTheme = localStorage.getItem('ak_portfolio_theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeIcon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-
-        themeToggleBtn.addEventListener('click', () => {
-            const current = document.documentElement.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('ak_portfolio_theme', next);
-            themeIcon.className = next === 'light' ? 'fas fa-moon' : 'fas fa-sun';
-            showToast(next === 'light' ? 'Açık Görünüm Aktif' : 'Koyu Görünüm Aktif');
-        });
 
         function showToast(msg) {
             const toast = document.getElementById('toastNotification');
@@ -1372,16 +1363,33 @@
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         /* --- SKILLS LOADING --- */
+        const SKILL_ICON_FALLBACK = {
+            'catia': 'fa-drafting-compass',
+            'ansys': 'fa-project-diagram',
+            'solidworks': 'fa-cube',
+            'matlab': 'fa-square-root-alt'
+        };
+
+        function getFallbackSkillIcon(name) {
+            const lower = (name || '').toLowerCase();
+            for (const [key, icon] of Object.entries(SKILL_ICON_FALLBACK)) {
+                if (lower.includes(key)) return icon;
+            }
+            return 'fa-cogs';
+        }
+
         async function loadSkills() {
             const grid = document.getElementById('skillsGrid');
             try {
                 const { data, error } = await sb.from('skills').select('*').order('sort_order', { ascending: true });
                 if (error) throw error;
                 if (data && data.length > 0) {
-                    document.getElementById('statSkillCount').textContent = data.length + ' Alan';
                     let html = '';
                     data.forEach(skill => {
-                        const iconHtml = skill.icon_url ? `<img src="${skill.icon_url}" alt="${skill.name}" loading="lazy" decoding="async">` : `<i class="fas fa-cogs"></i>`;
+                        const fallbackIcon = getFallbackSkillIcon(skill.name);
+                        const iconHtml = skill.icon_url
+                            ? `<img src="${skill.icon_url}" alt="${skill.name}" loading="lazy" decoding="async" onerror="this.outerHTML='<i class=\\'fas ${fallbackIcon}\\'></i>'">`
+                            : `<i class="fas ${fallbackIcon}"></i>`;
                         html += `
                             <div class="skill-card" style="--skill-color: ${skill.color || '#38BDF8'}">
                                 <div class="skill-icon">${iconHtml}</div>
@@ -1391,25 +1399,38 @@
                     });
                     grid.innerHTML = html;
                 } else {
-                    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:0.88rem;">Henüz yetenek eklenmemiş.</p>';
+                    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:0.88rem;">Henüz yetkinlik eklenmemiş.</p>';
                 }
             } catch (err) {
-                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#EF4444;font-size:0.88rem;">Yetenekler yüklenemedi.</p>';
+                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#EF4444;font-size:0.88rem;">Yetkinlikler yüklenemedi.</p>';
             }
         }
 
         const STATUS_MAP = {
-            'Tamamlandı':             { icon: 'fa-check',       cls: 'completed',       label: 'Tamamlandı' },
-            'Tasarım Doğrulandı':     { icon: 'fa-shield-alt',  cls: 'design-verified', label: 'Tasarım Doğrulandı' },
-            'Geliştirme Aşamasında':  { icon: 'fa-code-branch', cls: 'in-progress',     label: 'Geliştirme Aşamasında' },
-            'Devam Ediyor':           { icon: 'fa-sync',        cls: 'in-progress',     label: 'Devam Ediyor' },
-            'İmalatta':               { icon: 'fa-cogs',        cls: 'manufacturing',   label: 'İmalatta' }
+            'Tamamlandı':             { icon: 'fa-check',       cls: 'completed',       label: 'Tamamlandı',            group: 'completed' },
+            'Tasarım Doğrulandı':     { icon: 'fa-shield-alt',  cls: 'design-verified', label: 'Tasarım Doğrulandı',    group: 'completed' },
+            'Devam Eden Ar-Ge':       { icon: 'fa-flask',       cls: 'in-progress',     label: 'Devam Eden Ar-Ge',      group: 'ongoing' },
+            'Geliştirme Aşamasında':  { icon: 'fa-code-branch', cls: 'in-progress',     label: 'Devam Eden Ar-Ge',      group: 'ongoing' },
+            'Devam Ediyor':           { icon: 'fa-sync',        cls: 'in-progress',     label: 'Devam Eden Ar-Ge',      group: 'ongoing' },
+            'İmalatta':               { icon: 'fa-cogs',        cls: 'manufacturing',   label: 'İmalatta',              group: 'ongoing' }
         };
+
+        function getBlueprintMeta(project) {
+            const t = (project.title || '').toLowerCase();
+            if (t.includes('hidromobil') || t.includes('aerodinamik') || t.includes('kabuk')) {
+                return { icon: 'fa-wind', label: 'CATIA GSD • AERODİNAMİK KABUK AR-GE' };
+            }
+            if (t.includes('piston') || t.includes('ansys') || t.includes('fea')) {
+                return { icon: 'fa-project-diagram', label: 'ANSYS MECHANICAL • YAPISAL DOĞRULAMA (FEA)' };
+            }
+            return { icon: 'fa-cube', label: 'CAD / CAE • MÜHENDİSLİK TASARIMI' };
+        }
 
         function renderProjectCard(project, idx) {
             const images = project.images || [];
             const tags   = project.tags   || [];
-            const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Ediyor'];
+            const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
+            const cardSummary = formatCardDescription(project);
 
             let sliderHTML = '';
             if (images.length > 0) {
@@ -1432,14 +1453,18 @@
                         ${dotsHTML}
                     </div>`;
             } else {
+                const bp = getBlueprintMeta(project);
                 sliderHTML = `
-                    <div class="project-image-slider" data-project-idx="${idx}" style="display:flex;align-items:center;justify-content:center;background:var(--bg-surface-hover);">
+                    <div class="project-image-slider" data-project-idx="${idx}">
                         <div class="expand-hint"><i class="fas fa-expand-alt"></i> Detaylar</div>
-                        <i class="fas fa-cube" style="font-size:3.2rem;color:var(--text-muted);opacity:0.3;"></i>
+                        <div class="tech-blueprint-cover">
+                            <div class="tech-blueprint-icon"><i class="fas ${bp.icon}"></i></div>
+                            <div class="tech-blueprint-label">${bp.label}</div>
+                        </div>
                     </div>`;
             }
 
-            const tagsHTML = tags.map(tag => `<span class="tag" data-tag-filter="${tag}">${tag}</span>`).join('');
+            const tagsHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join('');
             const statusHTML = `<span class="status-badge ${status.cls}"><i class="fas ${status.icon}"></i> ${status.label}</span>`;
 
             return `
@@ -1448,33 +1473,19 @@
                     <div class="project-content">
                         ${tagsHTML ? `<div class="project-tags">${tagsHTML}</div>` : ''}
                         <h3 class="project-title">${project.title}</h3>
-                        <p class="project-desc">${project.description}</p>
+                        <p class="project-desc">${cardSummary}</p>
                         <div class="project-footer">
                             ${statusHTML}
                             <button type="button" class="project-detail-btn" onclick="openProjectDetail(${idx})">
-                                Detay <i class="fas fa-arrow-up-right-from-square"></i>
+                                Teknik Detay <i class="fas fa-arrow-up-right-from-square"></i>
                             </button>
                         </div>
                     </div>
                 </div>`;
         }
 
-        function buildFilterPills(projects) {
-            const toolbar = document.getElementById('projectsToolbar');
+        function initFilterButtons() {
             const pillsContainer = document.getElementById('projectFilterPills');
-            if (!projects || projects.length === 0) {
-                toolbar.style.display = 'none';
-                return;
-            }
-            toolbar.style.display = 'flex';
-            const statuses = [...new Set(projects.map(p => p.status).filter(Boolean))];
-            let html = `<button class="filter-btn active" data-filter="all">Tümü (${projects.length})</button>`;
-            statuses.forEach(st => {
-                const count = projects.filter(p => p.status === st).length;
-                html += `<button class="filter-btn" data-filter="${st}">${st} (${count})</button>`;
-            });
-            pillsContainer.innerHTML = html;
-
             pillsContainer.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     pillsContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1487,39 +1498,20 @@
 
         function filterAndRenderProjects() {
             const grid = document.getElementById('projectsGrid');
-            const query = (document.getElementById('projectSearchInput')?.value || '').toLowerCase().trim();
 
             const filtered = allProjectsData.map((p, originalIdx) => ({ project: p, originalIdx })).filter(({ project }) => {
-                const matchesStatus = activeFilter === 'all' || project.status === activeFilter;
-                const inTitle = (project.title || '').toLowerCase().includes(query);
-                const inDesc = (project.description || '').toLowerCase().includes(query);
-                const inTags = (project.tags || []).some(t => t.toLowerCase().includes(query));
-                return matchesStatus && (!query || inTitle || inDesc || inTags);
+                if (activeFilter === 'all') return true;
+                const stInfo = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
+                return stInfo.group === activeFilter;
             });
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:36px 0;font-size:0.88rem;">Arama veya filtre kriterlerine uygun proje bulunamadı.</p>`;
+                grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:36px 0;font-size:0.88rem;">Bu kategoride proje bulunamadı.</p>`;
             } else {
                 grid.innerHTML = filtered.map(({ project, originalIdx }) => renderProjectCard(project, originalIdx)).join('');
                 initSliders();
-                bindTagClicks();
             }
         }
-
-        function bindTagClicks() {
-            document.querySelectorAll('[data-tag-filter]').forEach(tagEl => {
-                tagEl.addEventListener('click', () => {
-                    const searchInput = document.getElementById('projectSearchInput');
-                    if (searchInput) {
-                        searchInput.value = tagEl.dataset.tagFilter;
-                        filterAndRenderProjects();
-                        showToast(`Etiket filtrelendi: ${tagEl.dataset.tagFilter}`);
-                    }
-                });
-            });
-        }
-
-        document.getElementById('projectSearchInput')?.addEventListener('input', filterAndRenderProjects);
 
         async function loadProjects() {
             const grid = document.getElementById('projectsGrid');
@@ -1527,18 +1519,32 @@
             try {
                 const { data, error } = await sb.from('projects').select('*').order('sort_order', { ascending: true });
                 if (error) throw error;
-                allProjectsData = data || [];
-                if (allProjectsData.length === 0) {
-                    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);font-size:0.88rem;">Henüz proje eklenmemiş.</p>`;
-                } else {
-                    document.getElementById('statProjectCount').textContent = allProjectsData.length + ' Proje';
-                    buildFilterPills(allProjectsData);
-                    filterAndRenderProjects();
-                }
+                const dbProjects = data || [];
+
+                // Ensure the 2 Ar-Ge projects (PAÜTECH Hidromobil & Piston-Biyel FEA) are present if not yet inserted in DB
+                const merged = [...dbProjects];
+                SUPPLEMENTAL_ARGE_PROJECTS.forEach(supp => {
+                    const exists = merged.some(p => {
+                        const t = (p.title || '').toLowerCase();
+                        if (supp.id.includes('pautech')) return t.includes('hidromobil') || t.includes('paütech');
+                        if (supp.id.includes('piston')) return t.includes('piston') || t.includes('biyel');
+                        return false;
+                    });
+                    if (!exists) merged.push(supp);
+                });
+
+                allProjectsData = merged;
+                initFilterButtons();
+                filterAndRenderProjects();
+
                 grid.style.display = 'grid';
                 loading.style.display = 'none';
             } catch (err) {
-                loading.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:36px;"><i class="fas fa-exclamation-triangle" style="color:#EF4444;font-size:1.6rem;margin-bottom:8px;"></i><p style="font-size:0.88rem;">Projeler yüklenemedi.</p></div>`;
+                allProjectsData = [...SUPPLEMENTAL_ARGE_PROJECTS];
+                initFilterButtons();
+                filterAndRenderProjects();
+                grid.style.display = 'grid';
+                loading.style.display = 'none';
             }
         }
 
@@ -1592,6 +1598,7 @@
             if (!project) return;
             const modal = document.getElementById('projectDetailModal');
             const gallery = document.getElementById('modalGalleryContainer');
+            const bodyCloseBtn = document.getElementById('closeProjectModalBodyBtn');
             const imgEl = document.getElementById('modalActiveImage');
             const navEl = document.getElementById('modalSliderNav');
             const counterEl = document.getElementById('modalSlideCounter');
@@ -1601,18 +1608,20 @@
 
             if (modalImages.length > 0) {
                 gallery.style.display = 'flex';
+                bodyCloseBtn.style.display = 'none';
                 imgEl.src = modalImages[modalCurrentSlide];
                 navEl.style.display = modalImages.length > 1 ? 'flex' : 'none';
                 counterEl.style.display = 'block';
                 counterEl.textContent = `${modalCurrentSlide + 1} / ${modalImages.length}`;
             } else {
                 gallery.style.display = 'none';
+                bodyCloseBtn.style.display = 'flex';
             }
 
             document.getElementById('modalProjectTitle').textContent = project.title || '';
-            document.getElementById('modalProjectDesc').textContent = project.description || '';
+            document.getElementById('modalProjectDesc').textContent = formatModalDescription(project);
             document.getElementById('modalProjectTags').innerHTML = (project.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
-            const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Ediyor'];
+            const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
             document.getElementById('modalProjectStatus').innerHTML = `<span class="status-badge ${status.cls}"><i class="fas ${status.icon}"></i> ${status.label}</span>`;
 
             modal.classList.add('open');
@@ -1632,6 +1641,7 @@
         }
 
         document.getElementById('closeProjectModalBtn').addEventListener('click', closeProjectModal);
+        document.getElementById('closeProjectModalBodyBtn').addEventListener('click', closeProjectModal);
         document.getElementById('modalPrevBtn').addEventListener('click', () => stepModalSlide(-1));
         document.getElementById('modalNextBtn').addEventListener('click', () => stepModalSlide(1));
         document.getElementById('projectDetailModal').addEventListener('click', (e) => {
@@ -1645,43 +1655,39 @@
             if (e.key === 'ArrowRight') stepModalSlide(1);
         });
 
-        /* --- TYPEWRITER --- */
+        /* --- SMOOTH & RELIABLE TYPEWRITER --- */
         const phrases = [
-            "Otomotiv & Mekatronik Sistemler",
-            "CAD & İleri Yüzey Modelleme",
-            "Hesaplamalı Akışkanlar Dinamiği (CFD)",
-            "Isı Transferi ve Termal Analizler",
-            "MATLAB Optimizasyonuna İlgi Duyuyor"
+            "CAD & Yüzey Modelleme (CATIA V5 / SolidWorks)",
+            "Yapısal Analiz & Doğrulama (ANSYS Mechanical)",
+            "Güç Aktarma & Aerodinamik Kabuk Tasarımı"
         ];
-        let i = 0;
+        let phraseIdx = 0;
+        let charIdx = phrases[0].length;
+        let isDeleting = true;
         const typewriterEl = document.getElementById('typewriter');
-        function typingEffect() {
-            let word = phrases[i].split("");
-            var loopTyping = function() {
-                if (word.length > 0) {
-                    typewriterEl.textContent += word.shift();
-                } else {
-                    setTimeout(deletingEffect, 2500);
-                    return false;
+
+        function runTypewriter() {
+            const currentPhrase = phrases[phraseIdx];
+            if (!isDeleting) {
+                charIdx++;
+                typewriterEl.textContent = currentPhrase.substring(0, charIdx);
+                if (charIdx === currentPhrase.length) {
+                    isDeleting = true;
+                    setTimeout(runTypewriter, 2600);
+                    return;
                 }
-                setTimeout(loopTyping, 60);
-            };
-            loopTyping();
-        }
-        function deletingEffect() {
-            let word = phrases[i].split("");
-            var loopDeleting = function() {
-                if (word.length > 0) {
-                    word.pop();
-                    typewriterEl.textContent = word.join("");
-                } else {
-                    i = (i + 1) % phrases.length;
-                    setTimeout(typingEffect, 600);
-                    return false;
+                setTimeout(runTypewriter, 45);
+            } else {
+                charIdx--;
+                typewriterEl.textContent = currentPhrase.substring(0, charIdx);
+                if (charIdx === 0) {
+                    isDeleting = false;
+                    phraseIdx = (phraseIdx + 1) % phrases.length;
+                    setTimeout(runTypewriter, 400);
+                    return;
                 }
-                setTimeout(loopDeleting, 22);
-            };
-            loopDeleting();
+                setTimeout(runTypewriter, 20);
+            }
         }
 
         /* --- DYNAMIC SITE CONTENT OVERRIDE --- */
@@ -1692,33 +1698,45 @@
                 const map = {};
                 data.forEach(row => { map[row.key] = row.value; });
 
-                if (map.hero_title) document.querySelector('.hero-title').textContent = map.hero_title;
-                const ps = document.querySelectorAll('.about-text p');
-                if (map.about_p1 && ps[0]) ps[0].textContent = map.about_p1;
-                if (map.about_p2 && ps[1]) ps[1].textContent = map.about_p2;
-
-                if (map.highlights) {
-                    try {
-                        const list = JSON.parse(map.highlights);
-                        const grid = document.querySelector('.about-highlights');
-                        if (grid && list.length) {
-                            grid.innerHTML = list.map(h => `
-                                <div class="highlight-card">
-                                    <i class="${h.icon||'fas fa-cogs'}"></i>
-                                    <h3>${h.title||''}</h3>
-                                    <p>${h.sub||''}</p>
-                                </div>`).join('');
-                        }
-                    } catch(e) {}
+                if (map.cv_url) {
+                    const cvBtn = document.getElementById('heroCvBtn');
+                    if (cvBtn) cvBtn.href = map.cv_url;
                 }
+
+                // Only override corporate defaults if content was explicitly saved via v4.0 Admin Panel
+                if (map.content_version === 'v4_corporate') {
+                    if (map.hero_title) document.querySelector('.hero-title').textContent = map.hero_title;
+                    if (map.hero_desc) document.querySelector('.hero-desc').textContent = map.hero_desc;
+                    const ps = document.querySelectorAll('.about-text p');
+                    if (map.about_p1 && ps[0]) ps[0].textContent = map.about_p1;
+                    if (map.about_p2 && ps[1]) ps[1].textContent = map.about_p2;
+
+                    if (map.highlights) {
+                        try {
+                            const list = JSON.parse(map.highlights);
+                            const grid = document.querySelector('.about-highlights');
+                            if (grid && list.length) {
+                                grid.innerHTML = list.map(h => `
+                                    <div class="highlight-card">
+                                        <i class="${h.icon||'fas fa-cogs'}"></i>
+                                        <h3>${h.title||''}</h3>
+                                        <p>${h.sub||''}</p>
+                                    </div>`).join('');
+                            }
+                        } catch(e) {}
+                    }
+                    if (map.contact_text) document.querySelector('.contact-text').textContent = map.contact_text;
+                }
+
                 if (map.contact_email) {
                     document.querySelector('.contact-email').textContent = map.contact_email;
                     document.getElementById('contactEmailLink').href = 'mailto:' + map.contact_email;
                 }
-                if (map.contact_linkedin) document.querySelector('a[href*="linkedin"]').href = map.contact_linkedin;
-                if (map.contact_text) document.querySelector('.contact-text').textContent = map.contact_text;
+                if (map.contact_linkedin) {
+                    document.getElementById('contactLinkedinLink').href = map.contact_linkedin;
+                }
             } catch (err) {
-                console.log('DB Content Override Failed', err);
+                console.log('Site content load:', err);
             }
         }
 
@@ -1810,7 +1828,7 @@
         }));
 
         document.addEventListener("DOMContentLoaded", () => {
-            typingEffect();
+            setTimeout(runTypewriter, 2400);
             loadSkills();
             loadProjects();
             loadSiteContent();
