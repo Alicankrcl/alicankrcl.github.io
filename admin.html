@@ -58,18 +58,13 @@
             position:relative;
             overflow:hidden;
         }
-        .login-card::before{
-            content:'';
-            position:absolute;
-            top:0;left:0;width:100%;height:2.5px;
-            background:var(--gradient-1);
-        }
-        .lock-icon{width:68px;height:68px;border-radius:50%;background:var(--primary-glow);border:1.5px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--primary);font-size:1.35rem;overflow:hidden;box-shadow:0 0 22px rgba(56,189,248,0.2)}
-        .lock-icon img{width:100%;height:100%;object-fit:cover}
+        .login-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:2.5px;background:var(--gradient-1)}
+        .lock-icon{width:72px;height:72px;border-radius:50%;background:var(--primary-glow);border:1px dashed var(--border-highlight);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--primary);font-size:1.35rem;padding:6px;box-shadow:0 0 22px rgba(56,189,248,0.18)}
+        .lock-icon img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,229,255,0.3))}
         .logo-area h1{font-size:1.38rem;font-weight:600;letter-spacing:-0.025em;margin-bottom:5px}
         .logo-area p{color:var(--text-muted);font-size:0.84rem;margin-bottom:26px}
 
-        /* FORMS */
+        /* FORMS & BUTTONS */
         .form-group{display:flex;flex-direction:column;gap:6px;text-align:left;margin-bottom:16px}
         .form-group label{font-size:0.7rem;font-weight:600;color:var(--text-muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:0.05em;display:flex;justify-content:space-between;align-items:center}
         .form-control{background:var(--bg-main);border:1px solid var(--border-color);padding:11px 13px;border-radius:9px;color:var(--text-main);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;transition:border-color 0.25s ease;width:100%}
@@ -78,7 +73,6 @@
         textarea.form-control{resize:vertical;min-height:110px}
         select.form-control{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394A3B8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
 
-        /* BUTTONS */
         .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 20px;border:none;border-radius:9px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.82rem;transition:var(--transition-smooth)}
         .btn-primary{background:var(--gradient-1);color:#fff;box-shadow:0 6px 18px rgba(56,189,248,0.18)}
         .btn-primary:hover{transform:translateY(-1.5px)}
@@ -97,8 +91,8 @@
         .admin-wrapper{display:none}
         .admin-header{position:sticky;top:0;z-index:100;background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:13px 28px;display:flex;justify-content:space-between;align-items:center}
         .admin-header .brand{display:flex;align-items:center;gap:10px}
-        .admin-header .brand-icon{width:34px;height:34px;border-radius:50%;background:var(--primary-glow);border:1.5px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.76rem;overflow:hidden}
-        .admin-header .brand-icon img{width:100%;height:100%;object-fit:cover}
+        .admin-header .brand-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.76rem}
+        .admin-header .brand-icon img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,229,255,0.28))}
         .admin-header .brand h2{font-size:0.98rem;font-weight:600;letter-spacing:-0.01em}
         .admin-header .brand .badge{font-size:0.66rem;font-weight:500;background:var(--primary-glow);color:var(--primary);padding:2px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(56,189,248,0.2)}
         .admin-header .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -113,7 +107,7 @@
         .kpi-info h4{font-size:1.35rem;font-weight:600;margin-top:3px;color:var(--text-main)}
         .kpi-icon{width:40px;height:40px;border-radius:10px;background:var(--primary-glow);border:1px solid rgba(56,189,248,0.18);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:1.05rem}
 
-        /* TABS */
+        /* TABS & CARDS */
         .admin-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--border-color);padding-bottom:10px;overflow-x:auto}
         .admin-tab{padding:9px 16px;cursor:pointer;font-weight:500;font-size:0.8rem;color:var(--text-muted);border-radius:9px;border:1px solid transparent;transition:var(--transition-smooth);display:flex;align-items:center;gap:7px;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap}
         .admin-tab:hover{color:var(--text-main);background:var(--bg-surface)}
@@ -121,7 +115,6 @@
         .tab-content{display:none}
         .tab-content.active{display:block}
 
-        /* CARDS & SPLIT PREVIEW LAYOUT */
         .admin-card{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;padding:26px;margin-bottom:26px;box-shadow:0 14px 34px rgba(0,0,0,0.3)}
         .admin-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px}
         .admin-card h3{font-size:1.08rem;font-weight:600;letter-spacing:-0.015em;display:flex;align-items:center;gap:9px;margin:0}
@@ -155,7 +148,11 @@
         .img-move-btn{background:none;border:none;color:var(--text-main);cursor:pointer;font-size:0.68rem;padding:2px 4px}
         .img-move-btn:hover{color:var(--primary)}
 
-        /* TABLES & SEARCH FILTER BAR */
+        .special-media-box{background:var(--bg-main);border:1px solid var(--border-color);border-radius:11px;padding:13px 15px;margin-bottom:14px}
+        .special-media-box h5{font-size:0.74rem;font-family:'JetBrains Mono',monospace;color:var(--primary);text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between}
+        .media-pill-badge{display:inline-flex;align-items:center;gap:5px;font-size:0.66rem;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:6px;background:rgba(0,229,255,0.1);color:#00E5FF;border:1px solid rgba(0,229,255,0.25)}
+
+        /* TABLES */
         .table-wrapper{background:var(--bg-surface);border:1px solid var(--border-color);border-radius:16px;overflow:hidden;margin-top:26px;box-shadow:0 14px 34px rgba(0,0,0,0.3)}
         .table-header{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);flex-wrap:wrap;gap:12px}
         .table-header h3{font-size:0.98rem;font-weight:600;display:flex;align-items:center;gap:8px}
@@ -184,7 +181,7 @@
         /* MODALS */
         .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:999;justify-content:center;align-items:flex-start;padding:36px 20px;overflow-y:auto}
         .modal-overlay.show{display:flex}
-        .modal{background:var(--bg-surface);border:1px solid var(--border-highlight);border-radius:16px;width:100%;max-width:650px;padding:28px;box-shadow:0 26px 65px rgba(0,0,0,0.65);margin-top:20px}
+        .modal{background:var(--bg-surface);border:1px solid var(--border-highlight);border-radius:16px;width:100%;max-width:680px;padding:28px;box-shadow:0 26px 65px rgba(0,0,0,0.65);margin-top:20px}
         .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
         .modal-header h3{font-size:1.08rem;font-weight:600}
         .modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border-color);background:var(--bg-main);color:var(--text-muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.88rem;transition:var(--transition-smooth)}
@@ -194,27 +191,15 @@
         .confirm-modal .modal p{color:var(--text-muted);margin-bottom:22px;font-size:0.86rem}
         .confirm-modal .modal .btn-group{display:flex;gap:10px;justify-content:center}
 
-        /* CONTENT EDITOR */
         .content-section{background:var(--bg-main);border:1px solid var(--border-color);border-radius:12px;padding:20px;margin-bottom:16px}
         .content-section h4{font-size:0.88rem;font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:var(--primary)}
         .char-count{font-size:0.68rem;color:var(--text-muted);text-align:right;margin-top:4px;font-family:'JetBrains Mono',monospace}
 
-        /* TOAST NOTIFICATION */
         .admin-toast{position:fixed;bottom:24px;right:24px;background:var(--bg-elevated);border:1px solid var(--primary);color:var(--text-main);padding:10px 18px;border-radius:10px;font-size:0.78rem;font-family:'JetBrains Mono',monospace;box-shadow:0 12px 30px rgba(0,0,0,0.5);display:flex;align-items:center;gap:8px;z-index:2000;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity 0.25s ease, transform 0.25s ease}
         .admin-toast.show{opacity:1;visibility:visible;transform:translateY(0)}
 
-        @media(max-width:992px){
-            .builder-grid{grid-template-columns:1fr}
-            .kpi-grid{grid-template-columns:1fr 1fr}
-            .live-preview-panel{position:static}
-        }
-        @media(max-width:768px){
-            .form-row,.kpi-grid{grid-template-columns:1fr}
-            .admin-header{flex-direction:column;gap:10px;padding:14px}
-            .admin-content{padding:18px 14px}
-            .data-table{font-size:0.78rem}
-            .data-table th,.data-table td{padding:9px 10px}
-        }
+        @media(max-width:992px){.builder-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.live-preview-panel{position:static}}
+        @media(max-width:768px){.form-row,.kpi-grid{grid-template-columns:1fr}.admin-header{flex-direction:column;gap:10px;padding:14px}.admin-content{padding:18px 14px}.data-table{font-size:0.78rem}.data-table th,.data-table td{padding:9px 10px}}
     </style>
 </head>
 <body>
@@ -252,7 +237,7 @@
                 <img src="logo.png" alt="Karcılı Logo" data-admin-logo onerror="this.outerHTML='AK'">
             </div>
             <h2><span class="gradient-text">Portfolyo Admin</span></h2>
-            <span class="badge">v4.1 KURUMSAL</span>
+            <span class="badge">v4.5 3B CAD &amp; RAPOR</span>
         </div>
         <div class="header-actions">
             <span class="user-email" id="adminEmail"></span>
@@ -268,40 +253,27 @@
     </div>
 
     <div class="admin-content">
-        <!-- DASHBOARD KPI CARDS -->
         <div class="kpi-grid">
             <div class="kpi-card">
-                <div class="kpi-info">
-                    <span>Toplam Proje</span>
-                    <h4 id="kpiTotalProjects">0</h4>
-                </div>
+                <div class="kpi-info"><span>Toplam Proje</span><h4 id="kpiTotalProjects">0</h4></div>
                 <div class="kpi-icon"><i class="fas fa-cubes"></i></div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-info">
-                    <span>Tamamlanan / Doğrulanan</span>
-                    <h4 id="kpiCompletedProjects">0</h4>
-                </div>
+                <div class="kpi-info"><span>Tamamlanan / Doğrulanan</span><h4 id="kpiCompletedProjects">0</h4></div>
                 <div class="kpi-icon" style="color:#10B981;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.25)"><i class="fas fa-check-double"></i></div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-info">
-                    <span>Kayıtlı Yetkinlik</span>
-                    <h4 id="kpiTotalSkills">0</h4>
-                </div>
+                <div class="kpi-info"><span>Kayıtlı Yetkinlik</span><h4 id="kpiTotalSkills">0</h4></div>
                 <div class="kpi-icon" style="color:#3B82F6;background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.25)"><i class="fas fa-microchip"></i></div>
             </div>
             <div class="kpi-card">
-                <div class="kpi-info">
-                    <span>Yüklü Proje Görseli</span>
-                    <h4 id="kpiTotalImages">0</h4>
-                </div>
+                <div class="kpi-info"><span>Medya / 3B / Rapor</span><h4 id="kpiTotalImages">0</h4></div>
                 <div class="kpi-icon" style="color:#A855F7;background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.25)"><i class="fas fa-images"></i></div>
             </div>
         </div>
 
         <div class="admin-tabs">
-            <button class="admin-tab active" data-tab="projects"><i class="fas fa-rocket"></i> Projeler</button>
+            <button class="admin-tab active" data-tab="projects"><i class="fas fa-rocket"></i> Projeler (3B CAD &amp; Rapor)</button>
             <button class="admin-tab" data-tab="skills"><i class="fas fa-tools"></i> Yetkinlikler</button>
             <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği, Logo &amp; CV</button>
         </div>
@@ -362,12 +334,25 @@
                             </div>
                             <div class="image-previews-grid" id="projImagePreviews"></div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="special-media-box">
+                                <h5><span><i class="fas fa-cube"></i> Korumalı 3B CAD Modeli (.STL)</span><span style="color:#10B981;font-size:0.62rem">ŞİFRELENİR</span></h5>
+                                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:8px">Yüklenen .STL dosyası otomatik şifrelenir (<code>.ak3d</code>), kimse indiremez veya CAD'de açamaz.</p>
+                                <input type="file" id="projModelFileInput" accept=".stl" class="form-control" style="padding:7px 10px;font-size:0.76rem">
+                            </div>
+                            <div class="special-media-box">
+                                <h5><span><i class="fas fa-file-shield"></i> Teknik Rapor / Vaka Analizi (.PDF)</span><span style="color:#A5B4FC;font-size:0.62rem">SALT OKUNUR</span></h5>
+                                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:8px">Projeye ait teknik araştırma / hesaplama PDF raporunu yükleyin (araç çubuğu gizli açılır).</p>
+                                <input type="file" id="projReportFileInput" accept=".pdf,application/pdf" class="form-control" style="padding:7px 10px;font-size:0.76rem">
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary" id="submitProjectBtn">
                             <i class="fas fa-save"></i> Projeyi Kaydet
                         </button>
                     </form>
 
-                    <!-- LIVE PROJECT CARD PREVIEW -->
                     <div class="live-preview-panel">
                         <div class="live-preview-header">
                             <span><i class="fas fa-eye"></i> Canlı Kart Önizlemesi</span>
@@ -490,7 +475,7 @@
                         </div>
                         <div class="form-group">
                             <label>Hero Alt Açıklama Metni</label>
-                            <textarea id="heroDesc" class="form-control" style="min-height:85px" placeholder="Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim..."></textarea>
+                            <textarea id="heroDesc" class="form-control" style="min-height:85px" placeholder="Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi..."></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -528,12 +513,12 @@
                         <h4><i class="fas fa-paragraph"></i> Hakkımda Paragrafları</h4>
                         <div class="form-group">
                             <label>1. Paragraf (Mühendislik Odağı &amp; PAÜTECH Hidromobil)</label>
-                            <textarea id="aboutP1" class="form-control" style="min-height:115px" placeholder="CAD ve mühendislik deneyimlerinizi anlatın..."></textarea>
+                            <textarea id="aboutP1" class="form-control" style="min-height:115px"></textarea>
                             <div class="char-count" id="p1Count">0 karakter</div>
                         </div>
                         <div class="form-group" style="margin-bottom:0">
                             <label>2. Paragraf (Yazılım Yetkinlikleri &amp; Kariyer Hedefi)</label>
-                            <textarea id="aboutP2" class="form-control" style="min-height:115px" placeholder="Tasarım ve doğrulama hedeflerinizi anlatın..."></textarea>
+                            <textarea id="aboutP2" class="form-control" style="min-height:115px"></textarea>
                             <div class="char-count" id="p2Count">0 karakter</div>
                         </div>
                     </div>
@@ -543,16 +528,16 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>E-Posta Adresi</label>
-                                <input type="email" id="contactEmail" class="form-control" placeholder="alicankarcili20@gmail.com">
+                                <input type="email" id="contactEmail" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>LinkedIn URL</label>
-                                <input type="url" id="contactLinkedin" class="form-control" placeholder="https://www.linkedin.com/in/alican-karcılı-772b78364/">
+                                <input type="url" id="contactLinkedin" class="form-control">
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom:0">
                             <label>İletişim Bölümü Alt Yazısı</label>
-                            <textarea id="contactText" class="form-control" style="min-height:85px" placeholder="Savunma sanayii ve otomotiv Ar-Ge staj programları..."></textarea>
+                            <textarea id="contactText" class="form-control" style="min-height:85px"></textarea>
                         </div>
                     </div>
 
@@ -627,6 +612,18 @@
                 </div>
                 <div class="image-previews-grid" id="editProjImagePreviews"></div>
             </div>
+
+            <div class="form-row">
+                <div class="special-media-box">
+                    <h5><span><i class="fas fa-cube"></i> 3B CAD Modeli (.STL)</span><span id="editModelCurrentStatus" style="font-size:0.62rem"></span></h5>
+                    <input type="file" id="editProjModelFileInput" accept=".stl" class="form-control" style="padding:7px 10px;font-size:0.74rem">
+                </div>
+                <div class="special-media-box">
+                    <h5><span><i class="fas fa-file-shield"></i> Teknik Rapor (.PDF)</span><span id="editReportCurrentStatus" style="font-size:0.62rem"></span></h5>
+                    <input type="file" id="editProjReportFileInput" accept=".pdf,application/pdf" class="form-control" style="padding:7px 10px;font-size:0.74rem">
+                </div>
+            </div>
+
             <div style="display:flex;gap:10px;margin-top:10px">
                 <button type="submit" class="btn btn-primary" id="editProjSubmitBtn"><i class="fas fa-save"></i> Güncelle</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('editProjectModal')">İptal</button>
@@ -710,7 +707,15 @@ const adminPanel  = document.getElementById('adminPanel');
 let cachedProjects = [];
 let cachedSkills   = [];
 
-/* --- CORPORATE V4 DEFAULTS --- */
+function isModelUrl(url) {
+    const u = (url || '').toLowerCase().split('?')[0];
+    return u.endsWith('.stl') || u.endsWith('.ak3d') || u.endsWith('.glb') || u.endsWith('.obj') || u.includes('/models/');
+}
+function isReportUrl(url) {
+    const u = (url || '').toLowerCase().split('?')[0];
+    return u.endsWith('.pdf') || u.includes('/reports/');
+}
+
 const CORPORATE_DEFAULTS = {
     hero_title: 'Mekanik Tasarım & Yapısal Analiz Portfolyosu',
     hero_desc: 'Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim. CATIA V5 ve SolidWorks ile mekanik sistem ve A-sınıfı yüzey tasarımları geliştiriyor, ANSYS Mechanical ile yapısal doğrulama analizleri yürütüyorum.',
@@ -722,16 +727,8 @@ const CORPORATE_DEFAULTS = {
     contact_linkedin: 'https://www.linkedin.com/in/alican-karc%C4%B1l%C4%B1-772b78364/',
     contact_text: 'Savunma sanayii ve otomotiv Ar-Ge staj programları, mekanik tasarım projeleri veya yapısal analiz çalışmaları hakkında doğrudan iletişime geçebilirsiniz.',
     highlights: [
-        {
-            icon: 'fas fa-cube',
-            title: 'Mekanik Tasarım & FEA Uygulamaları',
-            sub: 'CATIA V5 & SolidWorks ile 3B modelleme, ANSYS Mechanical ile yapısal doğrulama'
-        },
-        {
-            icon: 'fas fa-wind',
-            title: 'PAÜTECH Hidromobil — Kabuk Ar-Ge',
-            sub: 'Yarış aracı aerodinamik dış kabuk tasarımı ve G1/G2 yüzey sürekliliği geliştirme'
-        }
+        { icon: 'fas fa-cube', title: 'Mekanik Tasarım & FEA Uygulamaları', sub: 'CATIA V5 & SolidWorks ile 3B modelleme, ANSYS Mechanical ile yapısal doğrulama' },
+        { icon: 'fas fa-wind', title: 'PAÜTECH Hidromobil — Kabuk Ar-Ge', sub: 'Yarış aracı aerodinamik dış kabuk tasarımı ve G1/G2 yüzey sürekliliği geliştirme' }
     ]
 };
 
@@ -756,7 +753,7 @@ async function showAdmin(user) {
     loginScreen.style.display = 'none';
     adminPanel.style.display  = 'block';
     document.getElementById('adminEmail').textContent = user.email;
-    await autoEnsureCorporateData();
+    await syncCorporateDatabase(false);
     loadProjectsList();
     loadSkillsList();
     loadContentForm();
@@ -766,13 +763,11 @@ function showLogin() {
     adminPanel.style.display  = 'none';
 }
 
-/* --- AUTO-SYNC CORPORATE PROJECTS & DESCRIPTIONS TO SUPABASE --- */
 async function syncCorporateDatabase(forceContent = false) {
     try {
         const { data: existingProjects } = await sb.from('projects').select('*');
         const list = existingProjects || [];
 
-        // 1. Clean any parenthetical prompt notes from titles & clean Audi R8 / Go-Kart descriptions
         for (const p of list) {
             const rawTitle = p.title || '';
             const cleanedTitle = rawTitle.replace(/\s*\(\s*veya daha spesifik[^)]*\)/gi, '').trim();
@@ -791,7 +786,6 @@ async function syncCorporateDatabase(forceContent = false) {
             }
         }
 
-        // 2. Ensure Project 3 (PAÜTECH Hidromobil) exists
         const hasPautech = list.some(p => (p.title || '').toLowerCase().includes('hidromobil'));
         if (!hasPautech) {
             await sb.from('projects').insert([{
@@ -804,7 +798,6 @@ async function syncCorporateDatabase(forceContent = false) {
             }]);
         }
 
-        // 3. Ensure Project 4 (Piston - Biyel Kolu / Boxer Motor FEA) exists
         const hasPiston = list.some(p => {
             const tl = (p.title || '').toLowerCase();
             return tl.includes('piston') || tl.includes('boxer');
@@ -820,7 +813,6 @@ async function syncCorporateDatabase(forceContent = false) {
             }]);
         }
 
-        // 4. Sync corporate site_content if not yet v4_corporate or if forced
         const { data: scData } = await sb.from('site_content').select('*');
         const scMap = {};
         (scData || []).forEach(r => { scMap[r.key] = r.value; });
@@ -836,13 +828,7 @@ async function syncCorporateDatabase(forceContent = false) {
             await upsertContent('contact_text', CORPORATE_DEFAULTS.contact_text);
             await upsertContent('highlights', JSON.stringify(CORPORATE_DEFAULTS.highlights));
         }
-    } catch (e) {
-        console.log('Sync info:', e.message);
-    }
-}
-
-async function autoEnsureCorporateData() {
-    await syncCorporateDatabase(false);
+    } catch (e) { console.log('Sync info:', e.message); }
 }
 
 document.getElementById('syncCorporateBtn').addEventListener('click', async () => {
@@ -898,7 +884,6 @@ document.querySelectorAll('.admin-tab').forEach(tab => {
     });
 });
 
-/* --- LIVE PREVIEW UPDATER --- */
 const STATUS_CLS = {
     'Tamamlandı': 'completed',
     'Tasarım Doğrulandı': 'design-verified',
@@ -929,10 +914,11 @@ function updateLiveProjectPreview() {
     document.getElementById(id)?.addEventListener('input', updateLiveProjectPreview);
 });
 
-/* --- IMAGE MANAGEMENT & REORDERING --- */
 let newProjFiles  = [];
 let editCurImages = [];
 let editNewFiles  = [];
+let editCurModelUrl = null;
+let editCurReportUrl = null;
 
 const dz = document.getElementById('projDropZone');
 ['dragenter','dragover'].forEach(n => dz.addEventListener(n, e => { e.preventDefault(); dz.classList.add('dragover'); }));
@@ -1019,6 +1005,33 @@ async function uploadFiles(files) {
     return urls;
 }
 
+// Obfuscate .STL file with AK3D XOR encryption before uploading
+async function uploadProtected3DModel(file) {
+    const rawBuf = await file.arrayBuffer();
+    const src = new Uint8Array(rawBuf);
+    const magic = [65, 75, 51, 68]; // 'AK3D'
+    const key = [0x4B, 0x41, 0x52, 0x43, 0x49, 0x4C, 0x49, 0x33, 0x44];
+    const out = new Uint8Array(src.length + 4);
+    out.set(magic, 0);
+    for (let i = 0; i < src.length; i++) {
+        out[i + 4] = src[i] ^ key[i % key.length];
+    }
+    const blob = new Blob([out], { type: 'application/octet-stream' });
+    const path = `models/protected_${Date.now()}_${Math.random().toString(36).slice(2,7)}.ak3d`;
+    const { error } = await sb.storage.from('portfolio').upload(path, blob, { cacheControl: '3600', upsert: false });
+    if (error) throw new Error('3B Model yüklenemedi: ' + error.message);
+    const { data: { publicUrl } } = sb.storage.from('portfolio').getPublicUrl(path);
+    return publicUrl;
+}
+
+async function uploadReportPdf(file) {
+    const path = `reports/report_${Date.now()}_${Math.random().toString(36).slice(2,7)}.pdf`;
+    const { error } = await sb.storage.from('portfolio').upload(path, file, { cacheControl: '3600', upsert: false });
+    if (error) throw new Error('Rapor PDF yüklenemedi: ' + error.message);
+    const { data: { publicUrl } } = sb.storage.from('portfolio').getPublicUrl(path);
+    return publicUrl;
+}
+
 document.getElementById('projectForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const succEl = document.getElementById('addProjectSuccess');
@@ -1029,6 +1042,17 @@ document.getElementById('projectForm').addEventListener('submit', async (e) => {
 
     try {
         const images = newProjFiles.length ? await uploadFiles(newProjFiles) : [];
+        const modelInput = document.getElementById('projModelFileInput');
+        if (modelInput.files && modelInput.files.length) {
+            const mUrl = await uploadProtected3DModel(modelInput.files[0]);
+            images.push(mUrl);
+        }
+        const reportInput = document.getElementById('projReportFileInput');
+        if (reportInput.files && reportInput.files.length) {
+            const rUrl = await uploadReportPdf(reportInput.files[0]);
+            images.push(rUrl);
+        }
+
         const { error } = await sb.from('projects').insert([{
             title:       document.getElementById('projTitle').value.trim(),
             status:      document.getElementById('projStatus').value,
@@ -1081,17 +1105,26 @@ function renderProjectsTable() {
         return;
     }
 
-    let html = `<table class="data-table"><thead><tr><th>#</th><th>Görsel</th><th>Başlık</th><th>Etiketler</th><th>Durum</th><th>Sıra</th><th>İşlem</th></tr></thead><tbody>`;
+    let html = `<table class="data-table"><thead><tr><th>#</th><th>Görsel</th><th>Başlık &amp; Ekler</th><th>Etiketler</th><th>Durum</th><th>Sıra</th><th>İşlem</th></tr></thead><tbody>`;
     filtered.forEach((p, i) => {
         const cls   = STATUS_CLS[p.status] || 'in-progress';
         const tags  = (p.tags||[]).map(t=>`<span class="table-tag">${t}</span>`).join('');
-        const thumb = p.images?.length ? `<img src="${p.images[0]}" loading="lazy" style="width:44px;height:33px;object-fit:cover;border-radius:6px;border:1px solid var(--border-color)">` : '<i class="fas fa-drafting-compass" style="color:var(--primary);font-size:1.15rem"></i>';
+        const photos = (p.images||[]).filter(u => !isModelUrl(u) && !isReportUrl(u));
+        const has3D = (p.images||[]).some(u => isModelUrl(u));
+        const hasRep = (p.images||[]).some(u => isReportUrl(u));
+
+        const thumb = photos.length ? `<img src="${photos[0]}" loading="lazy" style="width:44px;height:33px;object-fit:cover;border-radius:6px;border:1px solid var(--border-color)">` : '<i class="fas fa-drafting-compass" style="color:var(--primary);font-size:1.15rem"></i>';
         const safeTitle = p.title.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+
+        let extraBadges = '';
+        if (has3D) extraBadges += `<span class="media-pill-badge" style="margin-left:6px"><i class="fas fa-cube"></i> 3B CAD</span>`;
+        if (hasRep) extraBadges += `<span class="media-pill-badge" style="margin-left:6px;color:#A5B4FC;border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.12)"><i class="fas fa-file-pdf"></i> RAPOR</span>`;
+
         html += `
             <tr>
                 <td style="color:var(--text-muted);font-family:'JetBrains Mono',monospace">${i+1}</td>
                 <td>${thumb}</td>
-                <td style="font-weight:600">${p.title}</td>
+                <td style="font-weight:600">${p.title}${extraBadges}</td>
                 <td><div class="table-tags">${tags}</div></td>
                 <td><span class="table-status ${cls}">${p.status}</span></td>
                 <td>
@@ -1125,9 +1158,7 @@ window.quickAdjustOrder = async function(table, id, newOrder) {
         if (error) throw error;
         notifyToast('Sıralama güncellendi');
         if (table === 'projects') loadProjectsList(); else loadSkillsList();
-    } catch (e) {
-        alert('Sıralama güncellenemedi: ' + e.message);
-    }
+    } catch (e) { alert('Sıralama güncellenemedi: ' + e.message); }
 };
 
 window.duplicateProject = async function(id) {
@@ -1145,13 +1176,13 @@ window.duplicateProject = async function(id) {
         if (error) throw error;
         notifyToast('Proje kopyalandı');
         loadProjectsList();
-    } catch (e) {
-        alert('Kopyalama hatası: ' + e.message);
-    }
+    } catch (e) { alert('Kopyalama hatası: ' + e.message); }
 };
 
 window.openEditProject = async function(id) {
     document.getElementById('editProjectError').style.display = document.getElementById('editProjectSuccess').style.display = 'none';
+    document.getElementById('editProjModelFileInput').value = '';
+    document.getElementById('editProjReportFileInput').value = '';
     try {
         const { data, error } = await sb.from('projects').select('*').eq('id', id).single();
         if (error) throw error;
@@ -1161,8 +1192,23 @@ window.openEditProject = async function(id) {
         document.getElementById('editProjTags').value   = (data.tags||[]).join(', ');
         document.getElementById('editProjOrder').value  = data.sort_order ?? 0;
         document.getElementById('editProjDesc').value   = data.description || '';
-        editCurImages = [...(data.images||[])];
+
+        const allImgs = data.images || [];
+        editCurImages = allImgs.filter(u => !isModelUrl(u) && !isReportUrl(u));
+        editCurModelUrl = allImgs.find(u => isModelUrl(u)) || null;
+        editCurReportUrl = allImgs.find(u => isReportUrl(u)) || null;
         editNewFiles  = [];
+
+        const mStat = document.getElementById('editModelCurrentStatus');
+        mStat.innerHTML = editCurModelUrl
+            ? `<span style="color:#10B981">✓ Yüklü <a href="#" onclick="editCurModelUrl=null;this.parentElement.textContent='Kaldırıldı';return false;" style="color:#EF4444;margin-left:4px">[Sil]</a></span>`
+            : `<span style="color:var(--text-muted)">Yok</span>`;
+
+        const rStat = document.getElementById('editReportCurrentStatus');
+        rStat.innerHTML = editCurReportUrl
+            ? `<span style="color:#10B981">✓ Yüklü <a href="#" onclick="editCurReportUrl=null;this.parentElement.textContent='Kaldırıldı';return false;" style="color:#EF4444;margin-left:4px">[Sil]</a></span>`
+            : `<span style="color:var(--text-muted)">Yok</span>`;
+
         renderPreviews('edit');
         openModal('editProjectModal');
     } catch(err) { alert('Hata: ' + err.message); }
@@ -1179,6 +1225,23 @@ document.getElementById('editProjectForm').addEventListener('submit', async (e) 
     try {
         const uploaded = editNewFiles.length ? await uploadFiles(editNewFiles) : [];
         const images   = [...editCurImages, ...uploaded];
+
+        const editModelInput = document.getElementById('editProjModelFileInput');
+        if (editModelInput.files && editModelInput.files.length) {
+            const newMUrl = await uploadProtected3DModel(editModelInput.files[0]);
+            images.push(newMUrl);
+        } else if (editCurModelUrl) {
+            images.push(editCurModelUrl);
+        }
+
+        const editReportInput = document.getElementById('editProjReportFileInput');
+        if (editReportInput.files && editReportInput.files.length) {
+            const newRUrl = await uploadReportPdf(editReportInput.files[0]);
+            images.push(newRUrl);
+        } else if (editCurReportUrl) {
+            images.push(editCurReportUrl);
+        }
+
         const { error } = await sb.from('projects').update({
             title:       document.getElementById('editProjTitle').value.trim(),
             status:      document.getElementById('editProjStatus').value,
@@ -1435,9 +1498,7 @@ async function loadContentForm() {
         ['aboutP1','aboutP2'].forEach((id,i) => {
             document.getElementById(['p1Count','p2Count'][i]).textContent = document.getElementById(id).value.length + ' karakter';
         });
-    } catch (err) {
-        console.log('site_content tablosu yüklenemedi:', err.message);
-    }
+    } catch (err) { console.log('site_content tablosu yüklenemedi:', err.message); }
 }
 
 async function upsertContent(key, value) {
@@ -1478,7 +1539,6 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
     }
 });
 
-/* --- JSON BACKUP EXPORT --- */
 document.getElementById('exportBackupBtn').addEventListener('click', async () => {
     try {
         const { data: contentData } = await sb.from('site_content').select('*');
@@ -1496,12 +1556,9 @@ document.getElementById('exportBackupBtn').addEventListener('click', async () =>
         a.click();
         URL.revokeObjectURL(url);
         notifyToast('JSON yedek dosyası indirildi');
-    } catch (e) {
-        alert('Yedek alınamadı: ' + e.message);
-    }
+    } catch (e) { alert('Yedek alınamadı: ' + e.message); }
 });
 
-/* --- DELETE MODAL --- */
 window.openDeleteModal = function(id, name, type) {
     document.getElementById('deleteItemId').value   = id;
     document.getElementById('deleteItemType').value = type;
