@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel | Alican Karcılı Mühendislik Portfolyosu</title>
+    <meta name="theme-color" content="#04070F">
+    <link rel="icon" type="image/png" href="logo.png" id="adminFavicon">
+    <link rel="apple-touch-icon" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -61,7 +64,8 @@
             top:0;left:0;width:100%;height:2.5px;
             background:var(--gradient-1);
         }
-        .lock-icon{width:54px;height:54px;border-radius:14px;background:var(--primary-glow);border:1px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--primary);font-size:1.35rem}
+        .lock-icon{width:68px;height:68px;border-radius:50%;background:var(--primary-glow);border:1.5px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:var(--primary);font-size:1.35rem;overflow:hidden;box-shadow:0 0 22px rgba(56,189,248,0.2)}
+        .lock-icon img{width:100%;height:100%;object-fit:cover}
         .logo-area h1{font-size:1.38rem;font-weight:600;letter-spacing:-0.025em;margin-bottom:5px}
         .logo-area p{color:var(--text-muted);font-size:0.84rem;margin-bottom:26px}
 
@@ -93,7 +97,8 @@
         .admin-wrapper{display:none}
         .admin-header{position:sticky;top:0;z-index:100;background:var(--glass-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--glass-border);padding:13px 28px;display:flex;justify-content:space-between;align-items:center}
         .admin-header .brand{display:flex;align-items:center;gap:10px}
-        .admin-header .brand-icon{width:30px;height:30px;border-radius:8px;background:var(--primary-glow);border:1px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.76rem}
+        .admin-header .brand-icon{width:34px;height:34px;border-radius:50%;background:var(--primary-glow);border:1.5px solid var(--border-highlight);display:flex;align-items:center;justify-content:center;color:var(--primary);font-family:'JetBrains Mono',monospace;font-weight:600;font-size:0.76rem;overflow:hidden}
+        .admin-header .brand-icon img{width:100%;height:100%;object-fit:cover}
         .admin-header .brand h2{font-size:0.98rem;font-weight:600;letter-spacing:-0.01em}
         .admin-header .brand .badge{font-size:0.66rem;font-weight:500;background:var(--primary-glow);color:var(--primary);padding:2px 9px;border-radius:20px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(56,189,248,0.2)}
         .admin-header .header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -216,7 +221,9 @@
 
 <div class="login-wrapper" id="loginScreen">
     <div class="login-card">
-        <div class="lock-icon"><i class="fas fa-shield-halved"></i></div>
+        <div class="lock-icon">
+            <img src="logo.png" alt="Karcılı Logo" data-admin-logo onerror="this.outerHTML='<i class=\'fas fa-shield-halved\'></i>'">
+        </div>
         <div class="logo-area">
             <h1><span class="gradient-text">Admin Panel</span></h1>
             <p>Alican Karcılı Portfolyo Yönetimi</p>
@@ -241,9 +248,11 @@
 <div class="admin-wrapper" id="adminPanel">
     <div class="admin-header">
         <div class="brand">
-            <div class="brand-icon">AK</div>
+            <div class="brand-icon">
+                <img src="logo.png" alt="Karcılı Logo" data-admin-logo onerror="this.outerHTML='AK'">
+            </div>
             <h2><span class="gradient-text">Portfolyo Admin</span></h2>
-            <span class="badge">v4.0 KURUMSAL</span>
+            <span class="badge">v4.1 KURUMSAL</span>
         </div>
         <div class="header-actions">
             <span class="user-email" id="adminEmail"></span>
@@ -294,7 +303,7 @@
         <div class="admin-tabs">
             <button class="admin-tab active" data-tab="projects"><i class="fas fa-rocket"></i> Projeler</button>
             <button class="admin-tab" data-tab="skills"><i class="fas fa-tools"></i> Yetkinlikler</button>
-            <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği &amp; CV</button>
+            <button class="admin-tab" data-tab="content"><i class="fas fa-file-pen"></i> Site İçeriği, Logo &amp; CV</button>
         </div>
 
         <!-- TAB 1: PROJECTS -->
@@ -467,14 +476,14 @@
         <div class="tab-content" id="tab-content">
             <div class="admin-card">
                 <div class="admin-card-header">
-                    <h3><i class="fas fa-user-pen"></i> Kurumsal İçerik, CV &amp; İletişim Yönetimi</h3>
+                    <h3><i class="fas fa-user-pen"></i> Kurumsal İçerik, Logo, CV &amp; İletişim Yönetimi</h3>
                 </div>
                 <div class="alert alert-success" id="contentSuccess"></div>
                 <div class="alert alert-error" id="contentError"></div>
 
                 <form id="contentForm">
                     <div class="content-section">
-                        <h4><i class="fas fa-heading"></i> Hero Bölümü &amp; Özgeçmiş (CV PDF)</h4>
+                        <h4><i class="fas fa-heading"></i> Hero Bölümü, Site Logosu &amp; Özgeçmiş (CV PDF)</h4>
                         <div class="form-group">
                             <label>Hero Ana Başlık</label>
                             <input type="text" id="heroTitle" class="form-control" placeholder="Mekanik Tasarım & Yapısal Analiz Portfolyosu">
@@ -482,6 +491,21 @@
                         <div class="form-group">
                             <label>Hero Alt Açıklama Metni</label>
                             <textarea id="heroDesc" class="form-control" style="min-height:85px" placeholder="Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Site Logosu &amp; Sekme İkonu (Favicon) Bağlantısı</label>
+                                <input type="text" id="logoUrl" class="form-control" placeholder="logo.png veya Supabase Logo URL">
+                            </div>
+                            <div class="form-group">
+                                <label>Bilgisayardan Site Logosu Yükle (PNG/JPG)</label>
+                                <div style="display:flex;gap:8px;align-items:center">
+                                    <input type="file" id="logoFileInput" accept="image/*" class="form-control" style="padding:7px 10px">
+                                    <button type="button" class="btn btn-secondary btn-sm" id="uploadLogoBtn" style="white-space:nowrap;padding:11px 14px">
+                                        <i class="fas fa-image"></i> Logo Yükle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group" style="margin-bottom:0">
@@ -690,6 +714,7 @@ let cachedSkills   = [];
 const CORPORATE_DEFAULTS = {
     hero_title: 'Mekanik Tasarım & Yapısal Analiz Portfolyosu',
     hero_desc: 'Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi ve PAÜTECH Hidromobil Takımı kabuk tasarımı üyesiyim. CATIA V5 ve SolidWorks ile mekanik sistem ve A-sınıfı yüzey tasarımları geliştiriyor, ANSYS Mechanical ile yapısal doğrulama analizleri yürütüyorum.',
+    logo_url: 'logo.png',
     cv_url: 'cv.pdf',
     about_p1: 'Pamukkale Üniversitesi Otomotiv Mühendisliği 2. sınıf (GANO: 3.09) öğrencisi olarak; mekanik sistem tasarımı, A-sınıfı (Class-A) yüzey modelleme ve sonlu elemanlar analizi (FEA) alanlarında mühendislik çözümleri geliştiriyorum. PAÜTECH Hidromobil Takımı bünyesinde aerodinamik dış kabuk tasarımı sorumluluğu üstlenerek, düşük sürükleme katsayısı (Cd) ve kalıplanabilirlik kriterlerine uygun Ar-Ge çalışmaları yürütüyorum.',
     about_p2: 'Tasarım süreçlerinde CATIA V5 (Generative Shape Design, Part & Assembly Design) ve SolidWorks (3D Sketch, Weldments) modüllerini etkin şekilde kullanıyor; geliştirdiğim mekanik bileşenlerin statik, gerilme ve yorulma doğrulamalarını ANSYS Mechanical ortamında gerçekleştiriyorum. Savunma sanayii ve otomotiv Ar-Ge projelerinde tasarım ile doğrulama süreçlerini bütünleşik yürüten bir mühendis olarak değer üretmeyi hedefliyorum.',
@@ -747,9 +772,15 @@ async function syncCorporateDatabase(forceContent = false) {
         const { data: existingProjects } = await sb.from('projects').select('*');
         const list = existingProjects || [];
 
-        // 1. Update Audi R8 & Go-Kart descriptions so they don't repeat title on line 1
+        // 1. Clean any parenthetical prompt notes from titles & clean Audi R8 / Go-Kart descriptions
         for (const p of list) {
-            const t = (p.title || '').toLowerCase();
+            const rawTitle = p.title || '';
+            const cleanedTitle = rawTitle.replace(/\s*\(\s*veya daha spesifik[^)]*\)/gi, '').trim();
+            if (cleanedTitle !== rawTitle) {
+                await sb.from('projects').update({ title: cleanedTitle }).eq('id', p.id);
+            }
+
+            const t = cleanedTitle.toLowerCase();
             if (t.includes('audi r8') && (p.description || '').toLowerCase().startsWith('audi r8')) {
                 const cleanAudiDesc = `CATIA V5 Generative Shape Design (GSD) modülü kullanılarak G1/G2 yüzey sürekliliği kriterlerine uygun şekilde sıfırdan modellenen aerodinamik dış kabuk geometrisi.\n\nProje kapsamında referans blueprint'ler (ön, üst, yan ve arka görünüşler) uzaysal düzlemlere ölçeklendirilerek yerleştirilmiş, ana karakter hatları 3D spline eğrileri ile oluşturulmuştur. Multi-sections surface, sweep ve blend komutları kullanılarak yüzey geçişlerindeki teğetsellik (G1) ve eğrilik (G2) süreklilikleri korunmuştur.\n\nSimetri düzlemi üzerinden yürütülen yarı-model çalışması birleştirilerek kaput, tavan, yan hava kanalları ve çamurluk geçişlerini içeren bütünsel aerodinamik dış kabuk formu elde edilmiştir.`;
                 await sb.from('projects').update({ description: cleanAudiDesc, sort_order: 1 }).eq('id', p.id);
@@ -773,8 +804,11 @@ async function syncCorporateDatabase(forceContent = false) {
             }]);
         }
 
-        // 3. Ensure Project 4 (Piston - Biyel Kolu FEA) exists
-        const hasPiston = list.some(p => (p.title || '').toLowerCase().includes('piston'));
+        // 3. Ensure Project 4 (Piston - Biyel Kolu / Boxer Motor FEA) exists
+        const hasPiston = list.some(p => {
+            const tl = (p.title || '').toLowerCase();
+            return tl.includes('piston') || tl.includes('boxer');
+        });
         if (!hasPiston) {
             await sb.from('projects').insert([{
                 title: 'Piston - Biyel Kolu Mekanizması CAD & Yapısal Analiz (FEA)',
@@ -820,7 +854,7 @@ document.getElementById('syncCorporateBtn').addEventListener('click', async () =
     await loadContentForm();
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> Kurumsal Verileri Eşitle';
-    notifyToast('4 Proje ve kurumsal metinler Supabase ile eşitlendi!');
+    notifyToast('Projeler ve kurumsal metinler Supabase ile eşitlendi!');
 });
 
 function updateKPIs() {
@@ -1283,7 +1317,7 @@ document.getElementById('editSkillForm').addEventListener('submit', async (e) =>
     } catch (err) { errEl.textContent = err.message; errEl.style.display = 'block'; }
 });
 
-/* --- SITE CONTENT & CV UPLOAD MANAGEMENT --- */
+/* --- SITE CONTENT, LOGO & CV UPLOAD MANAGEMENT --- */
 let highlightList = [];
 
 function renderHighlightCards() {
@@ -1310,6 +1344,36 @@ document.getElementById('addHighlightBtn').addEventListener('click', () => {
     document.getElementById(id).addEventListener('input', function() {
         document.getElementById(['p1Count','p2Count'][i]).textContent = this.value.length + ' karakter';
     });
+});
+
+document.getElementById('uploadLogoBtn').addEventListener('click', async () => {
+    const fileInput = document.getElementById('logoFileInput');
+    if (!fileInput.files || !fileInput.files.length) {
+        alert('Lütfen önce bilgisayarınızdan logo görselini seçin.');
+        return;
+    }
+    const file = fileInput.files[0];
+    const ext = file.name.split('.').pop();
+    const btn = document.getElementById('uploadLogoBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yükleniyor...';
+    try {
+        const path = `branding/Karcili_Logo_${Date.now()}.${ext}`;
+        const { error } = await sb.storage.from('portfolio').upload(path, file, { cacheControl: '3600', upsert: true });
+        if (error) throw error;
+        const { data: { publicUrl } } = sb.storage.from('portfolio').getPublicUrl(path);
+        document.getElementById('logoUrl').value = publicUrl;
+        await upsertContent('logo_url', publicUrl);
+        document.querySelectorAll('[data-admin-logo]').forEach(img => { img.src = publicUrl; });
+        const fav = document.getElementById('adminFavicon');
+        if (fav) fav.href = publicUrl;
+        notifyToast('Site logosu ve sekme ikonu yüklendi & kaydedildi!');
+    } catch (err) {
+        alert('Logo yükleme hatası: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-image"></i> Logo Yükle';
+    }
 });
 
 document.getElementById('uploadCvBtn').addEventListener('click', async () => {
@@ -1347,12 +1411,19 @@ async function loadContentForm() {
         const isV4 = map.content_version === 'v4_corporate';
         document.getElementById('heroTitle').value       = (isV4 && map.hero_title)       ? map.hero_title       : CORPORATE_DEFAULTS.hero_title;
         document.getElementById('heroDesc').value        = (isV4 && map.hero_desc)        ? map.hero_desc        : CORPORATE_DEFAULTS.hero_desc;
-        document.getElementById('cvUrl').value           = map.cv_url || CORPORATE_DEFAULTS.cv_url;
+        document.getElementById('logoUrl').value         = map.logo_url || CORPORATE_DEFAULTS.logo_url;
+        document.getElementById('cvUrl').value           = map.cv_url   || CORPORATE_DEFAULTS.cv_url;
         document.getElementById('aboutP1').value         = (isV4 && map.about_p1)         ? map.about_p1         : CORPORATE_DEFAULTS.about_p1;
         document.getElementById('aboutP2').value         = (isV4 && map.about_p2)         ? map.about_p2         : CORPORATE_DEFAULTS.about_p2;
         document.getElementById('contactEmail').value    = map.contact_email    || CORPORATE_DEFAULTS.contact_email;
         document.getElementById('contactLinkedin').value = map.contact_linkedin || CORPORATE_DEFAULTS.contact_linkedin;
         document.getElementById('contactText').value     = (isV4 && map.contact_text)     ? map.contact_text     : CORPORATE_DEFAULTS.contact_text;
+
+        if (map.logo_url) {
+            document.querySelectorAll('[data-admin-logo]').forEach(img => { img.src = map.logo_url; });
+            const fav = document.getElementById('adminFavicon');
+            if (fav) fav.href = map.logo_url;
+        }
 
         if (isV4 && map.highlights) {
             try { highlightList = JSON.parse(map.highlights); } catch(e) { highlightList = [...CORPORATE_DEFAULTS.highlights]; }
@@ -1386,6 +1457,7 @@ document.getElementById('contentForm').addEventListener('submit', async (e) => {
         await upsertContent('content_version',  'v4_corporate');
         await upsertContent('hero_title',       document.getElementById('heroTitle').value.trim());
         await upsertContent('hero_desc',        document.getElementById('heroDesc').value.trim());
+        await upsertContent('logo_url',         document.getElementById('logoUrl').value.trim() || 'logo.png');
         await upsertContent('cv_url',           document.getElementById('cvUrl').value.trim() || 'cv.pdf');
         await upsertContent('about_p1',         document.getElementById('aboutP1').value.trim());
         await upsertContent('about_p2',         document.getElementById('aboutP2').value.trim());
