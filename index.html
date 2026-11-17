@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alican Karcılı | Otomotiv Mühendisliği — Mekanik Tasarım & Yapısal Analiz</title>
     <meta name="description" content="Alican Karcılı - Otomotiv Mühendisliği portfolyosu. CATIA V5 & SolidWorks ile ileri yüzey ve mekanik sistem tasarımı, ANSYS Mechanical ile yapısal analiz (FEA) ve PAÜTECH Hidromobil aerodinamik kabuk Ar-Ge çalışmaları.">
+    <meta name="theme-color" content="#04070F">
+    <link rel="icon" type="image/png" href="logo.png" id="siteFavicon">
+    <link rel="apple-touch-icon" href="logo.png" id="appleTouchIcon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -139,7 +142,7 @@
             transform: translateY(0);
         }
 
-        /* --- NAVIGATION & ARCHITECTURAL WORDMARK --- */
+        /* --- NAVIGATION & BRAND EMBLEM --- */
         header {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: transparent;
@@ -156,23 +159,44 @@
 
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 5%; max-width: 1280px; margin: 0 auto;
+            padding: 15px 5%; max-width: 1280px; margin: 0 auto;
         }
 
         .logo {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.05rem;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.18em;
             color: var(--text-main);
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 11px;
             position: relative;
             padding: 4px 0;
-            transition: opacity 0.25s ease;
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
-        .logo:hover { opacity: 0.9; }
+        .logo:hover { opacity: 0.95; }
+        .logo-emblem {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
+            box-shadow: 0 0 14px rgba(56, 189, 248, 0.22);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            background: #04070F;
+            flex-shrink: 0;
+        }
+        .logo:hover .logo-emblem {
+            transform: rotate(8deg) scale(1.06);
+            border-color: var(--primary-bright);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.38);
+        }
+        .logo-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
         .logo .first-name { font-weight: 300; color: var(--text-main); }
         .logo .last-name {
             font-weight: 700;
@@ -220,9 +244,9 @@
         }
 
         .hud-dot {
-            width: 6px; height: 6px; border-radius: 50%;
+            width: 7px; height: 7px; border-radius: 50%;
             background: var(--primary);
-            box-shadow: 0 0 8px var(--primary);
+            box-shadow: 0 0 10px var(--primary);
             display: inline-block;
             flex-shrink: 0;
         }
@@ -232,15 +256,15 @@
         .hero-badge {
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            padding: 6px 16px;
+            gap: 10px;
+            padding: 6px 18px;
             border-radius: 999px;
             background: var(--bg-surface);
             border: 1px solid var(--border-highlight);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.71rem;
             font-weight: 500;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
             color: var(--primary);
             margin-bottom: 22px;
             box-shadow: var(--shadow-glow);
@@ -384,7 +408,13 @@
         }
 
         /* --- SECTION LAYOUTS --- */
-        section { padding: 95px 5%; max-width: 1240px; margin: 0 auto; position: relative; }
+        section {
+            padding: 95px 5%;
+            max-width: 1240px;
+            margin: 0 auto;
+            position: relative;
+            scroll-margin-top: 82px;
+        }
         .section-header { margin-bottom: 48px; text-align: center; }
         .section-title {
             font-size: clamp(1.45rem, 2.5vw, 1.9rem);
@@ -403,7 +433,7 @@
             border-radius: 2px;
         }
 
-        /* --- ABOUT SECTION --- */
+        /* --- ABOUT SECTION & CUSTOM LOGO HUD CARD --- */
         .about-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: 55px; align-items: center; }
         .about-text p { color: var(--text-secondary); margin-bottom: 18px; font-size: 0.94rem; line-height: 1.78; }
         .about-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 28px; }
@@ -447,7 +477,7 @@
         .highlight-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 6px; }
         .highlight-card p { color: var(--text-muted); font-size: 0.82rem; margin: 0; line-height: 1.55; }
         
-        /* Clean Engineering Visual Card */
+        /* Engineering Emblem HUD Card */
         .about-visual { position: relative; display: flex; justify-content: center; }
         .engineering-hud-card {
             width: 100%;
@@ -458,27 +488,39 @@
             padding: 28px 24px;
             box-shadow: var(--shadow-card);
             position: relative;
+            transition: var(--transition-smooth);
+        }
+        .engineering-hud-card:hover {
+            border-color: var(--border-highlight);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5), 0 0 28px rgba(56, 189, 248, 0.12);
         }
         .visual-box {
             position: relative;
-            width: 168px;
-            height: 168px;
+            width: 176px;
+            height: 176px;
             margin: 0 auto 24px;
             border-radius: 50%; 
             border: 1px dashed var(--border-highlight);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 70%);
+            background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 72%);
+            padding: 12px;
         }
-        .visual-box::before {
-            content: '';
-            position: absolute;
-            inset: 15px;
+        .visual-box img.hud-brand-logo {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border: 1px solid var(--border-color);
+            object-fit: cover;
+            border: 2px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 28px rgba(0, 229, 255, 0.22);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+            background: #04070F;
         }
-        .visual-box i { font-size: 3.4rem; color: var(--primary); opacity: 0.9; }
+        .engineering-hud-card:hover .visual-box img.hud-brand-logo {
+            transform: scale(1.04);
+            box-shadow: 0 0 36px rgba(0, 229, 255, 0.35);
+        }
 
         .hud-specs {
             display: grid;
@@ -486,7 +528,7 @@
             gap: 10px;
         }
         .hud-spec-item {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.22);
             border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 10px 12px;
@@ -504,7 +546,7 @@
             margin-top: 2px;
         }
 
-        /* --- SKILLS SECTION --- */
+        /* --- SKILLS SECTION (HIGH-CONTRAST ICON BOXES) --- */
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(225px, 1fr)); gap: 18px; }
         .skill-card {
             background: var(--bg-surface);
@@ -533,12 +575,13 @@
         }
         .skill-card:hover::after { opacity: 1; height: 3px; }
         .skill-icon {
-            width: 54px;
-            height: 54px;
+            width: 58px;
+            height: 58px;
             margin: 0 auto 14px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -547,8 +590,14 @@
         .skill-card:hover .skill-icon {
             transform: scale(1.06);
             border-color: var(--skill-color, var(--primary));
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.22) 0%, rgba(56, 189, 248, 0.08) 100%);
         }
-        .skill-icon img { max-height: 30px; max-width: 34px; object-fit: contain; }
+        .skill-icon img {
+            max-height: 32px;
+            max-width: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35)) brightness(1.15) contrast(1.08);
+        }
         .skill-icon i { font-size: 1.65rem; color: var(--skill-color, var(--primary)); }
         .skill-card h3 { font-size: 0.94rem; font-weight: 600; margin-bottom: 6px; letter-spacing: 0.01em; }
         .skill-card p { font-size: 0.76rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
@@ -587,7 +636,7 @@
             color: var(--primary);
         }
 
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 28px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 28px; align-items: stretch; }
         .project-card {
             background: var(--bg-surface);
             border: 1px solid var(--border-color);
@@ -596,6 +645,7 @@
             transition: var(--transition-smooth);
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
         .project-card:hover {
             border-color: var(--border-highlight);
@@ -603,7 +653,7 @@
             box-shadow: var(--shadow-card);
         }
         
-        .project-image-slider { position: relative; width: 100%; height: 245px; background: #050811; overflow: hidden; cursor: pointer; }
+        .project-image-slider { position: relative; width: 100%; height: 245px; background: #050811; overflow: hidden; cursor: pointer; flex-shrink: 0; }
         .project-image-slider img {
             transition: opacity 0.4s ease, transform 0.45s ease;
         }
@@ -718,7 +768,7 @@
             font-family: 'JetBrains Mono', monospace;
             transition: var(--transition-smooth);
         }
-        .project-title { font-size: 1.12rem; font-weight: 600; margin-bottom: 10px; color: var(--text-main); }
+        .project-title { font-size: 1.12rem; font-weight: 600; margin-bottom: 10px; color: var(--text-main); line-height: 1.32; }
         .project-desc {
             color: var(--text-secondary);
             font-size: 0.88rem;
@@ -802,6 +852,14 @@
             max-height: 100%;
             object-fit: contain;
         }
+        /* Place counter on top-left inside modal so it never overlaps close button on top-right */
+        .project-modal-gallery .slider-counter {
+            right: auto;
+            left: 16px;
+            top: 16px;
+            padding: 5px 12px;
+            font-size: 0.72rem;
+        }
         .modal-close-btn {
             position: absolute;
             top: 14px;
@@ -810,7 +868,7 @@
             height: 36px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.18);
-            background: rgba(4, 7, 15, 0.78);
+            background: rgba(4, 7, 15, 0.82);
             color: #fff;
             cursor: pointer;
             display: flex;
@@ -995,6 +1053,21 @@
             font-size: 0.78rem;
             font-family: 'JetBrains Mono', monospace;
         }
+        .footer-inner {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .footer-logo {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.18);
+        }
 
         @media (max-width: 1024px) {
             .about-grid, .contact-wrapper { grid-template-columns: 1fr; }
@@ -1029,8 +1102,11 @@
     <header id="header">
         <nav>
             <a href="#home" class="logo">
-                <span class="first-name">Alican</span>
-                <span class="last-name">Karcılı</span>
+                <img src="logo.png" alt="Alican Karcılı Logo" class="logo-emblem" data-brand-logo onerror="this.style.display='none'">
+                <span class="logo-text">
+                    <span class="first-name">Alican</span>
+                    <span class="last-name">Karcılı</span>
+                </span>
             </a>
             <div class="nav-actions">
                 <ul class="nav-links" id="navLinks">
@@ -1049,7 +1125,7 @@
         <div class="hero-content reveal visible">
             <div class="hero-badge">
                 <span class="hud-dot"></span>
-                <span>&bull; OTOMOTİV MÜHENDİSLİĞİ &bull; MEKANİK TASARIM &amp; YAPISAL ANALİZ</span>
+                <span>OTOMOTİV MÜHENDİSLİĞİ &bull; MEKANİK TASARIM &amp; YAPISAL ANALİZ</span>
             </div>
             <h1 class="hero-title">Mekanik Tasarım &amp; Yapısal Analiz Portfolyosu</h1>
             <div class="typewriter-container">
@@ -1104,7 +1180,7 @@
             <div class="about-visual">
                 <div class="engineering-hud-card">
                     <div class="visual-box">
-                        <i class="fas fa-cogs"></i>
+                        <img src="logo.png" alt="Karcılı Mühendislik Logosu" class="hud-brand-logo" data-brand-logo onerror="this.outerHTML='<i class=\'fas fa-cogs\' style=\'font-size:3.4rem;color:var(--primary);\'></i>'">
                     </div>
                     <div class="hud-specs">
                         <div class="hud-spec-item">
@@ -1213,13 +1289,13 @@
     <div class="project-modal-overlay" id="projectDetailModal">
         <div class="project-modal-card">
             <div class="project-modal-gallery" id="modalGalleryContainer">
+                <div class="slider-counter" id="modalSlideCounter">1 / 1</div>
                 <button class="modal-close-btn" id="closeProjectModalBtn" aria-label="Kapat"><i class="fas fa-times"></i></button>
                 <img id="modalActiveImage" src="" alt="Proje Görseli">
                 <div class="slider-nav" id="modalSliderNav" style="opacity:1;">
                     <button class="slider-btn" id="modalPrevBtn"><i class="fas fa-arrow-left"></i></button>
                     <button class="slider-btn" id="modalNextBtn"><i class="fas fa-arrow-right"></i></button>
                 </div>
-                <div class="slider-counter" id="modalSlideCounter">1 / 1</div>
             </div>
             <div class="project-modal-body">
                 <button class="modal-close-btn" id="closeProjectModalBodyBtn" aria-label="Kapat" style="display:none;top:18px;right:18px;"><i class="fas fa-times"></i></button>
@@ -1245,7 +1321,10 @@
     </div>
 
     <footer>
-        <p>Alican Karcılı &copy; 2026 &mdash; Otomotiv Mühendisliği | Mekanik Tasarım &amp; Yapısal Analiz Portfolyosu</p>
+        <div class="footer-inner">
+            <img src="logo.png" alt="Karcılı Logo" class="footer-logo" data-brand-logo onerror="this.style.display='none'">
+            <p>Alican Karcılı &copy; 2026 &mdash; Otomotiv Mühendisliği | Mekanik Tasarım &amp; Yapısal Analiz Portfolyosu</p>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -1286,38 +1365,54 @@
             }
         ];
 
+        function cleanProjectTitle(rawTitle) {
+            let t = (rawTitle || '').trim();
+            // Automatically remove any parenthetical prompt notes like "(veya daha spesifik istersen: ...)"
+            t = t.replace(/\s*\(\s*veya daha spesifik[^)]*\)/gi, '').trim();
+            return t;
+        }
+
         function formatCardDescription(project) {
-            const title = (project.title || '').trim();
+            const title = cleanProjectTitle(project.title).toLowerCase();
             const rawDesc = (project.description || '').trim();
 
-            if (title.toLowerCase().includes('audi r8') && rawDesc.toLowerCase().includes('catia generative shape design modülü kullanılarak sıfırdan')) {
+            if (title.includes('audi r8')) {
                 return 'CATIA V5 Generative Shape Design (GSD) modülü kullanılarak G1/G2 yüzey sürekliliği kriterlerine uygun şekilde sıfırdan modellenen aerodinamik dış kabuk geometrisi.';
             }
-            if (title.toLowerCase().includes('go-kart') && rawDesc.toLowerCase().includes('solidworks weldments modülü ve 3d sketch')) {
+            if (title.includes('go-kart')) {
                 return 'Yüksek burulma rijitliği ve düşük kütle hedefleri doğrultusunda SolidWorks 3D Sketch ve Weldments modülleriyle tasarlanan boru uzay kafes (space frame) şasi mimarisi.';
+            }
+            if (title.includes('boxer') || title.includes('piston') || title.includes('krank')) {
+                return '4 silindirli Boxer motor krank-biyel-piston mekanizmasının CATIA V5 ortamında 3B katı/montaj modellemesi ve maksimum gaz basıncı ile atalet yükleri altında ANSYS Mechanical yapısal doğrulama (FEA) çalışması.';
             }
 
             // Strip duplicate title line if description starts with the title
             const lines = rawDesc.split('\n').map(l => l.trim()).filter(Boolean);
+            let chosen = lines[0] || rawDesc;
             if (lines.length > 1) {
                 const firstLine = lines[0].toLowerCase();
-                const cleanTitle = title.toLowerCase().split('-')[0].trim();
-                if (cleanTitle && firstLine.includes(cleanTitle)) {
-                    return lines[1];
+                const cleanT = title.split('-')[0].trim();
+                if (cleanT && firstLine.includes(cleanT)) {
+                    chosen = lines[1];
                 }
-                return lines[0];
             }
-            return rawDesc;
+            if (chosen.length > 230) {
+                const sentences = chosen.match(/[^.!?]+[.!?]+/g);
+                if (sentences && sentences.length >= 2) {
+                    return (sentences[0] + ' ' + sentences[1]).trim();
+                }
+            }
+            return chosen;
         }
 
         function formatModalDescription(project) {
-            const title = (project.title || '').trim();
+            const title = cleanProjectTitle(project.title);
             const rawDesc = (project.description || '').trim();
             const lines = rawDesc.split('\n');
             if (lines.length > 1) {
                 const firstLine = lines[0].trim().toLowerCase();
-                const cleanTitle = title.toLowerCase().split('-')[0].trim();
-                if (cleanTitle && firstLine.includes(cleanTitle)) {
+                const cleanT = title.toLowerCase().split('-')[0].trim();
+                if (cleanT && firstLine.includes(cleanT)) {
                     return lines.slice(1).join('\n').trim();
                 }
             }
@@ -1420,7 +1515,7 @@
             if (t.includes('hidromobil') || t.includes('aerodinamik') || t.includes('kabuk')) {
                 return { icon: 'fa-wind', label: 'CATIA GSD • AERODİNAMİK KABUK AR-GE' };
             }
-            if (t.includes('piston') || t.includes('ansys') || t.includes('fea')) {
+            if (t.includes('piston') || t.includes('ansys') || t.includes('fea') || t.includes('boxer')) {
                 return { icon: 'fa-project-diagram', label: 'ANSYS MECHANICAL • YAPISAL DOĞRULAMA (FEA)' };
             }
             return { icon: 'fa-cube', label: 'CAD / CAE • MÜHENDİSLİK TASARIMI' };
@@ -1430,12 +1525,13 @@
             const images = project.images || [];
             const tags   = project.tags   || [];
             const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
+            const displayTitle = cleanProjectTitle(project.title);
             const cardSummary = formatCardDescription(project);
 
             let sliderHTML = '';
             if (images.length > 0) {
                 const imagesHTML = images.map((url, sIdx) =>
-                    `<img src="${url}" alt="${project.title}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;position:absolute;opacity:${sIdx === 0 ? 1 : 0};" data-slide-index="${sIdx}">`
+                    `<img src="${url}" alt="${displayTitle}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:${sIdx === 0 ? 1 : 0};pointer-events:${sIdx === 0 ? 'auto' : 'none'};" data-slide-index="${sIdx}">`
                 ).join('');
                 let navHTML = '';
                 let dotsHTML = '';
@@ -1472,7 +1568,7 @@
                     ${sliderHTML}
                     <div class="project-content">
                         ${tagsHTML ? `<div class="project-tags">${tagsHTML}</div>` : ''}
-                        <h3 class="project-title">${project.title}</h3>
+                        <h3 class="project-title">${displayTitle}</h3>
                         <p class="project-desc">${cardSummary}</p>
                         <div class="project-footer">
                             ${statusHTML}
@@ -1527,7 +1623,7 @@
                     const exists = merged.some(p => {
                         const t = (p.title || '').toLowerCase();
                         if (supp.id.includes('pautech')) return t.includes('hidromobil') || t.includes('paütech');
-                        if (supp.id.includes('piston')) return t.includes('piston') || t.includes('biyel');
+                        if (supp.id.includes('piston')) return t.includes('piston') || t.includes('biyel') || t.includes('boxer');
                         return false;
                     });
                     if (!exists) merged.push(supp);
@@ -1567,7 +1663,9 @@
                     current = index;
                     slider.dataset.current = current;
                     slider.querySelectorAll('img[data-slide-index]').forEach(img => {
-                        img.style.opacity = parseInt(img.dataset.slideIndex) === current ? '1' : '0';
+                        const isCurrent = parseInt(img.dataset.slideIndex) === current;
+                        img.style.opacity = isCurrent ? '1' : '0';
+                        img.style.pointerEvents = isCurrent ? 'auto' : 'none';
                     });
                     slider.querySelectorAll('.slider-dot').forEach(dot => {
                         dot.classList.toggle('active', parseInt(dot.dataset.dotIndex) === current);
@@ -1618,7 +1716,7 @@
                 bodyCloseBtn.style.display = 'flex';
             }
 
-            document.getElementById('modalProjectTitle').textContent = project.title || '';
+            document.getElementById('modalProjectTitle').textContent = cleanProjectTitle(project.title);
             document.getElementById('modalProjectDesc').textContent = formatModalDescription(project);
             document.getElementById('modalProjectTags').innerHTML = (project.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
             const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
@@ -1701,6 +1799,17 @@
                 if (map.cv_url) {
                     const cvBtn = document.getElementById('heroCvBtn');
                     if (cvBtn) cvBtn.href = map.cv_url;
+                }
+
+                if (map.logo_url) {
+                    const fav = document.getElementById('siteFavicon');
+                    const touch = document.getElementById('appleTouchIcon');
+                    if (fav) fav.href = map.logo_url;
+                    if (touch) touch.href = map.logo_url;
+                    document.querySelectorAll('[data-brand-logo]').forEach(img => {
+                        img.src = map.logo_url;
+                        img.style.display = '';
+                    });
                 }
 
                 // Only override corporate defaults if content was explicitly saved via v4.0 Admin Panel
