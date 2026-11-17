@@ -177,20 +177,18 @@
         }
         .logo:hover { opacity: 0.95; }
         .logo-emblem {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid rgba(56, 189, 248, 0.45);
-            box-shadow: 0 0 14px rgba(56, 189, 248, 0.22);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            background: #04070F;
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.28));
+            transition: transform 0.35s ease, filter 0.35s ease;
             flex-shrink: 0;
         }
         .logo:hover .logo-emblem {
-            transform: rotate(8deg) scale(1.06);
-            border-color: var(--primary-bright);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.38);
+            transform: rotate(12deg) scale(1.08);
+            filter: drop-shadow(0 0 16px rgba(0, 229, 255, 0.5));
         }
         .logo-text {
             display: inline-flex;
@@ -496,8 +494,8 @@
         }
         .visual-box {
             position: relative;
-            width: 176px;
-            height: 176px;
+            width: 184px;
+            height: 184px;
             margin: 0 auto 24px;
             border-radius: 50%; 
             border: 1px dashed var(--border-highlight);
@@ -505,21 +503,20 @@
             align-items: center;
             justify-content: center;
             background: radial-gradient(circle at center, var(--primary-glow) 0%, transparent 72%);
-            padding: 12px;
+            padding: 14px;
         }
         .visual-box img.hud-brand-logo {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(56, 189, 248, 0.4);
-            box-shadow: 0 0 28px rgba(0, 229, 255, 0.22);
-            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
-            background: #04070F;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.28));
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), filter 0.45s ease;
         }
         .engineering-hud-card:hover .visual-box img.hud-brand-logo {
-            transform: scale(1.04);
-            box-shadow: 0 0 36px rgba(0, 229, 255, 0.35);
+            transform: rotate(6deg) scale(1.05);
+            filter: drop-shadow(0 0 28px rgba(0, 229, 255, 0.45));
         }
 
         .hud-specs {
@@ -784,14 +781,21 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
+        }
+        .project-actions-group {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
         }
         .project-detail-btn {
             background: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 6px 13px;
+            padding: 6px 12px;
             border-radius: 999px;
-            font-size: 0.71rem;
+            font-size: 0.69rem;
             font-family: 'JetBrains Mono', monospace;
             cursor: pointer;
             transition: var(--transition-smooth);
@@ -803,6 +807,26 @@
             border-color: var(--primary);
             color: var(--primary);
             background: var(--primary-glow);
+        }
+        .project-detail-btn.btn-3d {
+            background: rgba(0, 229, 255, 0.09);
+            border-color: rgba(0, 229, 255, 0.35);
+            color: #00E5FF;
+        }
+        .project-detail-btn.btn-3d:hover {
+            background: #00E5FF;
+            color: #04070F;
+            box-shadow: 0 0 18px rgba(0, 229, 255, 0.35);
+        }
+        .project-detail-btn.btn-report {
+            background: rgba(99, 102, 241, 0.12);
+            border-color: rgba(99, 102, 241, 0.38);
+            color: #A5B4FC;
+        }
+        .project-detail-btn.btn-report:hover {
+            background: #6366F1;
+            color: #fff;
+            box-shadow: 0 0 18px rgba(99, 102, 241, 0.35);
         }
         
         .status-badge { font-size: 0.68rem; font-weight: 500; padding: 4px 11px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.03em; border: 1px solid transparent; }
@@ -816,7 +840,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(4, 7, 15, 0.85);
+            background: rgba(4, 7, 15, 0.86);
             backdrop-filter: blur(8px);
             z-index: 2000;
             justify-content: center;
@@ -852,7 +876,6 @@
             max-height: 100%;
             object-fit: contain;
         }
-        /* Place counter on top-left inside modal so it never overlaps close button on top-right */
         .project-modal-gallery .slider-counter {
             right: auto;
             left: 16px;
@@ -897,6 +920,263 @@
             font-size: 0.92rem;
             line-height: 1.75;
             white-space: pre-line;
+        }
+
+        /* --- PROTECTED 3D CAD VIEWER MODAL (NO DOWNLOAD / NO MEASUREMENT) --- */
+        .cad-modal-card {
+            background: #050914;
+            border: 1px solid var(--border-highlight);
+            border-radius: 20px;
+            max-width: 1040px;
+            width: 100%;
+            height: 84vh;
+            max-height: 760px;
+            overflow: hidden;
+            box-shadow: 0 28px 75px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 229, 255, 0.14);
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .cad-modal-topbar {
+            padding: 14px 20px;
+            background: rgba(9, 14, 26, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .cad-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+        .cad-security-pill {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: #10B981;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 4px 10px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .cad-title-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cad-viewport-wrap {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            background:
+                radial-gradient(circle at 50% 45%, rgba(56, 189, 248, 0.11), transparent 70%),
+                #03060C;
+            overflow: hidden;
+            cursor: grab;
+        }
+        .cad-viewport-wrap:active { cursor: grabbing; }
+        #cadCanvasContainer {
+            width: 100%;
+            height: 100%;
+        }
+        .cad-watermark-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 18px 22px;
+            overflow: hidden;
+        }
+        .cad-watermark-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-18deg);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.3rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            color: rgba(255, 255, 255, 0.035);
+            white-space: nowrap;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+        .cad-hud-info {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: rgba(203, 213, 225, 0.75);
+            background: rgba(4, 7, 15, 0.72);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 8px 12px;
+            border-radius: 10px;
+            max-width: fit-content;
+            backdrop-filter: blur(6px);
+        }
+        .cad-toolbar-bottom {
+            padding: 12px 20px;
+            background: rgba(9, 14, 26, 0.96);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .cad-mode-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .cad-ctrl-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 7px 13px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.71rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cad-ctrl-btn:hover, .cad-ctrl-btn.active {
+            background: var(--primary-glow);
+            border-color: var(--border-highlight);
+            color: var(--primary);
+        }
+
+        /* --- PROTECTED TECHNICAL REPORT & CASE STUDY VIEWER MODAL --- */
+        .report-modal-card {
+            background: #070C17;
+            border: 1px solid var(--border-highlight);
+            border-radius: 20px;
+            max-width: 1020px;
+            width: 100%;
+            height: 88vh;
+            overflow: hidden;
+            box-shadow: 0 28px 75px rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .report-modal-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 32px 36px;
+            position: relative;
+        }
+        .report-doc-sheet {
+            max-width: 860px;
+            margin: 0 auto;
+            background: rgba(13, 20, 36, 0.75);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 34px;
+        }
+        .report-doc-header {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .report-uni-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--primary);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .report-doc-header h2 {
+            font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+            color: var(--text-main);
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .report-meta-strip {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            background: rgba(0, 0, 0, 0.28);
+            padding: 8px 14px;
+            border-radius: 8px;
+        }
+        .report-sec-title {
+            font-size: 1.02rem;
+            color: var(--primary);
+            margin: 26px 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 20px;
+            font-size: 0.82rem;
+        }
+        .report-table th {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+        .report-table td {
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .report-eq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .report-eq-box {
+            background: rgba(4, 7, 15, 0.65);
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+        }
+        .report-eq-box .eq-label {
+            color: var(--text-muted);
+            font-size: 0.66rem;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .report-eq-box .eq-val {
+            color: #F8FAFC;
+            font-weight: 600;
         }
 
         /* --- CONTACT SECTION --- */
@@ -1061,12 +1341,12 @@
             flex-wrap: wrap;
         }
         .footer-logo {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.18);
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            background: transparent;
+            border: none;
+            filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.25));
         }
 
         @media (max-width: 1024px) {
@@ -1089,6 +1369,8 @@
             .projects-grid { grid-template-columns: 1fr; }
             .project-modal-gallery { height: 240px; }
             .cursor-spotlight { display: none; }
+            .report-modal-body { padding: 16px; }
+            .report-doc-sheet { padding: 18px; }
         }
     </style>
 </head>
@@ -1285,7 +1567,7 @@
         </div>
     </section>
 
-    <!-- PROJECT DETAIL & IMAGE LIGHTBOX MODAL -->
+    <!-- 1. PROJECT DETAIL & IMAGE LIGHTBOX MODAL -->
     <div class="project-modal-overlay" id="projectDetailModal">
         <div class="project-modal-card">
             <div class="project-modal-gallery" id="modalGalleryContainer">
@@ -1311,6 +1593,61 @@
         </div>
     </div>
 
+    <!-- 2. PROTECTED 3D CAD VIEWER MODAL (VIEW-ONLY, NO DOWNLOAD, NO MEASUREMENT) -->
+    <div class="project-modal-overlay" id="cadViewerModal" oncontextmenu="return false;">
+        <div class="cad-modal-card" oncontextmenu="return false;">
+            <div class="cad-modal-topbar">
+                <div class="cad-topbar-left">
+                    <span class="cad-security-pill"><i class="fas fa-lock"></i> SALT OKUNUR 3B ÖNİZLEME &bull; ÖLÇÜ &amp; İNDİRME KİLİTLİ</span>
+                    <span class="cad-title-text" id="cadModalTitle">3B CAD Model İnceleyici</span>
+                </div>
+                <button class="modal-close-btn" id="closeCadModalBtn" style="position:static;width:34px;height:34px;" aria-label="Kapat"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cad-viewport-wrap" id="cadViewportWrap" oncontextmenu="return false;">
+                <div id="cadCanvasContainer"></div>
+                <div class="cad-watermark-overlay">
+                    <div class="cad-hud-info" id="cadHudStatus">
+                        <i class="fas fa-cube" style="color:var(--primary)"></i> Sol Tık: 360&deg; Döndür &nbsp;|&nbsp; Tekerlek: Yakınlaştır &nbsp;|&nbsp; Sağ Tık: Kaydır
+                    </div>
+                    <div class="cad-watermark-center">ALİCAN KARCILI &bull; PROTECTED CAD</div>
+                    <div class="cad-hud-info" style="align-self:flex-end;color:var(--primary);">
+                        <i class="fas fa-shield-alt"></i> Birimsiz (Unitless) Koruma Aktif &mdash; Gerçek Ölçü Alınamaz
+                    </div>
+                </div>
+            </div>
+            <div class="cad-toolbar-bottom">
+                <div class="cad-mode-btns">
+                    <button type="button" class="cad-ctrl-btn active" data-cad-mode="solid"><i class="fas fa-cube"></i> Katı CAD Gövde</button>
+                    <button type="button" class="cad-ctrl-btn" data-cad-mode="wireframe"><i class="fas fa-border-all"></i> Tel Kafes (Mesh)</button>
+                    <button type="button" class="cad-ctrl-btn" data-cad-mode="xray"><i class="fas fa-Adjust"></i> X-Ray Görünüm</button>
+                    <button type="button" class="cad-ctrl-btn active" id="cadAutoRotateBtn"><i class="fas fa-sync-alt"></i> Otomatik Döndür</button>
+                    <button type="button" class="cad-ctrl-btn" id="cadKinematicsBtn" style="display:none;"><i class="fas fa-play"></i> Mekanizma Hareketi</button>
+                </div>
+                <button type="button" class="cad-ctrl-btn" id="cadResetCamBtn"><i class="fas fa-compress-arrows-alt"></i> Kamerayı Sıfırla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. PROTECTED TECHNICAL PORTFOLIO / CASE STUDY VIEWER MODAL -->
+    <div class="project-modal-overlay" id="reportViewerModal" oncontextmenu="return false;">
+        <div class="report-modal-card" oncontextmenu="return false;">
+            <div class="cad-modal-topbar">
+                <div class="cad-topbar-left">
+                    <span class="cad-security-pill"><i class="fas fa-file-shield"></i> KORUMALI TEKNİK RAPOR &bull; SALT OKUNUR</span>
+                    <span class="cad-title-text" id="reportModalTitle">Teknik Araştırma ve Tasarım Raporu</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <div id="reportViewSwitchBtns" style="display:none;gap:6px;">
+                        <button type="button" class="cad-ctrl-btn active" id="showInteractiveReportBtn"><i class="fas fa-table"></i> İnteraktif Rapor</button>
+                        <button type="button" class="cad-ctrl-btn" id="showPdfEmbedBtn"><i class="fas fa-file-pdf"></i> Orijinal PDF Görünümü</button>
+                    </div>
+                    <button class="modal-close-btn" id="closeReportModalBtn" style="position:static;width:34px;height:34px;" aria-label="Kapat"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            <div class="report-modal-body" id="reportModalBody" oncontextmenu="return false;"></div>
+        </div>
+    </div>
+
     <button class="back-to-top" id="backToTopBtn" aria-label="Yukarı Çık" title="Yukarı Çık">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -1328,6 +1665,9 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
 
     <script>
         const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
@@ -1338,6 +1678,29 @@
         let activeFilter = 'all';
         let modalImages = [];
         let modalCurrentSlide = 0;
+
+        /* --- MEDIA CLASSIFICATION HELPERS (ZERO SQL SCHEMA CHANGE) --- */
+        function isModelUrl(url) {
+            const u = (url || '').toLowerCase().split('?')[0];
+            return u.endsWith('.stl') || u.endsWith('.ak3d') || u.endsWith('.glb') || u.endsWith('.obj') || u.includes('/models/');
+        }
+        function isReportUrl(url) {
+            const u = (url || '').toLowerCase().split('?')[0];
+            return u.endsWith('.pdf') || u.includes('/reports/');
+        }
+        function getProjectPhotos(project) {
+            return (project.images || []).filter(u => !isModelUrl(u) && !isReportUrl(u));
+        }
+        function getProjectModelUrl(project) {
+            return (project.images || []).find(u => isModelUrl(u)) || null;
+        }
+        function getProjectReportUrl(project) {
+            return (project.images || []).find(u => isReportUrl(u)) || null;
+        }
+        function isBoxerMotorProject(project) {
+            const t = (project.title || '').toLowerCase();
+            return t.includes('boxer') || t.includes('rotax') || t.includes('piston') || t.includes('krank');
+        }
 
         /* --- DEFAULT AR-GE PROJECTS & CURATED SUMMARIES --- */
         const SUPPLEMENTAL_ARGE_PROJECTS = [
@@ -1367,7 +1730,6 @@
 
         function cleanProjectTitle(rawTitle) {
             let t = (rawTitle || '').trim();
-            // Automatically remove any parenthetical prompt notes like "(veya daha spesifik istersen: ...)"
             t = t.replace(/\s*\(\s*veya daha spesifik[^)]*\)/gi, '').trim();
             return t;
         }
@@ -1383,10 +1745,9 @@
                 return 'Yüksek burulma rijitliği ve düşük kütle hedefleri doğrultusunda SolidWorks 3D Sketch ve Weldments modülleriyle tasarlanan boru uzay kafes (space frame) şasi mimarisi.';
             }
             if (title.includes('boxer') || title.includes('piston') || title.includes('krank')) {
-                return '4 silindirli Boxer motor krank-biyel-piston mekanizmasının CATIA V5 ortamında 3B katı/montaj modellemesi ve maksimum gaz basıncı ile atalet yükleri altında ANSYS Mechanical yapısal doğrulama (FEA) çalışması.';
+                return 'Rotax 912 ULS referanslı 4 silindirli Boxer motor krank-biyel-piston mekanizmasının CATIA V5 ortamında 3B katı/montaj modellemesi, kinematik analizi ve mukavemet doğrulaması.';
             }
 
-            // Strip duplicate title line if description starts with the title
             const lines = rawDesc.split('\n').map(l => l.trim()).filter(Boolean);
             let chosen = lines[0] || rawDesc;
             if (lines.length > 1) {
@@ -1522,7 +1883,10 @@
         }
 
         function renderProjectCard(project, idx) {
-            const images = project.images || [];
+            const images = getProjectPhotos(project);
+            const modelUrl = getProjectModelUrl(project);
+            const reportUrl = getProjectReportUrl(project);
+            const isBoxer = isBoxerMotorProject(project);
             const tags   = project.tags   || [];
             const status = STATUS_MAP[project.status] || STATUS_MAP['Devam Eden Ar-Ge'];
             const displayTitle = cleanProjectTitle(project.title);
@@ -1563,6 +1927,27 @@
             const tagsHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join('');
             const statusHTML = `<span class="status-badge ${status.cls}"><i class="fas ${status.icon}"></i> ${status.label}</span>`;
 
+            const show3DBtn = Boolean(modelUrl || isBoxer);
+            const showReportBtn = Boolean(reportUrl || isBoxer);
+
+            let actionBtnsHTML = '';
+            if (show3DBtn) {
+                actionBtnsHTML += `
+                    <button type="button" class="project-detail-btn btn-3d" onclick="openProtectedCadViewer(${idx})">
+                        <i class="fas fa-cube"></i> 3B Modeli İncele
+                    </button>`;
+            }
+            if (showReportBtn) {
+                actionBtnsHTML += `
+                    <button type="button" class="project-detail-btn btn-report" onclick="openProtectedReportViewer(${idx})">
+                        <i class="fas fa-file-contract"></i> Teknik Rapor
+                    </button>`;
+            }
+            actionBtnsHTML += `
+                <button type="button" class="project-detail-btn" onclick="openProjectDetail(${idx})">
+                    Detay <i class="fas fa-arrow-up-right-from-square"></i>
+                </button>`;
+
             return `
                 <div class="project-card">
                     ${sliderHTML}
@@ -1572,9 +1957,9 @@
                         <p class="project-desc">${cardSummary}</p>
                         <div class="project-footer">
                             ${statusHTML}
-                            <button type="button" class="project-detail-btn" onclick="openProjectDetail(${idx})">
-                                Teknik Detay <i class="fas fa-arrow-up-right-from-square"></i>
-                            </button>
+                            <div class="project-actions-group">
+                                ${actionBtnsHTML}
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -1617,7 +2002,6 @@
                 if (error) throw error;
                 const dbProjects = data || [];
 
-                // Ensure the 2 Ar-Ge projects (PAÜTECH Hidromobil & Piston-Biyel FEA) are present if not yet inserted in DB
                 const merged = [...dbProjects];
                 SUPPLEMENTAL_ARGE_PROJECTS.forEach(supp => {
                     const exists = merged.some(p => {
@@ -1690,7 +2074,7 @@
             });
         }
 
-        /* --- PROJECT DETAIL LIGHTBOX MODAL --- */
+        /* --- 1. PROJECT DETAIL LIGHTBOX MODAL --- */
         window.openProjectDetail = function(idx, startSlide = 0) {
             const project = allProjectsData[idx];
             if (!project) return;
@@ -1701,7 +2085,7 @@
             const navEl = document.getElementById('modalSliderNav');
             const counterEl = document.getElementById('modalSlideCounter');
 
-            modalImages = project.images || [];
+            modalImages = getProjectPhotos(project);
             modalCurrentSlide = startSlide;
 
             if (modalImages.length > 0) {
@@ -1745,12 +2129,478 @@
         document.getElementById('projectDetailModal').addEventListener('click', (e) => {
             if (e.target.id === 'projectDetailModal') closeProjectModal();
         });
+
+        /* --- 2. PROTECTED 3D CAD VIEWER ENGINE (ANTI-THEFT, UNITLESS, NO DOWNLOAD) --- */
+        let cadRenderer = null, cadScene = null, cadCamera = null, cadControls = null;
+        let cadAnimId = null, cadModelGroup = null;
+        let cadKinematicParts = null;
+        let cadAnimateKinematics = true;
+        let cadCrankAngle = 0;
+
+        function decodeProtectedAk3d(arrayBuffer) {
+            const bytes = new Uint8Array(arrayBuffer);
+            const magic = [65, 75, 51, 68]; // 'AK3D'
+            const isEncrypted = bytes.length > 4 && bytes[0] === magic[0] && bytes[1] === magic[1] && bytes[2] === magic[2] && bytes[3] === magic[3];
+            if (!isEncrypted) return arrayBuffer;
+            const key = [0x4B, 0x41, 0x52, 0x43, 0x49, 0x4C, 0x49, 0x33, 0x44];
+            const out = new Uint8Array(bytes.length - 4);
+            for (let i = 4; i < bytes.length; i++) {
+                out[i - 4] = bytes[i] ^ key[(i - 4) % key.length];
+            }
+            return out.buffer;
+        }
+
+        function createCadMaterial(mode) {
+            if (mode === 'wireframe') {
+                return new THREE.MeshBasicMaterial({ color: 0x00E5FF, wireframe: true });
+            }
+            if (mode === 'xray') {
+                return new THREE.MeshPhongMaterial({
+                    color: 0x38BDF8,
+                    emissive: 0x072642,
+                    specular: 0x00E5FF,
+                    shininess: 90,
+                    transparent: true,
+                    opacity: 0.42,
+                    depthWrite: false,
+                    side: THREE.DoubleSide
+                });
+            }
+            return new THREE.MeshStandardMaterial({
+                color: 0x94A3B8,
+                metalness: 0.72,
+                roughness: 0.26,
+                side: THREE.DoubleSide
+            });
+        }
+
+        function buildProceduralBoxer4Assembly(mode) {
+            const root = new THREE.Group();
+            const matCrank = mode === 'wireframe' ? createCadMaterial('wireframe') :
+                             mode === 'xray' ? createCadMaterial('xray') :
+                             new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.82, roughness: 0.22 });
+            const matRod   = mode === 'wireframe' ? createCadMaterial('wireframe') :
+                             mode === 'xray' ? createCadMaterial('xray') :
+                             new THREE.MeshStandardMaterial({ color: 0x38BDF8, metalness: 0.65, roughness: 0.28 });
+            const matPiston = mode === 'wireframe' ? createCadMaterial('wireframe') :
+                              mode === 'xray' ? createCadMaterial('xray') :
+                              new THREE.MeshStandardMaterial({ color: 0xCBD5E1, metalness: 0.75, roughness: 0.2 });
+
+            const crankGroup = new THREE.Group();
+            root.add(crankGroup);
+
+            const r = 0.61;
+            const L = 2.18;
+            const zPositions = [-2.4, -0.8, 0.8, 2.4];
+            const journalAngles = [0, Math.PI, Math.PI, 0];
+
+            const mainGeo = new THREE.CylinderGeometry(0.42, 0.42, 6.6, 28);
+            mainGeo.rotateX(Math.PI / 2);
+            const mainShaft = new THREE.Mesh(mainGeo, matCrank);
+            crankGroup.add(mainShaft);
+
+            zPositions.forEach((z, i) => {
+                const ang = journalAngles[i];
+                const pinX = Math.cos(ang) * r;
+                const pinY = Math.sin(ang) * r;
+
+                const pinGeo = new THREE.CylinderGeometry(0.36, 0.36, 0.62, 24);
+                pinGeo.rotateX(Math.PI / 2);
+                const pinMesh = new THREE.Mesh(pinGeo, matCrank);
+                pinMesh.position.set(pinX, pinY, z);
+                crankGroup.add(pinMesh);
+
+                [-0.42, 0.42].forEach(dz => {
+                    const webGeo = new THREE.BoxGeometry(1.45, 0.88, 0.22);
+                    const webMesh = new THREE.Mesh(webGeo, matCrank);
+                    webMesh.position.set(pinX * 0.45, pinY * 0.45, z + dz);
+                    webMesh.rotation.z = ang;
+                    crankGroup.add(webMesh);
+                });
+            });
+
+            const cylinders = [];
+            const bankDirs = [1, -1, 1, -1];
+            zPositions.forEach((z, i) => {
+                const dir = bankDirs[i];
+                const phase = journalAngles[i];
+
+                const pistonGrp = new THREE.Group();
+                const pBodyGeo = new THREE.CylinderGeometry(0.84, 0.84, 0.95, 32);
+                pBodyGeo.rotateZ(Math.PI / 2);
+                const pBody = new THREE.Mesh(pBodyGeo, matPiston);
+                pistonGrp.add(pBody);
+
+                const wPinGeo = new THREE.CylinderGeometry(0.2, 0.2, 0.9, 20);
+                wPinGeo.rotateX(Math.PI / 2);
+                const wPin = new THREE.Mesh(wPinGeo, matCrank);
+                pistonGrp.add(wPin);
+
+                pistonGrp.position.set(dir * 2.5, 0, z);
+                root.add(pistonGrp);
+
+                const rodGrp = new THREE.Group();
+                const shankGeo = new THREE.BoxGeometry(L, 0.28, 0.22);
+                shankGeo.translate(L / 2, 0, 0);
+                const shank = new THREE.Mesh(shankGeo, matRod);
+                rodGrp.add(shank);
+
+                const bigEndGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.34, 24);
+                bigEndGeo.rotateX(Math.PI / 2);
+                const bigEnd = new THREE.Mesh(bigEndGeo, matRod);
+                rodGrp.add(bigEnd);
+
+                root.add(rodGrp);
+                cylinders.push({ z, dir, phase, r, L, pistonGrp, rodGrp });
+            });
+
+            cadKinematicParts = { crankGroup, cylinders };
+            updateBoxerKinematics(0.35);
+            return root;
+        }
+
+        function updateBoxerKinematics(theta) {
+            if (!cadKinematicParts) return;
+            cadKinematicParts.crankGroup.rotation.z = theta;
+            cadKinematicParts.cylinders.forEach(c => {
+                const totalAng = theta + c.phase;
+                const cx = Math.cos(totalAng) * c.r;
+                const cy = Math.sin(totalAng) * c.r;
+
+                const dy = -cy;
+                const dx = Math.sqrt(Math.max(0.01, c.L * c.L - dy * dy)) * c.dir;
+                const px = cx + dx;
+
+                c.pistonGrp.position.set(px, 0, c.z);
+                c.rodGrp.position.set(cx, cy, c.z);
+                c.rodGrp.rotation.z = Math.atan2(-cy, px - cx);
+            });
+        }
+
+        function applyCadDisplayMode(mode) {
+            if (!cadModelGroup) return;
+            cadModelGroup.traverse(child => {
+                if (child.isMesh) {
+                    child.material = createCadMaterial(mode);
+                }
+            });
+        }
+
+        window.openProtectedCadViewer = async function(idx) {
+            const project = allProjectsData[idx];
+            if (!project) return;
+
+            const modal = document.getElementById('cadViewerModal');
+            const container = document.getElementById('cadCanvasContainer');
+            const titleEl = document.getElementById('cadModalTitle');
+            const hudStatus = document.getElementById('cadHudStatus');
+            const kinBtn = document.getElementById('cadKinematicsBtn');
+
+            titleEl.textContent = cleanProjectTitle(project.title) + ' — 3B CAD İnceleyici';
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+
+            if (cadAnimId) cancelAnimationFrame(cadAnimId);
+            container.innerHTML = '';
+            cadKinematicParts = null;
+
+            const width = container.clientWidth || 860;
+            const height = container.clientHeight || 520;
+
+            cadScene = new THREE.Scene();
+            cadCamera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+            cadCamera.position.set(6.5, 4.8, 7.5);
+
+            cadRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: false });
+            cadRenderer.setSize(width, height);
+            cadRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(cadRenderer.domElement);
+
+            cadRenderer.domElement.addEventListener('contextmenu', e => e.preventDefault());
+            cadRenderer.domElement.addEventListener('dragstart', e => e.preventDefault());
+
+            cadControls = new THREE.OrbitControls(cadCamera, cadRenderer.domElement);
+            cadControls.enableDamping = true;
+            cadControls.dampingFactor = 0.06;
+            cadControls.autoRotate = true;
+            cadControls.autoRotateSpeed = 1.4;
+            cadControls.minDistance = 2.2;
+            cadControls.maxDistance = 22;
+
+            cadScene.add(new THREE.AmbientLight(0xffffff, 0.65));
+            const dir1 = new THREE.DirectionalLight(0xffffff, 0.95);
+            dir1.position.set(10, 14, 12);
+            cadScene.add(dir1);
+            const dir2 = new THREE.DirectionalLight(0x38BDF8, 0.55);
+            dir2.position.set(-10, -6, -10);
+            cadScene.add(dir2);
+
+            const grid = new THREE.GridHelper(14, 28, 0x38BDF8, 0x16243E);
+            grid.position.y = -2.2;
+            cadScene.add(grid);
+
+            cadModelGroup = new THREE.Group();
+            cadScene.add(cadModelGroup);
+
+            document.querySelectorAll('[data-cad-mode]').forEach(b => b.classList.toggle('active', b.dataset.cadMode === 'solid'));
+            document.getElementById('cadAutoRotateBtn').classList.add('active');
+
+            const modelUrl = getProjectModelUrl(project);
+            if (modelUrl) {
+                kinBtn.style.display = 'none';
+                hudStatus.innerHTML = '<i class="fas fa-spinner fa-spin" style="color:var(--primary)"></i> Korumalı 3B CAD geometrisi belleğe yükleniyor...';
+                try {
+                    const res = await fetch(modelUrl);
+                    const rawBuf = await res.arrayBuffer();
+                    const cleanBuf = decodeProtectedAk3d(rawBuf);
+                    const loader = new THREE.STLLoader();
+                    const geometry = loader.parse(cleanBuf);
+
+                    geometry.computeBoundingBox();
+                    geometry.center();
+                    geometry.computeVertexNormals();
+
+                    const box = geometry.boundingBox;
+                    const size = new THREE.Vector3();
+                    box.getSize(size);
+                    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                    const normScale = 5.5 / maxDim;
+
+                    const mesh = new THREE.Mesh(geometry, createCadMaterial('solid'));
+                    mesh.scale.set(normScale, normScale, normScale);
+                    cadModelGroup.add(mesh);
+                    hudStatus.innerHTML = '<i class="fas fa-cube" style="color:var(--primary)"></i> Sol Tık: 360&deg; Döndür &nbsp;|&nbsp; Tekerlek: Yakınlaştır &nbsp;|&nbsp; Sağ Tık: Kaydır';
+                } catch (err) {
+                    hudStatus.innerHTML = '<i class="fas fa-exclamation-circle" style="color:#F59E0B"></i> 3B dosya okunamadı, parametrik simülasyon modeli gösteriliyor.';
+                    cadModelGroup.add(buildProceduralBoxer4Assembly('solid'));
+                    kinBtn.style.display = 'inline-flex';
+                }
+            } else {
+                cadModelGroup.add(buildProceduralBoxer4Assembly('solid'));
+                kinBtn.style.display = 'inline-flex';
+                kinBtn.classList.add('active');
+                cadAnimateKinematics = true;
+            }
+
+            function renderLoop() {
+                cadAnimId = requestAnimationFrame(renderLoop);
+                if (cadKinematicParts && cadAnimateKinematics) {
+                    cadCrankAngle += 0.035;
+                    updateBoxerKinematics(cadCrankAngle);
+                }
+                if (cadControls) cadControls.update();
+                if (cadRenderer && cadScene && cadCamera) {
+                    cadRenderer.render(cadScene, cadCamera);
+                }
+            }
+            renderLoop();
+        };
+
+        function closeCadModal() {
+            document.getElementById('cadViewerModal').classList.remove('open');
+            document.body.style.overflow = '';
+            if (cadAnimId) {
+                cancelAnimationFrame(cadAnimId);
+                cadAnimId = null;
+            }
+            if (cadRenderer) {
+                cadRenderer.dispose();
+                cadRenderer = null;
+            }
+        }
+
+        document.getElementById('closeCadModalBtn').addEventListener('click', closeCadModal);
+        document.getElementById('cadViewerModal').addEventListener('click', e => {
+            if (e.target.id === 'cadViewerModal') closeCadModal();
+        });
+
+        document.querySelectorAll('[data-cad-mode]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-cad-mode]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                applyCadDisplayMode(btn.dataset.cadMode);
+            });
+        });
+
+        document.getElementById('cadAutoRotateBtn').addEventListener('click', function() {
+            if (!cadControls) return;
+            cadControls.autoRotate = !cadControls.autoRotate;
+            this.classList.toggle('active', cadControls.autoRotate);
+        });
+
+        document.getElementById('cadKinematicsBtn').addEventListener('click', function() {
+            cadAnimateKinematics = !cadAnimateKinematics;
+            this.classList.toggle('active', cadAnimateKinematics);
+            this.innerHTML = cadAnimateKinematics
+                ? '<i class="fas fa-pause"></i> Hareketi Durdur'
+                : '<i class="fas fa-play"></i> Mekanizma Hareketi';
+        });
+
+        document.getElementById('cadResetCamBtn').addEventListener('click', () => {
+            if (!cadCamera || !cadControls) return;
+            cadCamera.position.set(6.5, 4.8, 7.5);
+            cadControls.target.set(0, 0, 0);
+            cadControls.update();
+        });
+
+        /* --- 3. PROTECTED TECHNICAL REPORT & CASE STUDY VIEWER --- */
+        function buildBoxerInteractiveReportHTML() {
+            return `
+                <div class="report-doc-sheet">
+                    <div class="report-doc-header">
+                        <div class="report-uni-tag">PAMUKKALE ÜNİVERSİTESİ &bull; MÜHENDİSLİK FAKÜLTESİ &mdash; OTOMOTİV MÜHENDİSLİĞİ BÖLÜMÜ</div>
+                        <h2>ROTAX 912 ULS ESİNLİ BOXER-4 MOTORU KRANK-BİYEL-PİSTON MEKANİZMASININ 3B CAD MODELLEMESİ, KİNEMATİK VE ANALİTİK MUKAVEMET ANALİZİ</h2>
+                        <div class="report-meta-strip">
+                            <span><strong>Hazırlayan:</strong> Alican Karcılı</span>
+                            <span><strong>Rapor No:</strong> PAU-OTM-2026/B4-912</span>
+                            <span><strong>Motor Mimarisi:</strong> 4 Silindirli Boxer-4 (1352 cm&sup3;)</span>
+                            <span><strong>Ortam:</strong> CATIA V5 &amp; ANSYS Mechanical</span>
+                        </div>
+                    </div>
+
+                    <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.75;margin-bottom:18px;">
+                        Bu teknik çalışmada, havacılık tahrik sistemlerinde yaygın olarak kullanılan <strong>Rotax 912 ULS</strong> dört zamanlı, karşılıklı yatay (Boxer-4) içten yanmalı motor mimarisi referans alınarak tasarlanan krank-biyel-piston hareket grubunun üç boyutlu parametrik modellemesi (CATIA V5), kinematik kısıt doğrulaması ve analitik mukavemet tahkikleri gerçekleştirilmiştir.
+                    </p>
+
+                    <div class="report-sec-title"><i class="fas fa-sliders-h"></i> 1. Temel Motor Spesifikasyonları ve Malzeme Seçimi</div>
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Parametre / Özellik</th><th>Sembol</th><th>Sayısal Değer</th><th>Teknik Açıklama / Birim</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Silindir İç Çapı (Bore) / Strok</td><td>D / s</td><td>84.0 mm / 61.0 mm</td><td>Krank yarıçapı r = 30.5 mm</td></tr>
+                            <tr><td>Biyel Kolu Eksenler Arası Boyu</td><td>L</td><td>109.0 mm</td><td>Krank-biyel oranı &lambda; = r / L = 0.2798</td></tr>
+                            <tr><td>Toplam Silindir Hacmi / Sıkıştırma</td><td>V<sub>toplam</sub> / &varepsilon;</td><td>1352.0 cm&sup3; / 10.5</td><td>Silindir başı V<sub>h</sub> = 338.0 cm&sup3;</td></tr>
+                            <tr><td>Maksimum Güç / Tam Güç Devri</td><td>P<sub>max</sub> / n</td><td>73.5 kW (100 HP)</td><td>5800 d/dk (&omega; = 607.37 rad/s)</td></tr>
+                            <tr><td>Maksimum Motor Torku / Kütle</td><td>M<sub>d</sub> / m</td><td>128.0 Nm / 56.6 kg</td><td>Tam yük yanma basıncı P<sub>max</sub> = 7.0 MPa</td></tr>
+                            <tr><td>Krank, Biyel ve Pim Malzemesi</td><td>42CrMo4 (AISI 4140)</td><td>E = 210 GPa</td><td>&sigma;<sub>akma</sub> = 750 MPa, &sigma;<sub>çekme</sub> = 1000 MPa, &sigma;<sub>D</sub> = 450 MPa</td></tr>
+                            <tr><td>Piston Gövde Alaşımı</td><td>AlSi12CuMgNi (4032-T6)</td><td>E<sub>al</sub> = 79 GPa</td><td>&sigma;<sub>akma</sub> = 310 MPa, &rho; = 2700 kg/m&sup3;</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="report-sec-title"><i class="fas fa-calculator"></i> 2. Kinematik ve Dinamik Kuvvet Analizi (5800 d/dk, P<sub>max</sub> = 7.0 MPa)</div>
+                    <div class="report-eq-grid">
+                        <div class="report-eq-box">
+                            <span class="eq-label">Açısal Hız &amp; Ortalama Piston Hızı</span>
+                            <span class="eq-val">&omega; = 607.37 rad/s &nbsp;|&nbsp; c<sub>m</sub> = 11.79 m/s</span>
+                        </div>
+                        <div class="report-eq-box">
+                            <span class="eq-label">ÜÖN Maksimum Piston İvmesi</span>
+                            <span class="eq-val">a<sub>max,ÜÖN</sub> = r&omega;&sup2;(1+&lambda;) = 14,399.5 m/s&sup2;</span>
+                        </div>
+                        <div class="report-eq-box">
+                            <span class="eq-label">Maksimum Yanma Gazı Kuvveti</span>
+                            <span class="eq-val">F<sub>gaz,max</sub> = P<sub>max</sub> &times; A<sub>p</sub> = 38,792.4 N (38.79 kN)</span>
+                        </div>
+                        <div class="report-eq-box">
+                            <span class="eq-label">ÜÖN Atalet Kuvveti &amp; Net Biyel Yükü</span>
+                            <span class="eq-val">F<sub>atalet</sub> = 8.35 kN &nbsp;&rArr;&nbsp; F<sub>net,basma</sub> = 30.44 kN</span>
+                        </div>
+                    </div>
+
+                    <div class="report-sec-title"><i class="fas fa-shield-halved"></i> 3. Kritik Bileşenlerin Mukavemet ve Yorulma Doğrulama Sonuçları</div>
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Bileşen / Hesaplama Kriteri</th><th>Hesaplanan Değer</th><th>Malzeme Sınır Değeri</th><th>Emniyet Katsayısı (S<sub>em</sub>)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Piston Pimi Biyel Yatağı Ezilme Basıncı</td><td>88.16 MPa</td><td>110.0 MPa (Burç Sınırı)</td><td><strong>1.25</strong> (Yüzey Ezilmesi)</td></tr>
+                            <tr><td>Piston Pimi Çift Tesirli Kesme Gerilmesi</td><td>96.47 MPa</td><td>432.75 MPa (&tau;<sub>akma</sub>)</td><td><strong>4.49</strong> (Güvenli)</td></tr>
+                            <tr><td>Biyel Kolu Gövde Basma / Yorulma Gerilmesi</td><td>156.11 / 99.47 MPa</td><td>750.0 / 450.0 MPa</td><td><strong>4.80</strong> (Statik) / <strong>4.52</strong> (Yorulma)</td></tr>
+                            <tr><td>Krank Kol Muylusu Eğilme + Burulma (Von Mises)</td><td>117.60 MPa</td><td>750.0 MPa (&sigma;<sub>akma</sub>)</td><td><strong>6.38</strong> (Statik)</td></tr>
+                            <tr><td>Krank Muylusu Kök Radüsü Tepe Gerilmesi (K<sub>t</sub>=1.85)</td><td>217.56 MPa</td><td>450.0 MPa (&sigma;<sub>D,yorulma</sub>)</td><td><strong>2.07</strong> (Sonsuz Ömür)</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="report-sec-title"><i class="fas fa-project-diagram"></i> 4. ANSYS Mechanical Sonlu Elemanlar Analizi (FEA) Sınır Şartları</div>
+                    <table class="report-table">
+                        <thead>
+                            <tr><th>Model Bölgesi</th><th>ANSYS Tanım Tipi</th><th>Sınır Şartı, Yükleme ve Ağ (Mesh) Detayı</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Krank Ana Muyluları</td><td>Cylindrical Support</td><td>Radyal: Fixed, Eksenel: Fixed, Teğetsel: Free</td></tr>
+                            <tr><td>Piston Dış Etek Yüzeyi</td><td>Cylindrical Support</td><td>Radyal: Fixed, Eksenel: Free, Teğetsel: Fixed (Gömlek kılavuzlaması)</td></tr>
+                            <tr><td>Mafsal Arayüzleri</td><td>Frictional Contact</td><td>Krank-Biyel ve Biyel-Pim silindirik yüzeylerde &mu; = 0.05 yağlamalı temas</td></tr>
+                            <tr><td>Ateşleme Pistonu Tepesi</td><td>Pressure / Rotational Vel.</td><td>7.0 MPa yanma basıncı + 607.37 rad/s (5800 d/dk) atalet yükü</td></tr>
+                            <tr><td>Sonlu Elemanlar Ağı</td><td>Tetrahedral + Face Sizing</td><td>Muylu kök radüsleri ve biyel geçişlerinde 1.5 mm yerel ağ sıklaştırması</td></tr>
+                        </tbody>
+                    </table>
+                </div>`;
+        }
+
+        window.openProtectedReportViewer = function(idx) {
+            const project = allProjectsData[idx];
+            if (!project) return;
+
+            const modal = document.getElementById('reportViewerModal');
+            const body = document.getElementById('reportModalBody');
+            const titleEl = document.getElementById('reportModalTitle');
+            const switchBtns = document.getElementById('reportViewSwitchBtns');
+            const btnInteractive = document.getElementById('showInteractiveReportBtn');
+            const btnPdf = document.getElementById('showPdfEmbedBtn');
+
+            const reportUrl = getProjectReportUrl(project);
+            const isBoxer = isBoxerMotorProject(project);
+            titleEl.textContent = cleanProjectTitle(project.title) + ' — Teknik Rapor';
+
+            if (reportUrl && isBoxer) {
+                switchBtns.style.display = 'flex';
+                btnInteractive.classList.add('active');
+                btnPdf.classList.remove('active');
+                body.innerHTML = buildBoxerInteractiveReportHTML();
+
+                btnInteractive.onclick = () => {
+                    btnInteractive.classList.add('active');
+                    btnPdf.classList.remove('active');
+                    body.innerHTML = buildBoxerInteractiveReportHTML();
+                };
+                btnPdf.onclick = () => {
+                    btnPdf.classList.add('active');
+                    btnInteractive.classList.remove('active');
+                    body.innerHTML = `<iframe src="${reportUrl}#toolbar=0&navpanes=0&scrollbar=1" style="width:100%;height:100%;min-height:72vh;border:none;border-radius:12px;background:#090E1A;"></iframe>`;
+                };
+            } else if (reportUrl) {
+                switchBtns.style.display = 'none';
+                body.innerHTML = `<iframe src="${reportUrl}#toolbar=0&navpanes=0&scrollbar=1" style="width:100%;height:100%;min-height:72vh;border:none;border-radius:12px;background:#090E1A;"></iframe>`;
+            } else {
+                switchBtns.style.display = 'none';
+                body.innerHTML = buildBoxerInteractiveReportHTML();
+            }
+
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        };
+
+        function closeReportModal() {
+            document.getElementById('reportViewerModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('closeReportModalBtn').addEventListener('click', closeReportModal);
+        document.getElementById('reportViewerModal').addEventListener('click', e => {
+            if (e.target.id === 'reportViewerModal') closeReportModal();
+        });
+
         document.addEventListener('keydown', (e) => {
-            const modalOpen = document.getElementById('projectDetailModal').classList.contains('open');
-            if (!modalOpen) return;
-            if (e.key === 'Escape') closeProjectModal();
-            if (e.key === 'ArrowLeft') stepModalSlide(-1);
-            if (e.key === 'ArrowRight') stepModalSlide(1);
+            const detailOpen = document.getElementById('projectDetailModal').classList.contains('open');
+            const cadOpen = document.getElementById('cadViewerModal').classList.contains('open');
+            const reportOpen = document.getElementById('reportViewerModal').classList.contains('open');
+
+            if ((cadOpen || reportOpen) && (e.ctrlKey || e.metaKey) && ['s', 'p', 'u'].includes(e.key.toLowerCase())) {
+                e.preventDefault();
+                showToast('Korumalı içerik: İndirme ve yazdırma devre dışı.');
+                return;
+            }
+
+            if (e.key === 'Escape') {
+                if (cadOpen) closeCadModal();
+                if (reportOpen) closeReportModal();
+                if (detailOpen) closeProjectModal();
+            }
+            if (detailOpen) {
+                if (e.key === 'ArrowLeft') stepModalSlide(-1);
+                if (e.key === 'ArrowRight') stepModalSlide(1);
+            }
         });
 
         /* --- SMOOTH & RELIABLE TYPEWRITER --- */
@@ -1812,7 +2662,6 @@
                     });
                 }
 
-                // Only override corporate defaults if content was explicitly saved via v4.0 Admin Panel
                 if (map.content_version === 'v4_corporate') {
                     if (map.hero_title) document.querySelector('.hero-title').textContent = map.hero_title;
                     if (map.hero_desc) document.querySelector('.hero-desc').textContent = map.hero_desc;
