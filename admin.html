@@ -369,9 +369,9 @@
 
                         <div class="form-row">
                             <div class="special-media-box">
-                                <h5><span><i class="fas fa-cube"></i> Korumalı 3B CAD Modeli (.STL)</span><span style="color:#10B981;font-size:0.62rem">ŞİFRELENİR</span></h5>
-                                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:8px">Yüklenen .STL dosyası otomatik olarak şifrelenir (<code>.ak3d</code>), kimse indiremez veya CAD programında açamaz.</p>
-                                <input type="file" id="projModelFileInput" accept=".stl" class="form-control" style="padding:7px 10px;font-size:0.76rem">
+                                <h5><span><i class="fas fa-cube"></i> Korumalı 3B CAD Modeli (.STP / .IGS / .WRL / .STL)</span><span style="color:#10B981;font-size:0.62rem">ŞİFRELENİR</span></h5>
+                                <p style="font-size:0.72rem;color:var(--text-muted);margin-bottom:8px">CATIA / SolidWorks'ten <code>.stp</code>, <code>.igs</code>, <code>.wrl</code> veya <code>.stl</code> yükleyin; gerçek ölçüler silinip şifrelenerek (<code>.ak3d</code>) kaydedilir.</p>
+                                <input type="file" id="projModelFileInput" accept=".stp,.step,.igs,.iges,.wrl,.stl,.brep" class="form-control" style="padding:7px 10px;font-size:0.76rem">
                             </div>
                             <div class="special-media-box">
                                 <h5><span><i class="fas fa-file-shield"></i> Teknik Rapor / Vaka Analizi (.PDF)</span><span style="color:#A5B4FC;font-size:0.62rem">SALT OKUNUR</span></h5>
@@ -648,8 +648,8 @@
 
             <div class="form-row">
                 <div class="special-media-box">
-                    <h5><span><i class="fas fa-cube"></i> 3B CAD Modeli (.STL)</span><span id="editModelCurrentStatus" style="font-size:0.62rem"></span></h5>
-                    <input type="file" id="editProjModelFileInput" accept=".stl" class="form-control" style="padding:7px 10px;font-size:0.74rem">
+                    <h5><span><i class="fas fa-cube"></i> 3B CAD (.STP / .IGS / .WRL / .STL)</span><span id="editModelCurrentStatus" style="font-size:0.62rem"></span></h5>
+                    <input type="file" id="editProjModelFileInput" accept=".stp,.step,.igs,.iges,.wrl,.stl,.brep" class="form-control" style="padding:7px 10px;font-size:0.74rem">
                 </div>
                 <div class="special-media-box">
                     <h5><span><i class="fas fa-file-shield"></i> Teknik Rapor (.PDF)</span><span id="editReportCurrentStatus" style="font-size:0.62rem"></span></h5>
@@ -729,6 +729,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/occt-import-js@0.0.22/dist/occt-import-js.js"></script>
 <script>
 const SUPABASE_URL  = 'https://mtxzmddpkknafiqikwpg.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eHptZGRwa2tuYWZpcWlrd3BnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxNDk3MjcsImV4cCI6MjEwNTcyNTcyN30.vOjB1ZjSHI81ARL-udAKO_-USY9KJj2MxgdnVVznOfA';
@@ -743,7 +744,7 @@ let cachedSkills   = [];
 /* --- MEDIA HELPERS --- */
 function isModelUrl(url) {
     const u = (url || '').toLowerCase().split('?')[0];
-    return u.endsWith('.stl') || u.endsWith('.ak3d') || u.endsWith('.glb') || u.endsWith('.obj') || u.includes('/models/');
+    return u.endsWith('.stl') || u.endsWith('.ak3d') || u.endsWith('.stp') || u.endsWith('.step') || u.endsWith('.igs') || u.endsWith('.iges') || u.endsWith('.wrl') || u.endsWith('.glb') || u.endsWith('.obj') || u.includes('/models/');
 }
 function isReportUrl(url) {
     const u = (url || '').toLowerCase().split('?')[0];
@@ -1057,9 +1058,146 @@ async function uploadFiles(files) {
     return urls;
 }
 
-// Obfuscate .STL file with AK3D XOR encryption before uploading so nobody can open it in CAD software
+// Pack an array of flat triangle coordinates [x1,y1,z1, x2,y2,z2, x3,y3,z3, ...] into a unitless normalized Binary STL ArrayBuffer
+function buildUnitlessBinaryStlFromTriangles(triCoords) {
+    const numTris = Math.floor(triCoords.length / 9);
+    if (numTris === 0) throw new Error('3B CAD dosyasında geçerli yüzey (mesh) bulunamadı.');
+
+    // Compute bounding box & strip real millimeter dimensions on the client PC
+    let minX = Infinity, minY = Infinity, minZ = Infinity;
+    let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+    for (let i = 0; i < triCoords.length; i += 3) {
+        const x = triCoords[i], y = triCoords[i+1], z = triCoords[i+2];
+        if (x < minX) minX = x; if (x > maxX) maxX = x;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+        if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
+    }
+    const cx = (minX + maxX) * 0.5;
+    const cy = (minY + maxY) * 0.5;
+    const cz = (minZ + maxZ) * 0.5;
+    const maxDim = Math.max(maxX - minX, maxY - minY, maxZ - minZ) || 1;
+    const scale = 5.5 / maxDim;
+
+    const buf = new ArrayBuffer(84 + numTris * 50);
+    const view = new DataView(buf);
+    view.setUint32(80, numTris, true);
+
+    let offset = 84;
+    for (let t = 0; t < numTris; t++) {
+        const b = t * 9;
+        const x1 = (triCoords[b]   - cx) * scale, y1 = (triCoords[b+1] - cy) * scale, z1 = (triCoords[b+2] - cz) * scale;
+        const x2 = (triCoords[b+3] - cx) * scale, y2 = (triCoords[b+4] - cy) * scale, z2 = (triCoords[b+5] - cz) * scale;
+        const x3 = (triCoords[b+6] - cx) * scale, y3 = (triCoords[b+7] - cy) * scale, z3 = (triCoords[b+8] - cz) * scale;
+
+        const ux = x2 - x1, uy = y2 - y1, uz = z2 - z1;
+        const vx = x3 - x1, vy = y3 - y1, vz = z3 - z1;
+        let nx = uy * vz - uz * vy;
+        let ny = uz * vx - ux * vz;
+        let nz = ux * vy - uy * vx;
+        const len = Math.hypot(nx, ny, nz) || 1;
+        nx /= len; ny /= len; nz /= len;
+
+        view.setFloat32(offset, nx, true); offset += 4;
+        view.setFloat32(offset, ny, true); offset += 4;
+        view.setFloat32(offset, nz, true); offset += 4;
+
+        view.setFloat32(offset, x1, true); offset += 4;
+        view.setFloat32(offset, y1, true); offset += 4;
+        view.setFloat32(offset, z1, true); offset += 4;
+
+        view.setFloat32(offset, x2, true); offset += 4;
+        view.setFloat32(offset, y2, true); offset += 4;
+        view.setFloat32(offset, z2, true); offset += 4;
+
+        view.setFloat32(offset, x3, true); offset += 4;
+        view.setFloat32(offset, y3, true); offset += 4;
+        view.setFloat32(offset, z3, true); offset += 4;
+
+        view.setUint16(offset, 0, true); offset += 2;
+    }
+    return buf;
+}
+
+// Parse CATIA V5 VRML (.wrl) V1.0 or V2.0 (VRML97) into flat triangle coordinates
+function parseVrmlToTriangles(text) {
+    const triCoords = [];
+    const pointBlocks = [...text.matchAll(/point\s*\[([\s\S]*?)\]/gi)];
+    const indexBlocks = [...text.matchAll(/coordIndex\s*\[([\s\S]*?)\]/gi)];
+    const count = Math.min(pointBlocks.length, indexBlocks.length);
+
+    for (let b = 0; b < count; b++) {
+        const ptsRaw = pointBlocks[b][1].trim().split(/[\s,]+/).filter(Boolean).map(Number);
+        const idxRaw = indexBlocks[b][1].trim().split(/[\s,]+/).filter(Boolean).map(Number);
+
+        let poly = [];
+        for (let i = 0; i <= idxRaw.length; i++) {
+            const idx = i < idxRaw.length ? idxRaw[i] : -1;
+            if (idx < 0) {
+                if (poly.length >= 3) {
+                    const i0 = poly[0];
+                    for (let k = 1; k < poly.length - 1; k++) {
+                        const i1 = poly[k], i2 = poly[k + 1];
+                        triCoords.push(
+                            ptsRaw[i0*3], ptsRaw[i0*3+1], ptsRaw[i0*3+2],
+                            ptsRaw[i1*3], ptsRaw[i1*3+1], ptsRaw[i1*3+2],
+                            ptsRaw[i2*3], ptsRaw[i2*3+1], ptsRaw[i2*3+2]
+                        );
+                    }
+                }
+                poly = [];
+            } else {
+                poly.push(idx);
+            }
+        }
+    }
+    return triCoords;
+}
+
+// Convert .STP / .STEP / .IGS / .IGES / .BREP / .WRL / .STL into a unitless, AK3D-encrypted binary mesh before uploading
 async function uploadProtected3DModel(file) {
-    const rawBuf = await file.arrayBuffer();
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    let rawBuf = await file.arrayBuffer();
+
+    if (['stp', 'step', 'igs', 'iges', 'brep'].includes(ext)) {
+        notifyToast('CAD montaj dosyası (.STP/.IGS) şifreli 3B modele dönüştürülüyor...');
+        if (typeof occtimportjs !== 'function') {
+            throw new Error('CAD dönüştürücü kütüphanesi yüklenemedi. Sayfayı yenileyip tekrar deneyin.');
+        }
+        const occt = await occtimportjs();
+        const fileBytes = new Uint8Array(rawBuf);
+        let result;
+        if (ext === 'igs' || ext === 'iges') {
+            result = occt.ReadIgesFile(fileBytes, null);
+        } else if (ext === 'brep') {
+            result = occt.ReadBrepFile(fileBytes, null);
+        } else {
+            result = occt.ReadStepFile(fileBytes, null);
+        }
+        if (!result || !result.success || !result.meshes || !result.meshes.length) {
+            throw new Error('CAD dosyası okunamadı. Lütfen STEP (.stp) veya VRML (.wrl) formatında kaydedip deneyin.');
+        }
+        const triCoords = [];
+        for (const m of result.meshes) {
+            const pos = m.attributes?.position?.array;
+            const idx = m.index?.array;
+            if (!pos || !idx) continue;
+            for (let i = 0; i < idx.length; i += 3) {
+                const i0 = idx[i] * 3, i1 = idx[i+1] * 3, i2 = idx[i+2] * 3;
+                triCoords.push(
+                    pos[i0], pos[i0+1], pos[i0+2],
+                    pos[i1], pos[i1+1], pos[i1+2],
+                    pos[i2], pos[i2+1], pos[i2+2]
+                );
+            }
+        }
+        rawBuf = buildUnitlessBinaryStlFromTriangles(triCoords);
+    } else if (ext === 'wrl') {
+        notifyToast('CATIA VRML (.wrl) dosyası şifreli 3B modele dönüştürülüyor...');
+        const text = new TextDecoder('utf-8').decode(rawBuf);
+        const triCoords = parseVrmlToTriangles(text);
+        rawBuf = buildUnitlessBinaryStlFromTriangles(triCoords);
+    }
+
     const src = new Uint8Array(rawBuf);
     const magic = [65, 75, 51, 68]; // 'AK3D'
     const key = [0x4B, 0x41, 0x52, 0x43, 0x49, 0x4C, 0x49, 0x33, 0x44];

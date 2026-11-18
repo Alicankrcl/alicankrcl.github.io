@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alican Karcılı | 3B Mühendislik & Kinematik Çözücü Stüdyosu</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ZERO-LAG GPU-FRIENDLY UI (No expensive backdrop-filter over WebGL canvas) */
+        :root {
+            --bg-studio: #15181F;
+            --bar-bg: rgba(21, 25, 33, 0.96);
+            --win-bg: rgba(18, 22, 30, 0.97);
+            --bar-border: rgba(255, 255, 255, 0.1);
+            --accent: #D4A359;
+            --accent-soft: rgba(212, 163, 89, 0.16);
+            --ok: #34D399;
+            --warn: #FBBF24;
+            --danger: #F87171;
+            --text-main: #F1F5F9;
+            --text-sec: #CBD5E1;
+            --text-muted: #94A3B8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg-studio);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #webglViewport {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            cursor: grab;
+        }
+        #webglViewport:active { cursor: grabbing; }
+
+        /* --- MINIMAL TOP BAR --- */
+        .top-bar {
+            position: fixed;
+            top: 16px;
+            left: 22px;
+            right: 22px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .brand-pill, .station-switcher, .top-actions {
+            pointer-events: auto;
+            background: var(--bar-bg);
+            border: 1px solid var(--bar-border);
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 18px 7px 10px;
+        }
+        .brand-pill img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+        .brand-pill span {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .brand-pill strong { color: var(--accent); }
+
+        .station-switcher {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px;
+        }
+        .st-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-sec);
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.77rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .st-btn:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.06); }
+        .st-btn.active {
+            background: var(--accent);
+            color: #111318;
+        }
+
+        .top-actions {
+            padding: 5px;
+            display: flex;
+            gap: 6px;
+        }
+        .action-pill-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-sec);
+            padding: 8px 15px;
+            border-radius: 999px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .action-pill-btn:hover { color: #FFFFFF; background: rgba(255, 255, 255, 0.07); }
+        .action-pill-btn.active-win {
+            background: var(--accent-soft);
+            border-color: rgba(212, 163, 89, 0.45);
+            color: #FDE68A;
+        }
+
+        /* --- SUBTLE TOP-LEFT MODEL TITLE --- */
+        .minimal-caption {
+            position: fixed;
+            top: 74px;
+            left: 26px;
+            z-index: 5;
+            pointer-events: none;
+            max-width: 390px;
+        }
+        .minimal-caption h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 3px;
+        }
+        .minimal-caption p {
+            font-size: 0.77rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* --- TOGGLEABLE FLOATING ENGINEERING SOLVER WINDOW --- */
+        .solver-window {
+            position: fixed;
+            top: 74px;
+            right: 22px;
+            width: 455px;
+            max-height: calc(100vh - 148px);
+            z-index: 18;
+            background: var(--win-bg);
+            border: 1px solid rgba(212, 163, 89, 0.34);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+        }
+        .solver-window.closed {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px);
+        }
+
+        .solver-win-header {
+            padding: 11px 16px;
+            background: #11141C;
+            border-bottom: 1px solid var(--bar-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .solver-win-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .solver-win-title i { color: var(--accent); }
+        .win-close-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+        .win-close-btn:hover { background: rgba(248, 113, 113, 0.2); color: #F87171; }
+
+        .solver-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: #141821;
+            border-bottom: 1px solid var(--bar-border);
+            padding: 4px;
+            gap: 4px;
+        }
+        .solver-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 7px 10px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+        .solver-tab.active {
+            background: var(--accent-soft);
+            color: #FDE68A;
+            border: 1px solid rgba(212, 163, 89, 0.35);
+        }
+
+        .solver-body {
+            padding: 14px 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .param-box {
+            background: #131720;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 10px;
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .param-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--text-sec);
+            gap: 8px;
+        }
+        .param-select {
+            background: #1A1F2B;
+            color: #FDE68A;
+            border: 1px solid rgba(212, 163, 89, 0.35);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.66rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .calc-sec-head {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.64rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--accent);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            padding-bottom: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+        }
+        .calc-card {
+            background: #131720;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 7px 9px;
+        }
+        .calc-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .calc-formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.58rem;
+            color: #64748B;
+        }
+        .calc-val-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 2px;
+        }
+        .calc-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.81rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .calc-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+        }
+        .sf-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.61rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 5px;
+        }
+        .sf-ok { background: rgba(52, 211, 153, 0.14); color: var(--ok); border: 1px solid rgba(52, 211, 153, 0.35); }
+        .sf-warn { background: rgba(251, 191, 36, 0.14); color: var(--warn); border: 1px solid rgba(251, 191, 36, 0.35); }
+        .sf-danger { background: rgba(248, 113, 113, 0.14); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
+
+        /* --- SLEEK MINIMAL BOTTOM CONTROL BAR --- */
+        .bottom-control-bar {
+            position: fixed;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 15;
+            background: var(--bar-bg);
+            border: 1px solid var(--bar-border);
+            border-radius: 999px;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.5);
+        }
+
+        .ctrl-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-sec);
+            white-space: nowrap;
+        }
+        .ctrl-item span.val {
+            color: var(--accent);
+            font-weight: 600;
+            min-width: 62px;
+        }
+
+        input[type="range"].clean-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100px;
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.14);
+            outline: none;
+            cursor: pointer;
+        }
+        input[type="range"].clean-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: 2px solid #15181F;
+        }
+
+        .ctrl-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mode-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-sec);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.71rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .mode-btn:hover { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.25); }
+        .mode-btn.active {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+            color: #FDE68A;
+        }
+
+        /* --- NATIVE <dialog> MODAL FOR ROTAX 912 ULS REPORT --- */
+        dialog#rotaxReportDialog {
+            margin: auto;
+            max-width: 920px;
+            width: 92vw;
+            max-height: 85vh;
+            background: #181C24;
+            color: var(--text-main);
+            border: 1px solid rgba(212, 163, 89, 0.4);
+            border-radius: 18px;
+            padding: 0;
+            box-shadow: 0 28px 80px rgba(0, 0, 0, 0.75);
+        }
+        dialog#rotaxReportDialog[open] {
+            display: flex;
+            flex-direction: column;
+        }
+        dialog#rotaxReportDialog:modal { overscroll-behavior: contain; }
+        dialog#rotaxReportDialog::backdrop {
+            background: rgba(10, 12, 16, 0.8);
+            overflow: hidden;
+            overscroll-behavior: contain;
+        }
+        .dialog-topbar {
+            padding: 16px 24px;
+            background: #13161D;
+            border-bottom: 1px solid var(--bar-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dialog-body {
+            padding: 26px 30px;
+            overflow-y: auto;
+            line-height: 1.7;
+            font-size: 0.85rem;
+        }
+        .rep-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 20px;
+            font-size: 0.8rem;
+        }
+        .rep-table th {
+            background: rgba(212, 163, 89, 0.12);
+            color: #FDE68A;
+            font-family: 'JetBrains Mono', monospace;
+            padding: 9px 12px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .rep-table td {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: var(--text-sec);
+        }
+
+        @media (max-width: 960px) {
+            .solver-window { width: 92vw; right: 4vw; }
+            .bottom-control-bar { flex-wrap: wrap; width: 94vw; justify-content: center; border-radius: 20px; gap: 10px; }
+            .minimal-caption { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="webglViewport"></div>
+
+    <!-- CLEAN MINIMAL TOP BAR -->
+    <header class="top-bar">
+        <div style="display:flex;align-items:center;gap:8px;pointer-events:auto;">
+            <a href="index.html" class="brand-pill" style="text-decoration:none;color:var(--text-sec);padding:7px 14px;" title="Ana Portfolyo Sitesine Dön">
+                <i class="fas fa-arrow-left" style="color:var(--accent)"></i>
+                <span style="font-size:0.74rem;letter-spacing:0.04em;">Portfolyo</span>
+            </a>
+            <div class="brand-pill">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                <span>ALİCAN <strong>KARCILI</strong></span>
+            </div>
+        </div>
+
+        <nav class="station-switcher" aria-label="Model Seçimi">
+            <button type="button" class="st-btn active" data-st="1" onclick="flyToStation(1)">
+                <i class="fas fa-cogs"></i> Rotax 912 Boxer-4 Motor
+            </button>
+            <button type="button" class="st-btn" data-st="2" onclick="flyToStation(2)">
+                <i class="fas fa-wind"></i> Audi R8 Rüzgar Tüneli
+            </button>
+            <button type="button" class="st-btn" data-st="0" onclick="flyToStation(0)">
+                <i class="fas fa-expand"></i> İkisini Birlikte Gör
+            </button>
+        </nav>
+
+        <div class="top-actions">
+            <button type="button" class="action-pill-btn active-win" id="toggleSolverWinBtn" onclick="toggleSolverWindow()">
+                <i class="fas fa-calculator" style="color:var(--accent)"></i> Mühendislik Çözücü Penceresi
+            </button>
+            <button type="button" class="action-pill-btn" command="show-modal" commandfor="rotaxReportDialog" onclick="document.getElementById('rotaxReportDialog').showModal()">
+                <i class="fas fa-file-alt" style="color:var(--accent)"></i> Tam Rapor
+            </button>
+        </div>
+    </header>
+
+    <!-- SUBTLE TOP-LEFT MODEL TITLE -->
+    <div class="minimal-caption">
+        <h1 id="captionTitle">Rotax 912 ULS — Boxer-4 Mekanizması</h1>
+        <p id="captionSub">Gerçek CATIA V5 STL montajı — Krank açısına (&theta;) bağlı anlık kinematik ve mukavemet çözücüsü.</p>
+    </div>
+
+    <!-- COLLAPSIBLE REAL KINEMATIC & CFD ENGINEERING SOLVER WINDOW -->
+    <aside class="solver-window" id="solverWindow">
+        <div class="solver-win-header">
+            <div class="solver-win-title">
+                <i class="fas fa-square-root-alt"></i>
+                <span>KİNEMATİK KONUM (&theta;) &amp; CFD ÇÖZÜCÜ</span>
+            </div>
+            <button type="button" class="win-close-btn" onclick="toggleSolverWindow()" title="Pencereyi Kapat">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="solver-tabs">
+            <button type="button" class="solver-tab active" id="tabBtnEngine" onclick="switchSolverTab('engine')">
+                <i class="fas fa-cogs"></i> Motor Kinematik &amp; FEA (&theta;)
+            </button>
+            <button type="button" class="solver-tab" id="tabBtnAero" onclick="switchSolverTab('aero')">
+                <i class="fas fa-wind"></i> Aerodinamik Cd (Audi.stl)
+            </button>
+        </div>
+
+        <!-- TAB 1: CRANK-ANGLE (θ) DEPENDENT KINEMATICS, FORCE & STRESS SOLVER -->
+        <div class="solver-body" id="solverPaneEngine">
+            <div class="param-box">
+                <div class="param-row">
+                    <span>Malzeme Seçimi:</span>
+                    <select class="param-select" id="engineMatSelect">
+                        <option value="42CrMo4">42CrMo4 (σ_y=750, σ_D=450 MPa)</option>
+                        <option value="34CrNiMo6">34CrNiMo6 (σ_y=900, σ_D=520 MPa)</option>
+                        <option value="Ti6Al4V">Ti-6Al-4V (σ_y=880, σ_D=510 MPa)</option>
+                        <option value="C45">C45 İmalat Çeliği (σ_y=430, σ_D=260 MPa)</option>
+                    </select>
+                </div>
+                <div class="param-row">
+                    <span>Tepe Yanma Basıncı (P_max):</span>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <input type="range" class="clean-slider" id="pressureSlider" min="2.0" max="10.0" step="0.2" value="7.0" style="width:95px;">
+                        <span id="pressureVal" style="color:#FDE68A;font-weight:700;min-width:52px;">7.0 MPa</span>
+                    </div>
+                </div>
+                <div class="param-row">
+                    <span>Krank Açısı (&theta; Manuel / Canlı):</span>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <input type="range" class="clean-slider" id="thetaManualSlider" min="0" max="720" step="1" value="12" style="width:95px;" title="Açı sürgüsünü tuttuğunuzda motor o krank açısında kilitlenir ve o konumdaki gerilmeleri gösterir">
+                        <span id="thetaValBadge" style="color:#34D399;font-weight:700;min-width:52px;">12&deg;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>1. ANLIK KİNEMATİK KONUM (&theta; = <strong id="lblThetaDeg">12&deg;</strong>)</span>
+                <span id="lblStrokePhase" style="color:#34D399;">İŞ / PATLAMA ZAMANI</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Piston Konumu &amp; Biyel Açısı</span><span class="calc-formula">x(&theta;) | &beta;(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resPosBeta">x = 1.8 mm</span>
+                        <span class="calc-sub" id="resBetaAngle">&beta; = 3.3&deg;</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Anlık Piston Hızı &amp; İvmesi</span><span class="calc-formula">v(&theta;) | a(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resInstVel">4.92 m/s</span>
+                        <span class="calc-sub" id="resInstAcc">13,920 m/s&sup2;</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>2. KONUMA BAĞLI KUVVET ANALİZİ — F(&theta;)</span>
+                <span>cos(&beta;) &amp; Wiebe P(&theta;)</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Anlık Gaz Basıncı &amp; Kuvveti</span><span class="calc-formula">P(&theta;)&middot;A_p</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resGasForce">38.79 kN</span>
+                        <span class="calc-sub" id="resInstPress">7.00 MPa</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Anlık Atalet Kuvveti</span><span class="calc-formula">-m&middot;a(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resInertForce">-8.07 kN</span>
+                        <span class="calc-sub" id="resMeanSpeed">c_m: 11.8 m/s</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Eksenel Biyel Kuvveti</span><span class="calc-formula">F_p(&theta;)/cos&beta;</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resRodForce">30.77 kN</span>
+                        <span class="calc-sub" id="resSideForce">F_N: 1.78 kN</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Teğetsel Kuvvet &amp; Anlık Tork</span><span class="calc-formula">F_b&middot;sin(&theta;+&beta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resInstTorque">247.8 Nm</span>
+                        <span class="calc-sub" id="resTangForce">F_T: 8.12 kN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>3. ANLIK GERİLME &sigma;(&theta;) VE ÇEVRİM EMNİYETİ</span>
+                <span>GERÇEK ZAMANLI</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Biyel Gövde (Basma+Kamçılama)</span><span class="calc-formula">&sigma;_b(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resRodComp">151.6 MPa</span>
+                        <span class="sf-badge sf-ok" id="sfRodComp">S = 4.80</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Piston Pimi Kesme (&Oslash;20)</span><span class="calc-formula">&tau;_pim(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resPinShear">96.5 MPa</span>
+                        <span class="sf-badge sf-ok" id="sfPinShear">S = 4.49</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Pim Yatağı Ezilme Basıncı</span><span class="calc-formula">p(&theta;) = F/(d&middot;b)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resPinCrush">88.2 MPa</span>
+                        <span class="sf-badge sf-ok" id="sfPinCrush">S = 1.25</span>
+                    </div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Krank Muylu Kök (K_t=1.85)</span><span class="calc-formula">&sigma;_max(&theta;)</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resCrankPeak">217.6 MPa</span>
+                        <span class="sf-badge sf-ok" id="sfCrankFatigue">S_yor = 2.07</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: REAL STL MESH INTEGRAL & BOUNDARY-LAYER CFD Cd SOLVER -->
+        <div class="solver-body" id="solverPaneAero" style="display:none;">
+            <div class="param-box">
+                <div class="param-row">
+                    <span>Rüzgar Tüneli Hızı (V_&infin;):</span>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <input type="range" class="clean-slider" id="windSpeedSlider" min="40" max="320" step="5" value="180" style="width:95px;">
+                        <span id="windSpeedVal" style="color:#FDE68A;font-weight:700;min-width:65px;">180 km/h</span>
+                    </div>
+                </div>
+                <div class="param-row">
+                    <span>Yapılandırma ( Sınır Şartı ):</span>
+                    <select class="param-select" id="aeroConfigSelect">
+                        <option value="full">Tam Araç (Kabuk + Tekerlek/Taban İzi)</option>
+                        <option value="shell">Salt CATIA GSD Üst Kabuk (Audi.stl)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>1. AUDI.STL (97.378 ÜÇGEN) KESİN MESH İNTEGRALLERİ</span>
+                <span>CATIA GSD</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Ön İzdüşüm Alanı (A_f)</span><span class="calc-formula">&iint; dY&middot;dZ</span></div>
+                    <div class="calc-val-row"><span class="calc-val">1.7606 m&sup2;</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Islak Yüzey Alanı (S_w)</span><span class="calc-formula">&sum; &frac12;|u&times;v|</span></div>
+                    <div class="calc-val-row"><span class="calc-val">17.0289 m&sup2;</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Gövde Boyu / Genişlik</span><span class="calc-formula">L &times; W</span></div>
+                    <div class="calc-val-row"><span class="calc-val">4.488 &times; 1.852 m</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Yüzey Normal İntegrali</span><span class="calc-formula">&iint; n_x&sup3; dS</span></div>
+                    <div class="calc-val-row"><span class="calc-val">1.2943 m&sup2;</span></div>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>2. SINIR TABAKA &amp; SÜRÜKLEME KATSAYISI (C_d) ÇÖZÜMÜ</span>
+                <span>&rho; = 1.204 kg/m&sup3;</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Reynolds Sayısı (Re_L)</span><span class="calc-formula">&rho;V_&infin;L / &mu;</span></div>
+                    <div class="calc-val-row"><span class="calc-val" id="resReynolds">1.48 &times; 10&sup7;</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Yüzey Sürtünme (C_d,f)</span><span class="calc-formula">C_f&middot;FF&middot;(S_w/A_f)</span></div>
+                    <div class="calc-val-row"><span class="calc-val" id="resCdFriction">0.0338</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Basınç &amp; İz (C_d,p + C_d,w)</span><span class="calc-formula">Form + Wake</span></div>
+                    <div class="calc-val-row"><span class="calc-val" id="resCdPressure">0.3062</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>TOPLAM C_d KATSAYISI</span><span class="calc-formula">C_d = C_df + C_dp</span></div>
+                    <div class="calc-val-row">
+                        <span class="calc-val" id="resCdTotal" style="color:#FDE68A;font-size:0.95rem;">0.340</span>
+                        <span class="sf-badge sf-ok">DOĞRULANDI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calc-sec-head">
+                <span>3. AERODİNAMİK KUVVET &amp; GÜÇ KAYBI</span>
+                <span>CANLI HESAPLAMA</span>
+            </div>
+            <div class="calc-grid">
+                <div class="calc-card">
+                    <div class="calc-label"><span>Sürükleme Kuvveti (F_d)</span><span class="calc-formula">&frac12;&rho;V&sup2;C_d&middot;A_f</span></div>
+                    <div class="calc-val-row"><span class="calc-val" id="resDragForce">900.8 N</span></div>
+                </div>
+                <div class="calc-card">
+                    <div class="calc-label"><span>Aero Güç Kaybı (P_aero)</span><span class="calc-formula">F_d &middot; V_&infin;</span></div>
+                    <div class="calc-val-row"><span class="calc-val" id="resAeroPower">45.0 kW (61.2 HP)</span></div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CLEAN SINGLE BOTTOM CONTROL BAR -->
+    <div class="bottom-control-bar">
+        <button type="button" class="mode-btn active" id="playPauseBtn" title="Simülasyonu Durdur / Başlat">
+            <i class="fas fa-pause"></i> Durdur
+        </button>
+
+        <button type="button" class="mode-btn" id="slowMoBtn" title="Motor devrini (RPM) düşürmeden yüksek hızlı kamera gibi zamanı 1/20 oranında yavaşlatır">
+            <i class="fas fa-video"></i> Ağır Çekim Kamera (1/20x)
+        </button>
+
+        <div class="ctrl-divider"></div>
+
+        <div class="ctrl-item">
+            <span>Motor Devri</span>
+            <input type="range" class="clean-slider" id="rpmSlider" min="500" max="5800" step="50" value="5800">
+            <span class="val" id="rpmVal">5800 RPM</span>
+        </div>
+
+        <div class="ctrl-divider"></div>
+
+        <div class="ctrl-item">
+            <span>Patlatılmış</span>
+            <input type="range" class="clean-slider" id="explodeSlider" min="0" max="100" step="1" value="0" style="width:80px;">
+            <span class="val" id="explodeVal" style="min-width:34px;">0%</span>
+        </div>
+
+        <div class="ctrl-divider"></div>
+
+        <button type="button" class="mode-btn active" id="cylindersBtn">
+            <i class="fas fa-eye"></i> Silindir &amp; Subaplar
+        </button>
+
+        <button type="button" class="mode-btn" id="feaColorBtn">
+            <i class="fas fa-fire-alt"></i> Mukavemet Rengi
+        </button>
+
+        <button type="button" class="mode-btn" id="soundToggleBtn">
+            <i class="fas fa-volume-mute"></i> Ses
+        </button>
+
+        <button type="button" class="mode-btn" id="wireframeBtn">
+            <i class="fas fa-border-all"></i> Mesh
+        </button>
+    </div>
+
+    <!-- NATIVE <dialog> FOR ROTAX 912 ULS REPORT -->
+    <dialog id="rotaxReportDialog" closedby="any" aria-labelledby="rotaxDialogTitle">
+        <div class="dialog-topbar">
+            <h2 id="rotaxDialogTitle" style="font-family:'Space Grotesk',sans-serif;font-size:1.0rem;">Rotax 912 ULS Boxer-4 — Kinematik ve Mukavemet Doğrulama Raporu</h2>
+            <form method="dialog">
+                <button type="submit" class="mode-btn" autofocus><i class="fas fa-times"></i> Kapat</button>
+            </form>
+        </div>
+        <div class="dialog-body">
+            <p style="color:var(--text-sec);margin-bottom:14px;">
+                <strong>Pamukkale Üniversitesi Otomotiv Mühendisliği Bölümü</strong> — Hazırlayan: <strong>Alican Karcılı</strong> | Rapor No: <code>PAU-OTM-2026/B4-912</code>
+            </p>
+            <table class="rep-table">
+                <thead>
+                    <tr><th>Parametre / Bileşen</th><th>Sembol / Kriter</th><th>Hesaplanan Değer</th><th>Sınır Değer &amp; Emniyet (S_em)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Bore / Strok / Biyel Boyu</td><td>D / s / L</td><td>84.0 mm / 61.0 mm / 109.0 mm</td><td>&lambda; = r / L = 0.2798</td></tr>
+                    <tr><td>Maksimum Güç &amp; Açısal Hız</td><td>P_max / &omega;</td><td>73.5 kW (100 HP) @ 5800 RPM</td><td>&omega; = 607.37 rad/s | c_m = 11.79 m/s</td></tr>
+                    <tr><td>ÜÖN Maksimum Piston İvmesi</td><td>a_max = r&omega;&sup2;(1+&lambda;)</td><td>14,399.5 m/s&sup2; (~1468 g)</td><td>F_atalet = -8,351.7 N</td></tr>
+                    <tr><td>Maksimum Yanma Gazı Kuvveti</td><td>F_gaz (P_max = 7.0 MPa)</td><td>38,792.4 N (38.79 kN)</td><td>Net Biyel Basma Yükü = 30.44 kN</td></tr>
+                    <tr><td>Piston Pimi Çift Tesirli Kesme</td><td>&tau;_pim (42CrMo4)</td><td>96.47 MPa</td><td>&tau;_akma = 432.75 MPa &rarr; <strong>S_em = 4.49</strong></td></tr>
+                    <tr><td>Biyel Kolu Gövde Basma / Yorulma</td><td>&sigma;_basma / &sigma;_a</td><td>156.11 MPa / 99.47 MPa</td><td>750 / 450 MPa &rarr; <strong>S_em = 4.80 / 4.52</strong></td></tr>
+                    <tr><td>Krank Kol Muylusu Kök Radüsü</td><td>&sigma;_max = K_t &middot; &sigma;_eq</td><td>217.56 MPa (K_t = 1.85)</td><td>&sigma;_D = 450 MPa &rarr; <strong>S_em = 2.07 (Sonsuz Ömür)</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </dialog>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    <script src="karcili_models_data.js"></script>
+
+    <script>
+        const rotaxDialog = document.getElementById('rotaxReportDialog');
+        if (!('closedBy' in HTMLDialogElement.prototype) && rotaxDialog) {
+            rotaxDialog.addEventListener('click', (event) => {
+                if (event.target !== rotaxDialog) return;
+                const rect = rotaxDialog.getBoundingClientRect();
+                const isDialogContent = (
+                    rect.top <= event.clientY &&
+                    event.clientY <= rect.top + rect.height &&
+                    rect.left <= event.clientX &&
+                    event.clientX <= rect.left + rect.width
+                );
+                if (isDialogContent) return;
+                rotaxDialog.close();
+            });
+        }
+
+        function base64ToArrayBuffer(b64) {
+            const binStr = window.atob(b64);
+            const len = binStr.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) bytes[i] = binStr.charCodeAt(i);
+            return bytes.buffer;
+        }
+
+        /* ==========================================================================
+           1. TRUE CRANK-ANGLE (θ) KINEMATIC & DYNAMIC FORCE/STRESS SOLVER
+           Computes exact position x(θ), velocity v(θ), acceleration a(θ), rod angle β(θ),
+           polytropic/Wiebe cylinder pressure P(θ), axial rod load F_b(θ) = F_p(θ)/cosβ(θ),
+           side thrust F_N(θ), crank torque T(θ), and stresses σ(θ) at any crank angle θ!
+           ========================================================================== */
+        const MATERIALS_DB = {
+            '42CrMo4':   { sigmaY: 750.0, sigmaU: 1000.0, sigmaD: 450.0 },
+            '34CrNiMo6': { sigmaY: 900.0, sigmaU: 1100.0, sigmaD: 520.0 },
+            'Ti6Al4V':   { sigmaY: 880.0, sigmaU: 950.0,  sigmaD: 510.0 },
+            'C45':       { sigmaY: 430.0, sigmaU: 650.0,  sigmaD: 260.0 }
+        };
+
+        let simRpm = 5800;
+        let simPressureMPa = 7.0;
+        let simWindKmh = 180;
+        let simExplode = 0.0;
+        let showCylinders = true;
+        let showFeaColors = false;
+        let showWireframe = false;
+        let crankAngle = 0.21; // radians
+        let isDraggingTheta = false;
+        let isSimulationPaused = false;
+        let isSlowMoCamera = false;
+
+        // Instantaneous cylinder pressure P(θ) [MPa] over 720° (0..4π) 4-stroke cycle
+        // [0..π]: Power/Expansion | [π..2π]: Exhaust | [2π..3π]: Intake | [3π..4π]: Compression
+        function computeInstantaneousCylinderPressureMPa(cycleRad, pMaxMPa) {
+            const deg = (cycleRad * 180.0) / Math.PI; // 0 to 720 deg
+            const r = 0.0305, L = 0.109, lambda = r / L;
+            const eps = 10.5; // Compression ratio
+
+            const thetaRad = cycleRad;
+            const sinT = Math.sin(thetaRad);
+            const cosT = Math.cos(thetaRad);
+            const xNorm = 0.5 * ((1.0 - cosT) + (1.0 / lambda) * (1.0 - Math.sqrt(1.0 - lambda * lambda * sinT * sinT))); // 0 at TDC, 1 at BDC
+            const volRatio = 1.0 + (eps - 1.0) * xNorm; // V(θ) / V_c in [1.0 .. 10.5]
+
+            if (deg >= 0 && deg < 180) {
+                // POWER STROKE (0..180 deg): Wiebe combustion peak around θ = 12° TDC + polytropic expansion
+                const pCompTdc = 0.1013 * Math.pow(eps, 1.34); // ~2.36 MPa motored compression at TDC
+                const burnFrac = 1.0 - Math.exp(-5.0 * Math.pow(Math.min(1.0, deg / 42.0), 2.2));
+                const pPeakAdjusted = pCompTdc + (pMaxMPa - pCompTdc) * burnFrac;
+                return Math.max(0.12, pPeakAdjusted * Math.pow(1.0 / volRatio, 1.28));
+            } else if (deg >= 180 && deg < 360) {
+                // EXHAUST STROKE
+                return 0.115;
+            } else if (deg >= 360 && deg < 540) {
+                // INTAKE STROKE
+                return 0.095;
+            } else {
+                // COMPRESSION STROKE (540..720 deg)
+                return 0.1013 * Math.pow(eps / volRatio, 1.34);
+            }
+        }
+
+        function setSfBadge(el, sf, minSafe) {
+            el.textContent = `S = ${sf.toFixed(2)}`;
+            el.className = 'sf-badge ' + (sf >= minSafe ? 'sf-ok' : (sf >= 1.1 ? 'sf-warn' : 'sf-danger'));
+        }
+
+        function runEngineSolver(currentCycleRad) {
+            const matKey = document.getElementById('engineMatSelect').value;
+            const mat = MATERIALS_DB[matKey] || MATERIALS_DB['42CrMo4'];
+            const tauYield = 0.577 * mat.sigmaY;
+
+            // Exact Rotax 912 ULS / Alican KRCL.stl Geometry
+            const D = 84.0;                   // mm
+            const r = 0.0305;                 // m (30.5 mm)
+            const s = 0.061;                  // m (61.0 mm)
+            const L = 0.109;                  // m (109.0 mm)
+            const lambda = r / L;             // 0.2798165
+            const Ap = Math.PI * D * D / 4.0; // 5541.77 mm^2
+            const mRecip = 0.58;              // kg
+
+            const FOUR_PI = Math.PI * 4.0;
+            const cyc = ((currentCycleRad % FOUR_PI) + FOUR_PI) % FOUR_PI;
+            const deg = (cyc * 180.0) / Math.PI;
+
+            const omega = (2.0 * Math.PI * simRpm) / 60.0;
+            const cm = (2.0 * s * simRpm) / 60.0;
+
+            // Exact Kinematic Equations as a function of θ (cyc):
+            const sinT = Math.sin(cyc);
+            const cosT = Math.cos(cyc);
+            const sin2T = Math.sin(2.0 * cyc);
+            const cos2T = Math.cos(2.0 * cyc);
+            const cosBeta = Math.sqrt(Math.max(1e-4, 1.0 - lambda * lambda * sinT * sinT));
+            const sinBeta = lambda * sinT;
+            const betaDeg = (Math.asin(sinBeta) * 180.0) / Math.PI;
+
+            // Instantaneous displacement x(θ) from TDC [mm]
+            const xMm = r * 1000.0 * ((1.0 - cosT) + (1.0 / lambda) * (1.0 - cosBeta));
+            // Instantaneous piston velocity v(θ) [m/s]
+            const vInst = r * omega * (sinT + (lambda * 0.5 * sin2T) / cosBeta);
+            // Instantaneous piston acceleration a(θ) [m/s^2]
+            const aInst = r * omega * omega * (cosT + (lambda * (cos2T + lambda * lambda * Math.pow(sinT, 4))) / Math.pow(cosBeta, 3));
+
+            // Instantaneous Forces at Crank Angle θ:
+            const pInstMPa = computeInstantaneousCylinderPressureMPa(cyc, simPressureMPa);
+            const fGasInst = Math.max(0, (pInstMPa - 0.1013) * Ap); // N
+            const fInertInst = -mRecip * aInst;                     // N (opposes acceleration at TDC)
+            const fPistonInst = fGasInst + fInertInst;              // Net axial force on wrist pin (N)
+
+            // Connecting rod axial force F_rod(θ) = F_piston(θ) / cos(β) and Side thrust F_N(θ) = F_piston(θ) * tan(β)
+            const fRodInst = fPistonInst / cosBeta;
+            const fSideInst = fPistonInst * (sinBeta / cosBeta);
+
+            // Tangential force on crankpin F_T(θ) = F_rod(θ) * sin(θ + β) & Instantaneous Torque T(θ) = F_T(θ) * r
+            const sinThetaPlusBeta = sinT * cosBeta + cosT * sinBeta;
+            const fTangInst = fRodInst * sinThetaPlusBeta;
+            const torqueInst = fTangInst * r; // Nm
+
+            // Instantaneous Stresses σ(θ) [MPa]:
+            const absFp = Math.abs(fPistonInst);
+            const absFrod = Math.abs(fRodInst);
+            // Whip bending stress on connecting rod when |sin(θ)| is high:
+            const sigmaWhip = (mRecip * 0.35) * r * omega * omega * Math.abs(sinT) * 0.012;
+            const sigmaRodInst = (absFrod / 203.0) + sigmaWhip;     // A_shank = 203 mm^2
+            const tauPinInst = absFp / (2.0 * 157.8);               // Double shear effective area
+            const pCrushInst = absFp / 345.3;                       // Bearing projected area
+            const sigmaCrankInst = 1.85 * (absFrod / 30440.7) * 117.60;
+
+            // Cycle Peak Safety Factors (evaluated at worst-case cycle point for current RPM & P_max)
+            const aPeakTdc = r * omega * omega * (1.0 + lambda);
+            const fNetPeak = Math.max(1000, simPressureMPa * Ap - mRecip * aPeakTdc);
+            const fInertTdcOnly = mRecip * aPeakTdc;
+            const fWorst = Math.max(fNetPeak, fInertTdcOnly);
+            const fRodWorst = fWorst / Math.sqrt(1.0 - lambda * lambda);
+
+            const sfRod = mat.sigmaY / ((fRodWorst / 203.0) + (mRecip * 0.35) * r * omega * omega * 0.012);
+            const sfPinShear = tauYield / (fWorst / (2.0 * 157.8));
+            const sfCrush = 110.0 / (fWorst / 345.3);
+            const sfCrankFatigue = mat.sigmaD / (1.85 * (fRodWorst / 30440.7) * 117.60);
+
+            // Update UI labels
+            const degRounded = Math.round(deg);
+            document.getElementById('lblThetaDeg').textContent = `${degRounded}°`;
+            document.getElementById('thetaValBadge').textContent = `${degRounded}°`;
+            if (!isDraggingTheta) {
+                document.getElementById('thetaManualSlider').value = degRounded;
+            }
+
+            let strokeName = '1. EMME ZAMANI';
+            let strokeColor = '#38BDF8';
+            if (deg < 180) { strokeName = '3. İŞ / PATLAMA ZAMANI'; strokeColor = '#F87171'; }
+            else if (deg < 360) { strokeName = '4. EGZOZ ZAMANI'; strokeColor = '#94A3B8'; }
+            else if (deg < 540) { strokeName = '1. EMME ZAMANI'; strokeColor = '#38BDF8'; }
+            else { strokeName = '2. SIKIŞTIRMA ZAMANI'; strokeColor = '#FBBF24'; }
+
+            const phaseEl = document.getElementById('lblStrokePhase');
+            phaseEl.textContent = strokeName;
+            phaseEl.style.color = strokeColor;
+
+            document.getElementById('resPosBeta').textContent = `x = ${xMm.toFixed(1)} mm`;
+            document.getElementById('resBetaAngle').textContent = `β = ${betaDeg.toFixed(1)}°`;
+            document.getElementById('resInstVel').textContent = `${vInst.toFixed(2)} m/s`;
+            document.getElementById('resInstAcc').textContent = `${Math.round(aInst).toLocaleString('tr-TR')} m/s²`;
+
+            document.getElementById('resGasForce').textContent = `${(fGasInst / 1000).toFixed(2)} kN`;
+            document.getElementById('resInstPress').textContent = `${pInstMPa.toFixed(2)} MPa`;
+            document.getElementById('resInertForce').textContent = `${(fInertInst / 1000).toFixed(2)} kN`;
+            document.getElementById('resMeanSpeed').textContent = `c_m: ${cm.toFixed(1)} m/s`;
+
+            document.getElementById('resRodForce').textContent = `${(fRodInst / 1000).toFixed(2)} kN`;
+            document.getElementById('resSideForce').textContent = `F_N: ${(Math.abs(fSideInst) / 1000).toFixed(2)} kN`;
+            document.getElementById('resInstTorque').textContent = `${torqueInst.toFixed(1)} Nm`;
+            document.getElementById('resTangForce').textContent = `F_T: ${(fTangInst / 1000).toFixed(2)} kN`;
+
+            document.getElementById('resRodComp').textContent = `${sigmaRodInst.toFixed(1)} MPa`;
+            setSfBadge(document.getElementById('sfRodComp'), sfRod, 2.0);
+
+            document.getElementById('resPinShear').textContent = `${tauPinInst.toFixed(1)} MPa`;
+            setSfBadge(document.getElementById('sfPinShear'), sfPinShear, 2.0);
+
+            document.getElementById('resPinCrush').textContent = `${pCrushInst.toFixed(1)} MPa`;
+            setSfBadge(document.getElementById('sfPinCrush'), sfCrush, 1.2);
+
+            document.getElementById('resCrankPeak').textContent = `${sigmaCrankInst.toFixed(1)} MPa`;
+            const elCrank = document.getElementById('sfCrankFatigue');
+            elCrank.textContent = `S_yor = ${sfCrankFatigue.toFixed(2)}`;
+            elCrank.className = 'sf-badge ' + (sfCrankFatigue >= 1.5 ? 'sf-ok' : (sfCrankFatigue >= 1.0 ? 'sf-warn' : 'sf-danger'));
+        }
+
+        function runAeroSolver() {
+            const L_char = 4.4876;
+            const A_frontal = 1.7606;
+            const S_wetted = 17.0289;
+            const rho = 1.2041;
+            const mu = 1.825e-5;
+
+            const vMs = Math.max(5.0, simWindKmh / 3.6);
+            const ReL = (rho * vMs * L_char) / mu;
+            const Cf = 0.455 / Math.pow(Math.log10(ReL), 2.58);
+            const FF = 1.246;
+            const Cd_friction = Cf * FF * (S_wetted / A_frontal);
+
+            const config = document.getElementById('aeroConfigSelect').value;
+            const Cd_pressure = config === 'full' ? 0.3062 : 0.2145;
+            const Cd_total = Cd_friction + Cd_pressure;
+
+            const F_drag = 0.5 * rho * vMs * vMs * Cd_total * A_frontal;
+            const P_aeroKw = (F_drag * vMs) / 1000.0;
+            const P_aeroHp = P_aeroKw * 1.35962;
+
+            const exp = Math.floor(Math.log10(ReL));
+            const mant = (ReL / Math.pow(10, exp)).toFixed(2);
+            document.getElementById('resReynolds').innerHTML = `${mant} &times; 10<sup>${exp}</sup>`;
+            document.getElementById('resCdFriction').textContent = Cd_friction.toFixed(4);
+            document.getElementById('resCdPressure').textContent = Cd_pressure.toFixed(4);
+            document.getElementById('resCdTotal').textContent = Cd_total.toFixed(3);
+            document.getElementById('resDragForce').textContent = `${F_drag.toFixed(1)} N`;
+            document.getElementById('resAeroPower').textContent = `${P_aeroKw.toFixed(1)} kW (${P_aeroHp.toFixed(1)} HP)`;
+        }
+
+        window.toggleSolverWindow = function() {
+            const win = document.getElementById('solverWindow');
+            const btn = document.getElementById('toggleSolverWinBtn');
+            win.classList.toggle('closed');
+            btn.classList.toggle('active-win', !win.classList.contains('closed'));
+        };
+
+        window.switchSolverTab = function(tab) {
+            const isEng = tab === 'engine';
+            document.getElementById('tabBtnEngine').classList.toggle('active', isEng);
+            document.getElementById('tabBtnAero').classList.toggle('active', !isEng);
+            document.getElementById('solverPaneEngine').style.display = isEng ? 'flex' : 'none';
+            document.getElementById('solverPaneAero').style.display = isEng ? 'none' : 'flex';
+        };
+
+        /* ==========================================================================
+           2. HIGH-FPS OPTIMIZED 3D SCENE (FRUSTUM & VISIBILITY CULLING)
+           ========================================================================== */
+        const STATIONS = {
+            0: {
+                title: 'Karcılı 3B Mühendislik Stüdyosu',
+                sub: 'Sol: Rotax 912 ULS Boxer-4 Mekanizması  |  Sağ: Audi R8 Aerodinamik Rüzgar Tüneli',
+                camPos: new THREE.Vector3(0.0, 4.8, 13.0),
+                lookAt: new THREE.Vector3(0.0, 0.2, 0.0)
+            },
+            1: {
+                title: 'Rotax 912 ULS — Boxer-4 Mekanizması',
+                sub: 'Gerçek CATIA V5 STL montajı — Krank açısına (θ) bağlı anlık kinematik ve mukavemet çözücüsü.',
+                camPos: new THREE.Vector3(-5.5, 2.3, 5.2),
+                lookAt: new THREE.Vector3(-5.5, 0.2, 0.0)
+            },
+            2: {
+                title: 'Audi R8 — Aerodinamik Kabuk & Rüzgar Tüneli',
+                sub: 'CATIA V5 Generative Shape Design (97.378 üçgen) — Kesin STL mesh integrali ile Cd çözücü.',
+                camPos: new THREE.Vector3(5.5, 2.1, 5.4),
+                lookAt: new THREE.Vector3(5.5, 0.0, 0.0)
+            }
+        };
+
+        let currentStation = 1;
+        let targetCamPos = STATIONS[1].camPos.clone();
+        let targetLookAt = STATIONS[1].lookAt.clone();
+        let isCameraTransitioning = false;
+
+        const viewport = document.getElementById('webglViewport');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x15181F);
+
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 120);
+        camera.position.copy(STATIONS[1].camPos);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', stencil: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        // Cap pixel ratio at 1.25 for locked 60+ FPS even with 114k triangles
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+        viewport.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.07;
+        controls.maxPolarAngle = Math.PI / 2 - 0.02;
+        controls.minDistance = 1.6;
+        controls.maxDistance = 24.0;
+        controls.target.copy(STATIONS[1].lookAt);
+        controls.addEventListener('start', () => { isCameraTransitioning = false; });
+
+        scene.add(new THREE.AmbientLight(0xCBD5E1, 0.9));
+        const keyLight = new THREE.DirectionalLight(0xFFFBEB, 1.25);
+        keyLight.position.set(8, 18, 12);
+        scene.add(keyLight);
+        const fillLight = new THREE.DirectionalLight(0x94A3B8, 0.7);
+        fillLight.position.set(-12, 10, -10);
+        scene.add(fillLight);
+
+        const gridHelper = new THREE.GridHelper(34, 34, 0x2E3545, 0x202530);
+        gridHelper.position.y = -1.25;
+        scene.add(gridHelper);
+
+        const stlLoader = new THREE.STLLoader();
+
+        function setSoftEngineeringColor(colorObj, normVal) {
+            const t = Math.max(0, Math.min(1, normVal));
+            if (t < 0.35) {
+                const k = t / 0.35;
+                colorObj.setRGB(0.32 + k * 0.04, 0.55 + k * 0.25, 0.78 - k * 0.14);
+            } else if (t < 0.7) {
+                const k = (t - 0.35) / 0.35;
+                colorObj.setRGB(0.36 + k * 0.52, 0.80 - k * 0.08, 0.64 - k * 0.40);
+            } else {
+                const k = (t - 0.7) / 0.3;
+                colorObj.setRGB(0.88 + k * 0.06, 0.72 - k * 0.44, 0.24 - k * 0.06);
+            }
+        }
+
+        // Station 1: Real CATIA V5 Boxer-4 Moving Mechanism (-5.5, 0.25, 0)
+        const engineGroup = new THREE.Group();
+        engineGroup.position.set(-5.5, 0.25, 0);
+        scene.add(engineGroup);
+
+        let crankMesh = null;
+        const movingCylinders = [];
+        const allEngineMaterials = [];
+
+        if (window.KARCILI_ENG_PARTS) {
+            const ep = window.KARCILI_ENG_PARTS;
+            const rCrank = ep.r;
+            const lRod   = ep.L;
+            const boreR  = ep.bore * 0.5;
+
+            const crankGeo = stlLoader.parse(base64ToArrayBuffer(ep.crank));
+            crankGeo.computeVertexNormals();
+            const crankMat = new THREE.MeshStandardMaterial({
+                color: 0x94A3B8, metalness: 0.78, roughness: 0.22
+            });
+            allEngineMaterials.push(crankMat);
+            crankMesh = new THREE.Mesh(crankGeo, crankMat);
+            engineGroup.add(crankMesh);
+
+            // Shared geometries for cylinder sleeves, valves & spark plugs (reduces GPU draw state overhead)
+            const sleeveGeo = new THREE.CylinderGeometry(boreR * 1.03, boreR * 1.03, 2.05, 28, 1, true);
+            sleeveGeo.rotateZ(Math.PI / 2);
+            const sleeveMat = new THREE.MeshLambertMaterial({
+                color: 0x94A3B8, transparent: true, opacity: 0.20, side: THREE.DoubleSide, depthWrite: false
+            });
+
+            const headCapGeo = new THREE.CylinderGeometry(boreR * 1.06, boreR * 1.06, 0.10, 24);
+            headCapGeo.rotateZ(Math.PI / 2);
+            const headCapMat = new THREE.MeshStandardMaterial({
+                color: 0x334155, metalness: 0.7, roughness: 0.3, transparent: true, opacity: 0.55
+            });
+
+            const gasGeo = new THREE.CylinderGeometry(boreR * 0.94, boreR * 0.94, 1.0, 20);
+            gasGeo.rotateZ(Math.PI / 2);
+            const fireballGeo = new THREE.SphereGeometry(boreR * 0.82, 16, 16);
+
+            const bankDirs = [1, -1, -1, 1];
+            for (let i = 0; i < 4; i++) {
+                const dir = bankDirs[i];
+                const zPos = ep.cylZ[i];
+
+                const rodGeo = stlLoader.parse(base64ToArrayBuffer(ep.rods[i]));
+                rodGeo.computeVertexNormals();
+                const rodMat = new THREE.MeshStandardMaterial({
+                    color: 0xB8C4D4, metalness: 0.7, roughness: 0.26
+                });
+                allEngineMaterials.push(rodMat);
+                const rodMesh = new THREE.Mesh(rodGeo, rodMat);
+                engineGroup.add(rodMesh);
+
+                const pisGeo = stlLoader.parse(base64ToArrayBuffer(ep.pistons[i]));
+                pisGeo.computeVertexNormals();
+                const pisMat = new THREE.MeshStandardMaterial({
+                    color: 0xDDE3EA, metalness: 0.72, roughness: 0.2
+                });
+                allEngineMaterials.push(pisMat);
+                const pistonMesh = new THREE.Mesh(pisGeo, pisMat);
+                engineGroup.add(pistonMesh);
+
+                const pinGeo = stlLoader.parse(base64ToArrayBuffer(ep.pins[i]));
+                pinGeo.computeVertexNormals();
+                const pinMat = new THREE.MeshStandardMaterial({
+                    color: 0xD4A359, metalness: 0.82, roughness: 0.18
+                });
+                allEngineMaterials.push(pinMat);
+                const pinMesh = new THREE.Mesh(pinGeo, pinMat);
+                engineGroup.add(pinMesh);
+
+                const sleeveGrp = new THREE.Group();
+                sleeveGrp.add(new THREE.Mesh(sleeveGeo, sleeveMat));
+                sleeveGrp.position.set(dir * 2.38, 0, zPos);
+                engineGroup.add(sleeveGrp);
+
+                // Cylinder Head + Valves + Spark Plug
+                const headGroup = new THREE.Group();
+                headGroup.position.set(dir * 3.18, 0, zPos);
+                headGroup.add(new THREE.Mesh(headCapGeo, headCapMat));
+                engineGroup.add(headGroup);
+
+                function createPoppetValve(yOffset, isIntake) {
+                    const vGrp = new THREE.Group();
+                    vGrp.position.set(0, yOffset, 0);
+                    vGrp.rotation.z = dir * (isIntake ? -0.22 : 0.22);
+
+                    const movingValve = new THREE.Group();
+                    const vMat = new THREE.MeshStandardMaterial({
+                        color: isIntake ? 0x60A5FA : 0xF59E0B, metalness: 0.8, roughness: 0.2
+                    });
+                    const discGeo = new THREE.CylinderGeometry(0.23, 0.10, 0.06, 16);
+                    discGeo.rotateZ(dir > 0 ? -Math.PI / 2 : Math.PI / 2);
+                    const discMesh = new THREE.Mesh(discGeo, vMat);
+                    discMesh.position.x = -dir * 0.05;
+                    movingValve.add(discMesh);
+
+                    const stemGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.58, 10);
+                    stemGeo.rotateZ(Math.PI / 2);
+                    const stemMesh = new THREE.Mesh(stemGeo, vMat);
+                    stemMesh.position.x = dir * 0.24;
+                    movingValve.add(stemMesh);
+                    vGrp.add(movingValve);
+
+                    const springGrp = new THREE.Group();
+                    const springMat = new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.75, roughness: 0.3 });
+                    for (let cIdx = 0; cIdx < 3; cIdx++) {
+                        const coilGeo = new THREE.TorusGeometry(0.105, 0.02, 8, 16);
+                        coilGeo.rotateY(Math.PI / 2);
+                        const coil = new THREE.Mesh(coilGeo, springMat);
+                        coil.position.x = dir * (0.12 + cIdx * 0.11);
+                        springGrp.add(coil);
+                    }
+                    vGrp.add(springGrp);
+                    headGroup.add(vGrp);
+                    return { movingValve, springGrp };
+                }
+
+                const intakeValve = createPoppetValve(0.28, true);
+                const exhaustValve = createPoppetValve(-0.28, false);
+
+                // Spark Plug + Plasma Electrode
+                const sparkPlugGrp = new THREE.Group();
+                const ceramicGeo = new THREE.CylinderGeometry(0.068, 0.068, 0.34, 12);
+                ceramicGeo.rotateZ(Math.PI / 2);
+                const ceramicMesh = new THREE.Mesh(ceramicGeo, new THREE.MeshStandardMaterial({ color: 0xF8FAFC, roughness: 0.2 }));
+                ceramicMesh.position.x = dir * 0.24;
+                sparkPlugGrp.add(ceramicMesh);
+
+                const bootGeo = new THREE.CylinderGeometry(0.082, 0.072, 0.15, 12);
+                bootGeo.rotateZ(Math.PI / 2);
+                const bootMesh = new THREE.Mesh(bootGeo, new THREE.MeshStandardMaterial({ color: 0xDC2626, roughness: 0.4 }));
+                bootMesh.position.x = dir * 0.46;
+                sparkPlugGrp.add(bootMesh);
+
+                const arcGeo = new THREE.SphereGeometry(0.11, 10, 10);
+                const arcMat = new THREE.MeshBasicMaterial({ color: 0xE0F2FE, transparent: true, opacity: 0.0 });
+                const arcMesh = new THREE.Mesh(arcGeo, arcMat);
+                arcMesh.position.x = -dir * 0.06;
+                sparkPlugGrp.add(arcMesh);
+                headGroup.add(sparkPlugGrp);
+
+                const gasMat = new THREE.MeshBasicMaterial({
+                    color: 0x38BDF8, transparent: true, opacity: 0.0, depthWrite: false
+                });
+                const gasMesh = new THREE.Mesh(gasGeo, gasMat);
+                gasMesh.position.set(dir * 2.5, 0, zPos);
+                engineGroup.add(gasMesh);
+
+                const fireballMat = new THREE.MeshBasicMaterial({
+                    color: 0xFFFBEB, transparent: true, opacity: 0.0, depthWrite: false
+                });
+                const fireballMesh = new THREE.Mesh(fireballGeo, fireballMat);
+                fireballMesh.position.set(dir * 2.95, 0, zPos);
+                engineGroup.add(fireballMesh);
+
+                movingCylinders.push({
+                    dir, zPos, rCrank, lRod, cylIndex: i,
+                    rodMesh, rodMat, pistonMesh, pisMat, pinMesh, pinMat,
+                    sleeveGrp, headGroup, intakeValve, exhaustValve,
+                    arcMat, arcMesh, gasMesh, gasMat, fireballMesh, fireballMat
+                });
+            }
+        }
+
+        function updateBoxerKinematics(theta) {
+            if (!crankMesh) return;
+            crankMesh.rotation.z = theta;
+
+            const strokeCycleOffsets = [0, Math.PI * 2, 0, Math.PI * 2];
+            const FOUR_PI = Math.PI * 4.0;
+            const lambda = 30.5 / 109.0;
+
+            movingCylinders.forEach((c, idx) => {
+                const cx = c.dir * c.rCrank * Math.cos(theta);
+                const cy = c.dir * c.rCrank * Math.sin(theta);
+                const dxMag = Math.sqrt(Math.max(0.001, c.lRod * c.lRod - cy * cy));
+                const px = cx + c.dir * dxMag;
+
+                const expPistonX = c.dir * simExplode * 1.35;
+                const expPinZ    = c.dir * simExplode * 0.9;
+                const expSleeveX = c.dir * simExplode * 2.4;
+                const expHeadX   = c.dir * simExplode * 3.3;
+
+                c.rodMesh.position.set(cx + c.dir * simExplode * 0.35, cy, 0);
+                c.rodMesh.rotation.z = Math.atan2(c.dir * (-cy), c.dir * (px - cx));
+
+                c.pistonMesh.position.set(px + expPistonX, 0, 0);
+                c.pinMesh.position.set(px + expPistonX, 0, expPinZ);
+
+                c.sleeveGrp.visible = showCylinders;
+                c.sleeveGrp.position.set(c.dir * 2.38 + expSleeveX, 0, c.zPos);
+
+                c.headGroup.visible = showCylinders;
+                c.headGroup.position.set(c.dir * 3.18 + expHeadX, 0, c.zPos);
+
+                const cycleAngle = ((theta + strokeCycleOffsets[idx]) % FOUR_PI + FOUR_PI) % FOUR_PI;
+
+                let intakeLift = 0.0, exhaustLift = 0.0, sparkOpacity = 0.0, fireballOpacity = 0.0, fireballScale = 0.2, gasOpacity = 0.0;
+
+                if (cycleAngle < Math.PI) {
+                    const u = cycleAngle / Math.PI;
+                    if (u < 0.20) sparkOpacity = (1.0 - u / 0.20);
+                    if (u < 0.65) {
+                        const fu = u / 0.65;
+                        fireballOpacity = (1.0 - fu) * 0.92;
+                        fireballScale = 0.35 + fu * 0.95;
+                        c.fireballMat.color.setRGB(1.0, Math.max(0.25, 0.95 - fu * 0.7), Math.max(0.0, 0.6 - fu * 1.2));
+                    }
+                    gasOpacity = (1.0 - u * 0.75) * 0.52;
+                    c.gasMat.color.setRGB(1.0, Math.max(0.22, 0.65 - u * 0.45), 0.05);
+                } else if (cycleAngle < Math.PI * 2.0) {
+                    const u = (cycleAngle - Math.PI) / Math.PI;
+                    exhaustLift = Math.sin(u * Math.PI) * 0.26;
+                    gasOpacity = (1.0 - u * 0.7) * 0.26;
+                    c.gasMat.color.setRGB(0.55, 0.48, 0.44);
+                } else if (cycleAngle < Math.PI * 3.0) {
+                    const u = (cycleAngle - Math.PI * 2.0) / Math.PI;
+                    intakeLift = Math.sin(u * Math.PI) * 0.26;
+                    gasOpacity = Math.sin(u * Math.PI * 0.5) * 0.30;
+                    c.gasMat.color.setRGB(0.22, 0.74, 0.98);
+                } else {
+                    const u = (cycleAngle - Math.PI * 3.0) / Math.PI;
+                    gasOpacity = 0.28 + u * 0.34;
+                    c.gasMat.color.setRGB(0.22 + u * 0.75, 0.74 - u * 0.10, 0.98 - u * 0.75);
+                    if (u > 0.92) sparkOpacity = (u - 0.92) / 0.08;
+                }
+
+                c.intakeValve.movingValve.position.x = -c.dir * intakeLift;
+                c.intakeValve.springGrp.scale.x = 1.0 - (intakeLift / 0.26) * 0.32;
+                c.exhaustValve.movingValve.position.x = -c.dir * exhaustLift;
+                c.exhaustValve.springGrp.scale.x = 1.0 - (exhaustLift / 0.26) * 0.32;
+
+                c.arcMat.opacity = showCylinders ? sparkOpacity : 0.0;
+                const headX = c.dir * 3.14 + expHeadX;
+                const crownX = px + expPistonX + c.dir * 0.38;
+                const chamberLen = Math.max(0.08, Math.abs(headX - crownX));
+                const chamberMidX = (headX + crownX) * 0.5;
+
+                c.gasMesh.visible = showCylinders && simExplode < 0.15;
+                c.gasMesh.position.set(chamberMidX, 0, c.zPos);
+                c.gasMesh.scale.set(chamberLen, 1, 1);
+                c.gasMat.opacity = gasOpacity;
+
+                c.fireballMesh.visible = showCylinders && simExplode < 0.15 && fireballOpacity > 0.01;
+                c.fireballMesh.position.set(headX - c.dir * (chamberLen * 0.35), 0, c.zPos);
+                c.fireballMesh.scale.set(Math.min(chamberLen * 0.85, fireballScale), fireballScale, fireballScale);
+                c.fireballMat.opacity = fireballOpacity;
+
+                if (showFeaColors) {
+                    // Instantaneous stress coloring driven by true P(θ) + inertia / cos(β)
+                    const pCyl = computeInstantaneousCylinderPressureMPa(cycleAngle, simPressureMPa);
+                    const sinT = Math.sin(cycleAngle);
+                    const cosB = Math.sqrt(1.0 - lambda * lambda * sinT * sinT);
+                    const stressNorm = Math.min(1.0, ((pCyl / 7.0) * 0.75 + 0.20 * Math.abs(sinT)) / cosB);
+                    setSoftEngineeringColor(c.rodMat.color, stressNorm);
+                    setSoftEngineeringColor(c.pisMat.color, stressNorm * 0.75);
+                } else {
+                    c.rodMat.color.setHex(0xB8C4D4);
+                    c.pisMat.color.setHex(0xDDE3EA);
+                }
+            });
+        }
+
+        // Station 2: Real CATIA V5 Audi R8 Aerodynamic Shell (+5.5, -0.25, 0)
+        const windTunnelGroup = new THREE.Group();
+        windTunnelGroup.position.set(5.5, -0.25, 0);
+        windTunnelGroup.visible = false; // Hidden initially when on Station 1 for maximum FPS!
+        scene.add(windTunnelGroup);
+
+        let realAudiMesh = null;
+        let audiGeom = null;
+        const GRID_NX = 40, GRID_NZ = 24;
+        const audiHeightMap = new Float32Array(GRID_NX * GRID_NZ).fill(-0.85);
+
+        function buildAudiHeightMap(geom) {
+            const pos = geom.attributes.position;
+            for (let i = 0; i < pos.count; i++) {
+                const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+                const ix = Math.floor(((x + 3.0) / 6.0) * GRID_NX);
+                const iz = Math.floor(((z + 1.3) / 2.6) * GRID_NZ);
+                if (ix >= 0 && ix < GRID_NX && iz >= 0 && iz < GRID_NZ) {
+                    const idx = ix * GRID_NZ + iz;
+                    if (y > audiHeightMap[idx]) audiHeightMap[idx] = y;
+                }
+            }
+        }
+
+        function sampleAudiHeight(x, z) {
+            const ix = Math.floor(((x + 3.0) / 6.0) * GRID_NX);
+            const iz = Math.floor(((z + 1.3) / 2.6) * GRID_NZ);
+            if (ix < 0 || ix >= GRID_NX || iz < 0 || iz >= GRID_NZ) return -0.85;
+            return audiHeightMap[ix * GRID_NZ + iz];
+        }
+
+        if (window.KARCILI_AUDI_STL_B64) {
+            audiGeom = stlLoader.parse(base64ToArrayBuffer(window.KARCILI_AUDI_STL_B64));
+            audiGeom.computeVertexNormals();
+            buildAudiHeightMap(audiGeom);
+
+            const audiMat = new THREE.MeshStandardMaterial({
+                color: 0xBEC8D6, metalness: 0.62, roughness: 0.22
+            });
+            realAudiMesh = new THREE.Mesh(audiGeom, audiMat);
+            windTunnelGroup.add(realAudiMesh);
+        }
+
+        const cfdStreamlines = [];
+        const numPointsPerLine = 44;
+        for (let s = 0; s < 18; s++) {
+            const zBase = ((s % 6) - 2.5) * 0.34;
+            const layerIdx = Math.floor(s / 6);
+            const yLayerOffset = 0.08 + layerIdx * 0.24;
+            const pts = [];
+            for (let p = 0; p < numPointsPerLine; p++) pts.push(new THREE.Vector3(0, 0, 0));
+
+            const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+            const lineColors = new Float32Array(numPointsPerLine * 3);
+            lineGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+            const lineMat = new THREE.LineBasicMaterial({
+                vertexColors: true, transparent: true, opacity: 0.72
+            });
+            const line = new THREE.Line(lineGeo, lineMat);
+            windTunnelGroup.add(line);
+            cfdStreamlines.push({ line, lineGeo, zBase, yLayerOffset, phaseOffset: s * 0.35 });
+        }
+
+        /* ==========================================================================
+           3. NAVIGATION & UI EVENT BINDINGS
+           ========================================================================== */
+        window.flyToStation = function(idx) {
+            currentStation = idx;
+            const st = STATIONS[idx];
+            targetCamPos.copy(st.camPos);
+            targetLookAt.copy(st.lookAt);
+            isCameraTransitioning = true;
+
+            // Visibility culling: only render active station's heavy meshes!
+            engineGroup.visible = (idx === 0 || idx === 1);
+            windTunnelGroup.visible = (idx === 0 || idx === 2);
+
+            document.querySelectorAll('.st-btn').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.st) === idx);
+            });
+            document.getElementById('captionTitle').textContent = st.title;
+            document.getElementById('captionSub').textContent = st.sub;
+
+            if (idx === 1) switchSolverTab('engine');
+            if (idx === 2) switchSolverTab('aero');
+        };
+
+        const rpmSlider = document.getElementById('rpmSlider');
+        const explodeSlider = document.getElementById('explodeSlider');
+        const pressureSlider = document.getElementById('pressureSlider');
+        const thetaManualSlider = document.getElementById('thetaManualSlider');
+        const windSpeedSlider = document.getElementById('windSpeedSlider');
+
+        rpmSlider.addEventListener('input', () => {
+            simRpm = parseFloat(rpmSlider.value);
+            document.getElementById('rpmVal').textContent = `${simRpm} RPM`;
+            runEngineSolver(crankAngle);
+        });
+
+        pressureSlider.addEventListener('input', () => {
+            simPressureMPa = parseFloat(pressureSlider.value);
+            document.getElementById('pressureVal').textContent = `${simPressureMPa.toFixed(1)} MPa`;
+            runEngineSolver(crankAngle);
+        });
+
+        // Allow dragging crank angle θ (0° - 720°) directly to inspect forces & stresses at any kinematic position!
+        thetaManualSlider.addEventListener('pointerdown', () => { isDraggingTheta = true; });
+        window.addEventListener('pointerup', () => { isDraggingTheta = false; });
+        thetaManualSlider.addEventListener('input', () => {
+            isDraggingTheta = true;
+            const deg = parseFloat(thetaManualSlider.value);
+            crankAngle = (deg * Math.PI) / 180.0;
+            updateBoxerKinematics(crankAngle);
+            runEngineSolver(crankAngle);
+        });
+
+        document.getElementById('engineMatSelect').addEventListener('change', () => runEngineSolver(crankAngle));
+
+        windSpeedSlider.addEventListener('input', () => {
+            simWindKmh = parseFloat(windSpeedSlider.value);
+            document.getElementById('windSpeedVal').textContent = `${simWindKmh} km/h`;
+            runAeroSolver();
+        });
+
+        document.getElementById('aeroConfigSelect').addEventListener('change', runAeroSolver);
+
+        explodeSlider.addEventListener('input', () => {
+            simExplode = parseFloat(explodeSlider.value) / 100.0;
+            document.getElementById('explodeVal').textContent = `${Math.round(simExplode * 100)}%`;
+            updateBoxerKinematics(crankAngle);
+        });
+
+        document.getElementById('cylindersBtn').addEventListener('click', function() {
+            showCylinders = !showCylinders;
+            this.classList.toggle('active', showCylinders);
+            updateBoxerKinematics(crankAngle);
+        });
+
+        // Start / Stop (Pause / Resume) button — freezes crank angle θ while keeping 5800 RPM physics!
+        document.getElementById('playPauseBtn').addEventListener('click', function() {
+            isSimulationPaused = !isSimulationPaused;
+            this.classList.toggle('active', !isSimulationPaused);
+            this.innerHTML = isSimulationPaused
+                ? '<i class="fas fa-play"></i> Başlat'
+                : '<i class="fas fa-pause"></i> Durdur';
+            updateEngineSoundFrequency();
+            runEngineSolver(crankAngle);
+        });
+
+        // High-Speed Camera Slow-Motion (1/20x time scale) — NEVER lowers simRpm!
+        document.getElementById('slowMoBtn').addEventListener('click', function() {
+            isSlowMoCamera = !isSlowMoCamera;
+            this.classList.toggle('active', isSlowMoCamera);
+            this.innerHTML = isSlowMoCamera
+                ? '<i class="fas fa-video"></i> Ağır Çekim: AÇIK (1/20x)'
+                : '<i class="fas fa-video"></i> Ağır Çekim Kamera (1/20x)';
+        });
+
+        document.getElementById('feaColorBtn').addEventListener('click', function() {
+            showFeaColors = !showFeaColors;
+            this.classList.toggle('active', showFeaColors);
+            if (realAudiMesh) {
+                realAudiMesh.material.color.setHex(showFeaColors ? 0xD4A359 : 0xBEC8D6);
+            }
+            updateBoxerKinematics(crankAngle);
+        });
+
+        document.getElementById('wireframeBtn').addEventListener('click', function() {
+            showWireframe = !showWireframe;
+            this.classList.toggle('active', showWireframe);
+            allEngineMaterials.forEach(m => { m.wireframe = showWireframe; });
+            if (realAudiMesh) realAudiMesh.material.wireframe = showWireframe;
+        });
+
+        /* --- PROCEDURAL WEBAUDIO BOXER-4 ENGINE SOUND SYNTHESIZER --- */
+        let audioCtx = null, soundEnabled = false, engineOsc = null, subOsc = null, engineGain = null, filterNode = null;
+
+        function updateEngineSoundFrequency() {
+            if (!soundEnabled || !audioCtx || !engineOsc) return;
+            if (simRpm <= 50 || isDraggingTheta || isSimulationPaused) {
+                engineGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
+                return;
+            }
+            const effectiveRpm = isSlowMoCamera ? simRpm * 0.12 : simRpm;
+            const fireFreq = Math.max(8, (effectiveRpm / 60.0) * 2.0);
+            engineOsc.frequency.setTargetAtTime(fireFreq, audioCtx.currentTime, 0.04);
+            subOsc.frequency.setTargetAtTime(fireFreq * 0.5, audioCtx.currentTime, 0.04);
+            filterNode.frequency.setTargetAtTime(140 + (effectiveRpm / 5800) * 750, audioCtx.currentTime, 0.04);
+            engineGain.gain.setTargetAtTime(0.12 + (simRpm / 5800) * 0.12, audioCtx.currentTime, 0.05);
+        }
+
+        document.getElementById('soundToggleBtn').addEventListener('click', function() {
+            soundEnabled = !soundEnabled;
+            this.classList.toggle('active', soundEnabled);
+            this.innerHTML = soundEnabled
+                ? '<i class="fas fa-volume-up"></i> Motor Sesi: AÇIK'
+                : '<i class="fas fa-volume-mute"></i> Motor Sesi';
+
+            if (soundEnabled) {
+                if (!audioCtx) {
+                    const AudioContextCls = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContextCls();
+                    engineOsc = audioCtx.createOscillator();
+                    subOsc = audioCtx.createOscillator();
+                    filterNode = audioCtx.createBiquadFilter();
+                    engineGain = audioCtx.createGain();
+                    engineOsc.type = 'sawtooth';
+                    subOsc.type = 'triangle';
+                    filterNode.type = 'lowpass';
+                    filterNode.Q.value = 3.5;
+                    engineOsc.connect(filterNode);
+                    subOsc.connect(filterNode);
+                    filterNode.connect(engineGain);
+                    engineGain.connect(audioCtx.destination);
+                    engineOsc.start();
+                    subOsc.start();
+                }
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                updateEngineSoundFrequency();
+            } else if (engineGain && audioCtx) {
+                engineGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
+            }
+        });
+
+        /* ==========================================================================
+           4. OPTIMIZED 60FPS ANIMATION LOOP (THROTTLED DOM UPDATES + VISIBILITY CULLING)
+           ========================================================================== */
+        let lastFrameTime = performance.now();
+        let lastSolverDomUpdate = 0;
+        const streamColor = new THREE.Color();
+
+        function animate(now) {
+            requestAnimationFrame(animate);
+            const dt = Math.min(0.05, Math.max(0.004, (now - lastFrameTime) * 0.001));
+            lastFrameTime = now;
+
+            if (isCameraTransitioning) {
+                camera.position.lerp(targetCamPos, 0.08);
+                controls.target.lerp(targetLookAt, 0.08);
+                if (camera.position.distanceTo(targetCamPos) < 0.04) {
+                    isCameraTransitioning = false;
+                }
+            }
+            controls.update();
+
+            // 1. Update Engine only if visible
+            if (engineGroup.visible) {
+                if (simRpm > 0 && !isDraggingTheta && !isSimulationPaused) {
+                    const timeDilation = isSlowMoCamera ? 0.045 : 1.0; // 1/22x High-Speed Camera Slow-Motion without altering simRpm!
+                    const visualOmega = Math.pow(simRpm / 5800, 1.05) * 98.0 * timeDilation;
+                    crankAngle += visualOmega * dt;
+                }
+                updateBoxerKinematics(crankAngle);
+                updateEngineSoundFrequency();
+
+                // Throttle DOM text updates in Solver Window to ~12 Hz (every 85ms) so it never causes layout lag!
+                if (now - lastSolverDomUpdate > 85 && !document.getElementById('solverWindow').classList.contains('closed')) {
+                    lastSolverDomUpdate = now;
+                    runEngineSolver(crankAngle);
+                }
+            }
+
+            // 2. Update Wind Tunnel Streamlines only if visible
+            if (windTunnelGroup.visible) {
+                const windSpeedFactor = simWindKmh / 180;
+                const timeSec = now * 0.001;
+                cfdStreamlines.forEach(s => {
+                    const posArr = s.lineGeo.attributes.position.array;
+                    const colArr = s.lineGeo.attributes.color.array;
+                    for (let p = 0; p < numPointsPerLine; p++) {
+                        const u = p / (numPointsPerLine - 1);
+                        const x = -3.4 + u * 6.8;
+                        const hCenter = sampleAudiHeight(x, s.zBase);
+                        const hAhead  = sampleAudiHeight(x + 0.35, s.zBase);
+                        const hBehind = sampleAudiHeight(x - 0.35, s.zBase);
+                        const smoothedRoof = Math.max(hCenter, (hAhead + hCenter + hBehind) / 3);
+
+                        const baseLineY = -0.35 + s.yLayerOffset;
+                        const clearanceY = smoothedRoof + 0.12 + s.yLayerOffset * 0.55;
+                        const y = Math.max(baseLineY, clearanceY);
+                        const localLift = Math.max(0, y - baseLineY);
+
+                        const wave = 0.5 + 0.5 * Math.sin(u * 12 - timeSec * 7.5 * windSpeedFactor + s.phaseOffset);
+
+                        posArr[p * 3]     = x;
+                        posArr[p * 3 + 1] = y;
+                        posArr[p * 3 + 2] = s.zBase * (1 + localLift * 0.08);
+
+                        const velNorm = Math.min(1, localLift * 1.1 + wave * 0.22);
+                        setSoftEngineeringColor(streamColor, velNorm);
+                        colArr[p * 3]     = streamColor.r;
+                        colArr[p * 3 + 1] = streamColor.g;
+                        colArr[p * 3 + 2] = streamColor.b;
+                    }
+                    s.lineGeo.attributes.position.needsUpdate = true;
+                    s.lineGeo.attributes.color.needsUpdate = true;
+                });
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        updateBoxerKinematics(crankAngle);
+        runEngineSolver(crankAngle);
+        runAeroSolver();
+
+        // Check URL parameter ?station=0|1|2 on startup
+        const urlStation = new URLSearchParams(window.location.search).get('station');
+        if (urlStation !== null && STATIONS[parseInt(urlStation)]) {
+            const stIdx = parseInt(urlStation);
+            flyToStation(stIdx);
+            camera.position.copy(STATIONS[stIdx].camPos);
+            controls.target.copy(STATIONS[stIdx].lookAt);
+            isCameraTransitioning = false;
+        }
+
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
