@@ -568,14 +568,14 @@
                 <div class="param-row">
                     <span>Malzeme Seçimi:</span>
                     <select class="param-select" id="engineMatSelect">
-                        <option value="42CrMo4">42CrMo4 (σ_y=750, σ_D=450 MPa)</option>
-                        <option value="34CrNiMo6">34CrNiMo6 (σ_y=900, σ_D=520 MPa)</option>
-                        <option value="Ti6Al4V">Ti-6Al-4V (σ_y=880, σ_D=510 MPa)</option>
-                        <option value="C45">C45 İmalat Çeliği (σ_y=430, σ_D=260 MPa)</option>
+                        <option value="42CrMo4">42CrMo4 (Akma: 750, Yorulma: 450 MPa)</option>
+                        <option value="34CrNiMo6">34CrNiMo6 (Akma: 900, Yorulma: 520 MPa)</option>
+                        <option value="Ti6Al4V">Ti-6Al-4V (Akma: 880, Yorulma: 510 MPa)</option>
+                        <option value="C45">C45 İmalat Çeliği (Akma: 430, Yorulma: 260 MPa)</option>
                     </select>
                 </div>
                 <div class="param-row">
-                    <span>Tepe Yanma Basıncı (P_max):</span>
+                    <span>Tepe Yanma Basıncı (P<sub>max</sub>):</span>
                     <div style="display:flex;align-items:center;gap:8px;">
                         <input type="range" class="clean-slider" id="pressureSlider" min="2.0" max="10.0" step="0.2" value="7.0" style="width:95px;">
                         <span id="pressureVal" style="color:#FDE68A;font-weight:700;min-width:52px;">7.0 MPa</span>
@@ -617,7 +617,7 @@
             </div>
             <div class="calc-grid">
                 <div class="calc-card">
-                    <div class="calc-label"><span>Anlık Gaz Basıncı &amp; Kuvveti</span><span class="calc-formula">P(&theta;)&middot;A_p</span></div>
+                    <div class="calc-label"><span>Anlık Gaz Basıncı &amp; Kuvveti</span><span class="calc-formula">P(&theta;)&middot;A<sub>p</sub></span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resGasForce">38.79 kN</span>
                         <span class="calc-sub" id="resInstPress">7.00 MPa</span>
@@ -627,21 +627,21 @@
                     <div class="calc-label"><span>Anlık Atalet Kuvveti</span><span class="calc-formula">-m&middot;a(&theta;)</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resInertForce">-8.07 kN</span>
-                        <span class="calc-sub" id="resMeanSpeed">c_m: 11.8 m/s</span>
+                        <span class="calc-sub" id="resMeanSpeed">c<sub>m</sub>: 11.8 m/s</span>
                     </div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Eksenel Biyel Kuvveti</span><span class="calc-formula">F_p(&theta;)/cos&beta;</span></div>
+                    <div class="calc-label"><span>Eksenel Biyel Kuvveti</span><span class="calc-formula">F<sub>p</sub>(&theta;)/cos&beta;</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resRodForce">30.77 kN</span>
-                        <span class="calc-sub" id="resSideForce">F_N: 1.78 kN</span>
+                        <span class="calc-sub" id="resSideForce">F<sub>N</sub>: 1.78 kN</span>
                     </div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Teğetsel Kuvvet &amp; Anlık Tork</span><span class="calc-formula">F_b&middot;sin(&theta;+&beta;)</span></div>
+                    <div class="calc-label"><span>Teğetsel Kuvvet &amp; Anlık Tork</span><span class="calc-formula">F<sub>b</sub>&middot;sin(&theta;+&beta;)</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resInstTorque">247.8 Nm</span>
-                        <span class="calc-sub" id="resTangForce">F_T: 8.12 kN</span>
+                        <span class="calc-sub" id="resTangForce">F<sub>T</sub>: 8.12 kN</span>
                     </div>
                 </div>
             </div>
@@ -652,14 +652,14 @@
             </div>
             <div class="calc-grid">
                 <div class="calc-card">
-                    <div class="calc-label"><span>Biyel Gövde (Basma+Kamçılama)</span><span class="calc-formula">&sigma;_b(&theta;)</span></div>
+                    <div class="calc-label"><span>Biyel Gövde (Basma+Kamçılama)</span><span class="calc-formula">&sigma;<sub>b</sub>(&theta;)</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resRodComp">151.6 MPa</span>
                         <span class="sf-badge sf-ok" id="sfRodComp">S = 4.80</span>
                     </div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Piston Pimi Kesme (&Oslash;20)</span><span class="calc-formula">&tau;_pim(&theta;)</span></div>
+                    <div class="calc-label"><span>Piston Pimi Kesme (&Oslash;20)</span><span class="calc-formula">&tau;<sub>pim</sub>(&theta;)</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resPinShear">96.5 MPa</span>
                         <span class="sf-badge sf-ok" id="sfPinShear">S = 4.49</span>
@@ -673,10 +673,10 @@
                     </div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Krank Muylu Kök (K_t=1.85)</span><span class="calc-formula">&sigma;_max(&theta;)</span></div>
+                    <div class="calc-label"><span>Krank Muylu Kök (K<sub>t</sub>=1.85)</span><span class="calc-formula">&sigma;<sub>max</sub>(&theta;)</span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resCrankPeak">217.6 MPa</span>
-                        <span class="sf-badge sf-ok" id="sfCrankFatigue">S_yor = 2.07</span>
+                        <span class="sf-badge sf-ok" id="sfCrankFatigue">S = 2.07</span>
                     </div>
                 </div>
             </div>
@@ -686,7 +686,7 @@
         <div class="solver-body" id="solverPaneAero" style="display:none;">
             <div class="param-box">
                 <div class="param-row">
-                    <span>Rüzgar Tüneli Hızı (V_&infin;):</span>
+                    <span>Rüzgar Tüneli Hızı (V<sub>&infin;</sub>):</span>
                     <div style="display:flex;align-items:center;gap:8px;">
                         <input type="range" class="clean-slider" id="windSpeedSlider" min="40" max="320" step="5" value="180" style="width:95px;">
                         <span id="windSpeedVal" style="color:#FDE68A;font-weight:700;min-width:65px;">180 km/h</span>
@@ -707,11 +707,11 @@
             </div>
             <div class="calc-grid">
                 <div class="calc-card">
-                    <div class="calc-label"><span>Ön İzdüşüm Alanı (A_f)</span><span class="calc-formula">&iint; dY&middot;dZ</span></div>
+                    <div class="calc-label"><span>Ön İzdüşüm Alanı (A<sub>f</sub>)</span><span class="calc-formula">&iint; dY&middot;dZ</span></div>
                     <div class="calc-val-row"><span class="calc-val">1.7606 m&sup2;</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Islak Yüzey Alanı (S_w)</span><span class="calc-formula">&sum; &frac12;|u&times;v|</span></div>
+                    <div class="calc-label"><span>Islak Yüzey Alanı (S<sub>w</sub>)</span><span class="calc-formula">&sum; &frac12;|u&times;v|</span></div>
                     <div class="calc-val-row"><span class="calc-val">17.0289 m&sup2;</span></div>
                 </div>
                 <div class="calc-card">
@@ -719,30 +719,30 @@
                     <div class="calc-val-row"><span class="calc-val">4.488 &times; 1.852 m</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Yüzey Normal İntegrali</span><span class="calc-formula">&iint; n_x&sup3; dS</span></div>
+                    <div class="calc-label"><span>Yüzey Normal İntegrali</span><span class="calc-formula">&iint; n<sub>x</sub>&sup3; dS</span></div>
                     <div class="calc-val-row"><span class="calc-val">1.2943 m&sup2;</span></div>
                 </div>
             </div>
 
             <div class="calc-sec-head">
-                <span>2. SINIR TABAKA &amp; SÜRÜKLEME KATSAYISI (C_d) ÇÖZÜMÜ</span>
+                <span>2. SINIR TABAKA &amp; SÜRÜKLEME KATSAYISI (C<sub>d</sub>) ÇÖZÜMÜ</span>
                 <span>&rho; = 1.204 kg/m&sup3;</span>
             </div>
             <div class="calc-grid">
                 <div class="calc-card">
-                    <div class="calc-label"><span>Reynolds Sayısı (Re_L)</span><span class="calc-formula">&rho;V_&infin;L / &mu;</span></div>
+                    <div class="calc-label"><span>Reynolds Sayısı (Re<sub>L</sub>)</span><span class="calc-formula">&rho;V<sub>&infin;</sub>L / &mu;</span></div>
                     <div class="calc-val-row"><span class="calc-val" id="resReynolds">1.48 &times; 10&sup7;</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Yüzey Sürtünme (C_d,f)</span><span class="calc-formula">C_f&middot;FF&middot;(S_w/A_f)</span></div>
+                    <div class="calc-label"><span>Yüzey Sürtünme (C<sub>d,f</sub>)</span><span class="calc-formula">C<sub>f</sub>&middot;FF&middot;(S<sub>w</sub>/A<sub>f</sub>)</span></div>
                     <div class="calc-val-row"><span class="calc-val" id="resCdFriction">0.0338</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Basınç &amp; İz (C_d,p + C_d,w)</span><span class="calc-formula">Form + Wake</span></div>
+                    <div class="calc-label"><span>Basınç &amp; İz (C<sub>d,p</sub> + C<sub>d,w</sub>)</span><span class="calc-formula">Form + Wake</span></div>
                     <div class="calc-val-row"><span class="calc-val" id="resCdPressure">0.3062</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>TOPLAM C_d KATSAYISI</span><span class="calc-formula">C_d = C_df + C_dp</span></div>
+                    <div class="calc-label"><span>TOPLAM C<sub>d</sub> KATSAYISI</span><span class="calc-formula">C<sub>d</sub> = C<sub>df</sub> + C<sub>dp</sub></span></div>
                     <div class="calc-val-row">
                         <span class="calc-val" id="resCdTotal" style="color:#FDE68A;font-size:0.95rem;">0.340</span>
                         <span class="sf-badge sf-ok">DOĞRULANDI</span>
@@ -756,11 +756,11 @@
             </div>
             <div class="calc-grid">
                 <div class="calc-card">
-                    <div class="calc-label"><span>Sürükleme Kuvveti (F_d)</span><span class="calc-formula">&frac12;&rho;V&sup2;C_d&middot;A_f</span></div>
+                    <div class="calc-label"><span>Sürükleme Kuvveti (F<sub>d</sub>)</span><span class="calc-formula">&frac12;&rho;V&sup2;C<sub>d</sub>&middot;A<sub>f</sub></span></div>
                     <div class="calc-val-row"><span class="calc-val" id="resDragForce">900.8 N</span></div>
                 </div>
                 <div class="calc-card">
-                    <div class="calc-label"><span>Aero Güç Kaybı (P_aero)</span><span class="calc-formula">F_d &middot; V_&infin;</span></div>
+                    <div class="calc-label"><span>Aero Güç Kaybı (P<sub>aero</sub>)</span><span class="calc-formula">F<sub>d</sub> &middot; V<sub>&infin;</sub></span></div>
                     <div class="calc-val-row"><span class="calc-val" id="resAeroPower">45.0 kW (61.2 HP)</span></div>
                 </div>
             </div>
@@ -826,16 +826,16 @@
             </p>
             <table class="rep-table">
                 <thead>
-                    <tr><th>Parametre / Bileşen</th><th>Sembol / Kriter</th><th>Hesaplanan Değer</th><th>Sınır Değer &amp; Emniyet (S_em)</th></tr>
+                    <tr><th>Parametre / Bileşen</th><th>Sembol / Kriter</th><th>Hesaplanan Değer</th><th>Sınır Değer &amp; Emniyet (S<sub>em</sub>)</th></tr>
                 </thead>
                 <tbody>
                     <tr><td>Bore / Strok / Biyel Boyu</td><td>D / s / L</td><td>84.0 mm / 61.0 mm / 109.0 mm</td><td>&lambda; = r / L = 0.2798</td></tr>
-                    <tr><td>Maksimum Güç &amp; Açısal Hız</td><td>P_max / &omega;</td><td>73.5 kW (100 HP) @ 5800 RPM</td><td>&omega; = 607.37 rad/s | c_m = 11.79 m/s</td></tr>
-                    <tr><td>ÜÖN Maksimum Piston İvmesi</td><td>a_max = r&omega;&sup2;(1+&lambda;)</td><td>14,399.5 m/s&sup2; (~1468 g)</td><td>F_atalet = -8,351.7 N</td></tr>
-                    <tr><td>Maksimum Yanma Gazı Kuvveti</td><td>F_gaz (P_max = 7.0 MPa)</td><td>38,792.4 N (38.79 kN)</td><td>Net Biyel Basma Yükü = 30.44 kN</td></tr>
-                    <tr><td>Piston Pimi Çift Tesirli Kesme</td><td>&tau;_pim (42CrMo4)</td><td>96.47 MPa</td><td>&tau;_akma = 432.75 MPa &rarr; <strong>S_em = 4.49</strong></td></tr>
-                    <tr><td>Biyel Kolu Gövde Basma / Yorulma</td><td>&sigma;_basma / &sigma;_a</td><td>156.11 MPa / 99.47 MPa</td><td>750 / 450 MPa &rarr; <strong>S_em = 4.80 / 4.52</strong></td></tr>
-                    <tr><td>Krank Kol Muylusu Kök Radüsü</td><td>&sigma;_max = K_t &middot; &sigma;_eq</td><td>217.56 MPa (K_t = 1.85)</td><td>&sigma;_D = 450 MPa &rarr; <strong>S_em = 2.07 (Sonsuz Ömür)</strong></td></tr>
+                    <tr><td>Maksimum Güç &amp; Açısal Hız</td><td>P<sub>max</sub> / &omega;</td><td>73.5 kW (100 HP) @ 5800 RPM</td><td>&omega; = 607.37 rad/s | c<sub>m</sub> = 11.79 m/s</td></tr>
+                    <tr><td>ÜÖN Maksimum Piston İvmesi</td><td>a<sub>max</sub> = r&omega;&sup2;(1+&lambda;)</td><td>14,399.5 m/s&sup2; (~1468 g)</td><td>F<sub>atalet</sub> = -8,351.7 N</td></tr>
+                    <tr><td>Maksimum Yanma Gazı Kuvveti</td><td>F<sub>gaz</sub> (P<sub>max</sub> = 7.0 MPa)</td><td>38,792.4 N (38.79 kN)</td><td>Net Biyel Basma Yükü = 30.44 kN</td></tr>
+                    <tr><td>Piston Pimi Çift Tesirli Kesme</td><td>&tau;<sub>pim</sub> (42CrMo4)</td><td>96.47 MPa</td><td>&tau;<sub>akma</sub> = 432.75 MPa &rarr; <strong>S<sub>em</sub> = 4.49</strong></td></tr>
+                    <tr><td>Biyel Kolu Gövde Basma / Yorulma</td><td>&sigma;<sub>basma</sub> / &sigma;<sub>a</sub></td><td>156.11 MPa / 99.47 MPa</td><td>750 / 450 MPa &rarr; <strong>S<sub>em</sub> = 4.80 / 4.52</strong></td></tr>
+                    <tr><td>Krank Kol Muylusu Kök Radüsü</td><td>&sigma;<sub>max</sub> = K<sub>t</sub> &middot; &sigma;<sub>eq</sub></td><td>217.56 MPa (K<sub>t</sub> = 1.85)</td><td>&sigma;<sub>D</sub> = 450 MPa &rarr; <strong>S<sub>em</sub> = 2.07 (Sonsuz Ömür)</strong></td></tr>
                 </tbody>
             </table>
         </div>
@@ -1033,12 +1033,12 @@
             document.getElementById('resGasForce').textContent = `${(fGasInst / 1000).toFixed(2)} kN`;
             document.getElementById('resInstPress').textContent = `${pInstMPa.toFixed(2)} MPa`;
             document.getElementById('resInertForce').textContent = `${(fInertInst / 1000).toFixed(2)} kN`;
-            document.getElementById('resMeanSpeed').textContent = `c_m: ${cm.toFixed(1)} m/s`;
+            document.getElementById('resMeanSpeed').innerHTML = `c<sub>m</sub>: ${cm.toFixed(1)} m/s`;
 
             document.getElementById('resRodForce').textContent = `${(fRodInst / 1000).toFixed(2)} kN`;
-            document.getElementById('resSideForce').textContent = `F_N: ${(Math.abs(fSideInst) / 1000).toFixed(2)} kN`;
+            document.getElementById('resSideForce').innerHTML = `F<sub>N</sub>: ${(Math.abs(fSideInst) / 1000).toFixed(2)} kN`;
             document.getElementById('resInstTorque').textContent = `${torqueInst.toFixed(1)} Nm`;
-            document.getElementById('resTangForce').textContent = `F_T: ${(fTangInst / 1000).toFixed(2)} kN`;
+            document.getElementById('resTangForce').innerHTML = `F<sub>T</sub>: ${(fTangInst / 1000).toFixed(2)} kN`;
 
             document.getElementById('resRodComp').textContent = `${sigmaRodInst.toFixed(1)} MPa`;
             setSfBadge(document.getElementById('sfRodComp'), sfRod, 2.0);
@@ -1051,7 +1051,7 @@
 
             document.getElementById('resCrankPeak').textContent = `${sigmaCrankInst.toFixed(1)} MPa`;
             const elCrank = document.getElementById('sfCrankFatigue');
-            elCrank.textContent = `S_yor = ${sfCrankFatigue.toFixed(2)}`;
+            elCrank.textContent = `S = ${sfCrankFatigue.toFixed(2)}`;
             elCrank.className = 'sf-badge ' + (sfCrankFatigue >= 1.5 ? 'sf-ok' : (sfCrankFatigue >= 1.0 ? 'sf-warn' : 'sf-danger'));
         }
 
