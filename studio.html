@@ -489,10 +489,76 @@
             color: var(--text-sec);
         }
 
+        .bottom-control-bar::-webkit-scrollbar { display: none; }
+
         @media (max-width: 960px) {
-            .solver-window { width: 92vw; right: 4vw; }
-            .bottom-control-bar { flex-wrap: wrap; width: 94vw; justify-content: center; border-radius: 20px; gap: 10px; }
+            .top-bar {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .brand-desktop-only { display: none !important; }
+            .hide-mobile { display: none !important; }
+            .station-switcher {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+                padding: 4px;
+            }
+            .st-btn {
+                flex: 1;
+                justify-content: center;
+                padding: 6px 8px;
+                font-size: 0.7rem;
+                gap: 5px;
+            }
+            .action-pill-btn {
+                padding: 6px 11px;
+                font-size: 0.7rem;
+            }
+            .brand-pill {
+                padding: 6px 11px !important;
+            }
             .minimal-caption { display: none; }
+
+            /* Mobile Solver Window: Compact Bottom Sheet (keeps 3D engine visible in top half!) */
+            .solver-window {
+                top: auto;
+                bottom: 66px;
+                left: 10px;
+                right: 10px;
+                width: auto;
+                max-height: 46dvh;
+                border-radius: 14px;
+            }
+            .solver-win-header { padding: 8px 12px; }
+            .solver-body { padding: 10px 12px; gap: 8px; }
+            .calc-grid { gap: 6px; }
+            .calc-card { padding: 6px 8px; }
+            .calc-val { font-size: 0.74rem; }
+
+            /* Mobile Bottom Control Bar: Single Slim Horizontal Scrollable Row (46px tall) */
+            .bottom-control-bar {
+                bottom: 10px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                width: auto;
+                max-width: none;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                border-radius: 14px;
+                padding: 7px 12px;
+                gap: 10px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .bottom-control-bar .ctrl-item { font-size: 0.66rem; }
+            .bottom-control-bar .mode-btn { padding: 5px 10px; font-size: 0.68rem; }
+            input[type="range"].clean-slider { width: 76px; }
         }
     </style>
 </head>
@@ -503,11 +569,11 @@
     <!-- CLEAN MINIMAL TOP BAR -->
     <header class="top-bar">
         <div style="display:flex;align-items:center;gap:8px;pointer-events:auto;">
-            <a href="index.html" class="brand-pill" style="text-decoration:none;color:var(--text-sec);padding:7px 14px;" title="Ana Portfolyo Sitesine Dön">
+            <a href="index.html" class="brand-pill" id="backToPortfolioLink" style="text-decoration:none;color:var(--text-sec);padding:7px 14px;" title="Ana Portfolyo Sitesine Dön">
                 <i class="fas fa-arrow-left" style="color:var(--accent)"></i>
                 <span style="font-size:0.74rem;letter-spacing:0.04em;">Portfolyo</span>
             </a>
-            <div class="brand-pill">
+            <div class="brand-pill brand-desktop-only">
                 <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
                 <span>ALİCAN <strong>KARCILI</strong></span>
             </div>
@@ -515,22 +581,22 @@
 
         <nav class="station-switcher" aria-label="Model Seçimi">
             <button type="button" class="st-btn active" data-st="1" onclick="flyToStation(1)">
-                <i class="fas fa-cogs"></i> Rotax 912 Boxer-4 Motor
+                <i class="fas fa-cogs"></i> <span>Boxer-4 <span class="hide-mobile">Motor</span></span>
             </button>
             <button type="button" class="st-btn" data-st="2" onclick="flyToStation(2)">
-                <i class="fas fa-wind"></i> Audi R8 Rüzgar Tüneli
+                <i class="fas fa-wind"></i> <span>Audi R8 <span class="hide-mobile">Rüzgar Tüneli</span></span>
             </button>
             <button type="button" class="st-btn" data-st="0" onclick="flyToStation(0)">
-                <i class="fas fa-expand"></i> İkisini Birlikte Gör
+                <i class="fas fa-expand"></i> <span>Genel</span>
             </button>
         </nav>
 
         <div class="top-actions">
             <button type="button" class="action-pill-btn active-win" id="toggleSolverWinBtn" onclick="toggleSolverWindow()">
-                <i class="fas fa-calculator" style="color:var(--accent)"></i> Mühendislik Çözücü Penceresi
+                <i class="fas fa-calculator" style="color:var(--accent)"></i> <span>Çözücü <span class="hide-mobile">Penceresi</span></span>
             </button>
             <button type="button" class="action-pill-btn" command="show-modal" commandfor="rotaxReportDialog" onclick="document.getElementById('rotaxReportDialog').showModal()">
-                <i class="fas fa-file-alt" style="color:var(--accent)"></i> Tam Rapor
+                <i class="fas fa-file-alt" style="color:var(--accent)"></i> <span>Rapor</span>
             </button>
         </div>
     </header>
@@ -1513,10 +1579,22 @@
         /* ==========================================================================
            3. NAVIGATION & UI EVENT BINDINGS
            ========================================================================== */
+        function getResponsiveCamPos(st) {
+            const pos = st.camPos.clone();
+            const aspect = window.innerWidth / Math.max(1, window.innerHeight);
+            if (aspect < 0.85) {
+                // Pull camera further back on portrait mobile phones so full model width fits cleanly
+                const offset = pos.clone().sub(st.lookAt);
+                offset.multiplyScalar(1.68);
+                pos.copy(st.lookAt).add(offset);
+            }
+            return pos;
+        }
+
         window.flyToStation = function(idx) {
             currentStation = idx;
             const st = STATIONS[idx];
-            targetCamPos.copy(st.camPos);
+            targetCamPos.copy(getResponsiveCamPos(st));
             targetLookAt.copy(st.lookAt);
             isCameraTransitioning = true;
 
@@ -1759,15 +1837,29 @@
         runEngineSolver(crankAngle);
         runAeroSolver();
 
+        // Hide "Portfolyo" back link if already embedded inside index.html's modal iframe
+        if (window.self !== window.top) {
+            const backLink = document.getElementById('backToPortfolioLink');
+            if (backLink) backLink.style.display = 'none';
+        }
+
+        // Auto-collapse Solver Window on Mobile so 3D engine is 100% unobstructed on first load!
+        if (window.innerWidth <= 960) {
+            const win = document.getElementById('solverWindow');
+            const btn = document.getElementById('toggleSolverWinBtn');
+            if (win && !win.classList.contains('closed')) {
+                win.classList.add('closed');
+                if (btn) btn.classList.remove('active-win');
+            }
+        }
+
         // Check URL parameter ?station=0|1|2 on startup
         const urlStation = new URLSearchParams(window.location.search).get('station');
-        if (urlStation !== null && STATIONS[parseInt(urlStation)]) {
-            const stIdx = parseInt(urlStation);
-            flyToStation(stIdx);
-            camera.position.copy(STATIONS[stIdx].camPos);
-            controls.target.copy(STATIONS[stIdx].lookAt);
-            isCameraTransitioning = false;
-        }
+        const initStIdx = (urlStation !== null && STATIONS[parseInt(urlStation)]) ? parseInt(urlStation) : 1;
+        flyToStation(initStIdx);
+        camera.position.copy(getResponsiveCamPos(STATIONS[initStIdx]));
+        controls.target.copy(STATIONS[initStIdx].lookAt);
+        isCameraTransitioning = false;
 
         requestAnimationFrame(animate);
     </script>

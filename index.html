@@ -1558,6 +1558,19 @@
             .cursor-spotlight { display: none; }
             .report-modal-body { padding: 16px; }
             .report-doc-sheet { padding: 18px; }
+            .sim-lab-banner { padding: 22px 16px; border-radius: 18px; }
+            .sim-station-card { padding: 18px 16px; }
+            .sim-metrics-strip { grid-template-columns: 1fr; }
+            dialog#studioPortalDialog {
+                width: 100vw;
+                height: 100dvh;
+                max-width: 100vw;
+                max-height: 100dvh;
+                border-radius: 0;
+                border: none;
+            }
+            .studio-dialog-bar { padding: 8px 12px; }
+            #studioDialogTitle, #studioFullTabLink { display: none; }
         }
     </style>
 </head>
@@ -2453,6 +2466,7 @@
                 ? 'Audi R8 (CATIA GSD) — 3B Sanal Rüzgar Tüneli & Cd Çözücüsü'
                 : 'Rotax 912 ULS Boxer-4 — 3B Kinematik (θ), Subap & Mukavemet Simülatörü';
             studioDialogEl.showModal();
+            trackAnonymousVisit(stationIdx === 2 ? 'studio_audi_cfd' : 'studio_boxer_fea');
         };
         studioDialogEl.addEventListener('close', () => {
             studioFrameEl.src = 'about:blank';
@@ -3142,11 +3156,36 @@
             document.querySelector('#menuToggle i').className = 'fas fa-bars';
         }));
 
+        /* --- SILENT ANONYMOUS VISITOR TRACKING (ZERO PERSONAL DATA, NO POPUPS) --- */
+        async function trackAnonymousVisit(pageKey) {
+            try {
+                // Skip local file:// tests so your own local edits don't inflate visitor count
+                if (window.location.protocol === 'file:' || window.location.hostname === 'localhost') return;
+                const sessionFlag = `ak_visited_${pageKey}`;
+                if (sessionStorage.getItem(sessionFlag)) return;
+                sessionStorage.setItem(sessionFlag, '1');
+
+                const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth <= 768;
+                let refHost = 'Direkt Giriş';
+                if (document.referrer) {
+                    try { refHost = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch(e) {}
+                }
+                await sb.from('site_visits').insert([{
+                    page: pageKey,
+                    device: isMobile ? 'mobile' : 'desktop',
+                    referrer: refHost
+                }]);
+            } catch (err) {
+                // Silent fail if analytics table is not yet initialized
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             setTimeout(runTypewriter, 2400);
             loadSkills();
             loadProjects();
             loadSiteContent();
+            trackAnonymousVisit('home');
         });
     </script>
 </body>
