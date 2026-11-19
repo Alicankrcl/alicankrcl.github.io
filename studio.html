@@ -1246,12 +1246,94 @@
             }
         }
 
+        // Authentic ANSYS Mechanical Von-Mises Rainbow Colormap (Deep Blue -> Cyan -> Green -> Yellow -> Red)
+        function setAnsysVonMisesColor(colorObj, normVal) {
+            const t = Math.max(0, Math.min(1, normVal));
+            if (t < 0.25) {
+                const k = t / 0.25;
+                colorObj.setRGB(0.0, 0.22 + k * 0.58, 0.85 + k * 0.15);
+            } else if (t < 0.50) {
+                const k = (t - 0.25) / 0.25;
+                colorObj.setRGB(0.0, 0.80 + k * 0.15, 1.0 - k * 0.65);
+            } else if (t < 0.75) {
+                const k = (t - 0.50) / 0.25;
+                colorObj.setRGB(k * 0.98, 0.95 - k * 0.08, 0.35 - k * 0.35);
+            } else {
+                const k = (t - 0.75) / 0.25;
+                colorObj.setRGB(0.98, 0.87 - k * 0.78, 0.05);
+            }
+        }
+
+        // Precompute spatial Von-Mises stress concentration factor [0..1] per vertex on real CATIA STL meshes
+        function attachSpatialStressMap(geom, partType, dir, zCenter, rCrank, lRod) {
+            const pos = geom.attributes.position;
+            const count = pos.count;
+            const stressMap = new Float32Array(count);
+            const colors = new Float32Array(count * 3);
+            const tmpCol = new THREE.Color();
+
+            for (let i = 0; i < count; i++) {
+                const x = pos.getX(i), y = pos.getY(i), z = pos.getZ(i);
+                let s = 0.12;
+
+                if (partType === 'crank') {
+                    // Crankshaft: highest stress (Kt=1.85) at crankpin-to-web fillet transitions (radius ~0.32..0.68)
+                    const radXY = Math.hypot(x, y);
+                    const filletBand = Math.exp(-Math.pow((radXY - rCrank * 0.88) / 0.24, 2));
+                    const journalBand = Math.exp(-Math.pow((radXY - 0.26) / 0.18, 2));
+                    s = 0.08 + filletBand * 0.88 + journalBand * 0.25;
+                } else if (partType === 'rod') {
+                    // Connecting rod: peak stress along narrow I-beam mid-shank waist & small/big-end neck fillets
+                    const along = Math.abs(x) / Math.max(0.1, lRod); // 0 at big-end -> 1 at small-end
+                    const waistProfile = Math.exp(-Math.pow((along - 0.55) / 0.28, 2));
+                    const neckFillets = Math.exp(-Math.pow((along - 0.24) / 0.09, 2)) * 0.75 +
+                                        Math.exp(-Math.pow((along - 0.84) / 0.08, 2)) * 0.82;
+                    const narrowY = Math.exp(-Math.pow(Math.abs(y) / 0.22, 2));
+                    s = 0.08 + (waistProfile * 0.82 + neckFillets * 0.55) * (0.45 + 0.55 * narrowY);
+                } else if (partType === 'piston') {
+                    // Piston: peak stress at combustion crown face (outermost X) & wrist pin boss bores
+                    const crownDist = (x * dir); // positive toward combustion crown
+                    const crownHot = crownDist > 0.15 ? Math.min(1.0, (crownDist - 0.10) / 0.35) : 0.0;
+                    const pinBoss = Math.exp(-Math.pow(Math.hypot(x, y) / 0.30, 2));
+                    s = 0.07 + crownHot * 0.78 + pinBoss * 0.65;
+                } else if (partType === 'pin') {
+                    // Wrist pin: peak double-shear stress at the two shear planes |z - zCenter| ~ 0.18
+                    const dz = Math.abs(z - zCenter);
+                    const shearPlane = Math.exp(-Math.pow((dz - 0.19) / 0.09, 2));
+                    s = 0.12 + shearPlane * 0.86;
+                }
+
+                s = Math.max(0.05, Math.min(1.0, s));
+                stressMap[i] = s;
+                setAnsysVonMisesColor(tmpCol, s);
+                colors[i * 3]     = tmpCol.r;
+                colors[i * 3 + 1] = tmpCol.g;
+                colors[i * 3 + 2] = tmpCol.b;
+            }
+
+            geom.userData.stressMap = stressMap;
+            geom.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        }
+
+        function updateGeometryFeaColors(geom, loadScale) {
+            const stressMap = geom && geom.userData.stressMap;
+            const colAttr = geom && geom.attributes.color;
+            if (!stressMap || !colAttr) return;
+            const tmpCol = new THREE.Color();
+            for (let i = 0; i < stressMap.length; i++) {
+                setAnsysVonMisesColor(tmpCol, stressMap[i] * loadScale);
+                colAttr.setXYZ(i, tmpCol.r, tmpCol.g, tmpCol.b);
+            }
+            colAttr.needsUpdate = true;
+        }
+
         // Station 1: Real CATIA V5 Boxer-4 Moving Mechanism (-5.5, 0.25, 0)
         const engineGroup = new THREE.Group();
         engineGroup.position.set(-5.5, 0.25, 0);
         scene.add(engineGroup);
 
         let crankMesh = null;
+        let crankGeoRef = null, crankMetalMat = null, crankFeaMat = null;
         const movingCylinders = [];
         const allEngineMaterials = [];
 
@@ -1263,14 +1345,16 @@
 
             const crankGeo = stlLoader.parse(base64ToArrayBuffer(ep.crank));
             crankGeo.computeVertexNormals();
-            const crankMat = new THREE.MeshStandardMaterial({
-                color: 0x94A3B8, metalness: 0.78, roughness: 0.22
-            });
-            allEngineMaterials.push(crankMat);
-            crankMesh = new THREE.Mesh(crankGeo, crankMat);
+            attachSpatialStressMap(crankGeo, 'crank', 1, 0, rCrank, lRod);
+            crankGeoRef = crankGeo;
+
+            crankMetalMat = new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.78, roughness: 0.22 });
+            crankFeaMat   = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45 });
+            allEngineMaterials.push(crankMetalMat, crankFeaMat);
+            crankMesh = new THREE.Mesh(crankGeo, crankMetalMat);
             engineGroup.add(crankMesh);
 
-            // Shared geometries for cylinder sleeves, valves & spark plugs (reduces GPU draw state overhead)
+            // Shared geometries for cylinder sleeves, valves & spark plugs
             const sleeveGeo = new THREE.CylinderGeometry(boreR * 1.03, boreR * 1.03, 2.05, 28, 1, true);
             sleeveGeo.rotateZ(Math.PI / 2);
             const sleeveMat = new THREE.MeshLambertMaterial({
@@ -1287,6 +1371,9 @@
             gasGeo.rotateZ(Math.PI / 2);
             const fireballGeo = new THREE.SphereGeometry(boreR * 0.82, 16, 16);
 
+            const sharedFeaMat = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45 });
+            allEngineMaterials.push(sharedFeaMat);
+
             const bankDirs = [1, -1, -1, 1];
             for (let i = 0; i < 4; i++) {
                 const dir = bankDirs[i];
@@ -1294,27 +1381,24 @@
 
                 const rodGeo = stlLoader.parse(base64ToArrayBuffer(ep.rods[i]));
                 rodGeo.computeVertexNormals();
-                const rodMat = new THREE.MeshStandardMaterial({
-                    color: 0xB8C4D4, metalness: 0.7, roughness: 0.26
-                });
+                attachSpatialStressMap(rodGeo, 'rod', dir, zPos, rCrank, lRod);
+                const rodMat = new THREE.MeshStandardMaterial({ color: 0xB8C4D4, metalness: 0.7, roughness: 0.26 });
                 allEngineMaterials.push(rodMat);
                 const rodMesh = new THREE.Mesh(rodGeo, rodMat);
                 engineGroup.add(rodMesh);
 
                 const pisGeo = stlLoader.parse(base64ToArrayBuffer(ep.pistons[i]));
                 pisGeo.computeVertexNormals();
-                const pisMat = new THREE.MeshStandardMaterial({
-                    color: 0xDDE3EA, metalness: 0.72, roughness: 0.2
-                });
+                attachSpatialStressMap(pisGeo, 'piston', dir, zPos, rCrank, lRod);
+                const pisMat = new THREE.MeshStandardMaterial({ color: 0xDDE3EA, metalness: 0.72, roughness: 0.2 });
                 allEngineMaterials.push(pisMat);
                 const pistonMesh = new THREE.Mesh(pisGeo, pisMat);
                 engineGroup.add(pistonMesh);
 
                 const pinGeo = stlLoader.parse(base64ToArrayBuffer(ep.pins[i]));
                 pinGeo.computeVertexNormals();
-                const pinMat = new THREE.MeshStandardMaterial({
-                    color: 0xD4A359, metalness: 0.82, roughness: 0.18
-                });
+                attachSpatialStressMap(pinGeo, 'pin', dir, zPos, rCrank, lRod);
+                const pinMat = new THREE.MeshStandardMaterial({ color: 0xD4A359, metalness: 0.82, roughness: 0.18 });
                 allEngineMaterials.push(pinMat);
                 const pinMesh = new THREE.Mesh(pinGeo, pinMat);
                 engineGroup.add(pinMesh);
@@ -1406,7 +1490,10 @@
 
                 movingCylinders.push({
                     dir, zPos, rCrank, lRod, cylIndex: i,
-                    rodMesh, rodMat, pistonMesh, pisMat, pinMesh, pinMat,
+                    rodMesh, rodMat, rodGeo,
+                    pistonMesh, pisMat, pisGeo,
+                    pinMesh, pinMat, pinGeo,
+                    sharedFeaMat,
                     sleeveGrp, headGroup, intakeValve, exhaustValve,
                     arcMat, arcMesh, gasMesh, gasMat, fireballMesh, fireballMat
                 });
@@ -1498,16 +1585,15 @@
                 c.fireballMat.opacity = fireballOpacity;
 
                 if (showFeaColors) {
-                    // Instantaneous stress coloring driven by true P(θ) + inertia / cos(β)
-                    const pCyl = computeInstantaneousCylinderPressureMPa(cycleAngle, simPressureMPa);
-                    const sinT = Math.sin(cycleAngle);
-                    const cosB = Math.sqrt(1.0 - lambda * lambda * sinT * sinT);
-                    const stressNorm = Math.min(1.0, ((pCyl / 7.0) * 0.75 + 0.20 * Math.abs(sinT)) / cosB);
-                    setSoftEngineeringColor(c.rodMat.color, stressNorm);
-                    setSoftEngineeringColor(c.pisMat.color, stressNorm * 0.75);
+                    if (crankMesh.material !== crankFeaMat) crankMesh.material = crankFeaMat;
+                    if (c.rodMesh.material !== c.sharedFeaMat) c.rodMesh.material = c.sharedFeaMat;
+                    if (c.pistonMesh.material !== c.sharedFeaMat) c.pistonMesh.material = c.sharedFeaMat;
+                    if (c.pinMesh.material !== c.sharedFeaMat) c.pinMesh.material = c.sharedFeaMat;
                 } else {
-                    c.rodMat.color.setHex(0xB8C4D4);
-                    c.pisMat.color.setHex(0xDDE3EA);
+                    if (crankMesh.material !== crankMetalMat) crankMesh.material = crankMetalMat;
+                    if (c.rodMesh.material !== c.rodMat) c.rodMesh.material = c.rodMat;
+                    if (c.pistonMesh.material !== c.pisMat) c.pistonMesh.material = c.pisMat;
+                    if (c.pinMesh.material !== c.pinMat) c.pinMesh.material = c.pinMat;
                 }
             });
         }
@@ -1622,12 +1708,14 @@
             simRpm = parseFloat(rpmSlider.value);
             document.getElementById('rpmVal').textContent = `${simRpm} RPM`;
             runEngineSolver(crankAngle);
+            refreshFeaStressIntensity();
         });
 
         pressureSlider.addEventListener('input', () => {
             simPressureMPa = parseFloat(pressureSlider.value);
             document.getElementById('pressureVal').textContent = `${simPressureMPa.toFixed(1)} MPa`;
             runEngineSolver(crankAngle);
+            refreshFeaStressIntensity();
         });
 
         // Allow dragging crank angle θ (0° - 720°) directly to inspect forces & stresses at any kinematic position!
@@ -1683,9 +1771,21 @@
                 : '<i class="fas fa-video"></i> Ağır Çekim Kamera (1/20x)';
         });
 
+        function refreshFeaStressIntensity() {
+            if (!showFeaColors) return;
+            const loadScale = Math.max(0.35, Math.min(1.15, (simPressureMPa / 7.0) * (0.75 + 0.25 * (simRpm / 5800))));
+            updateGeometryFeaColors(crankGeoRef, loadScale);
+            movingCylinders.forEach(c => {
+                updateGeometryFeaColors(c.rodGeo, loadScale);
+                updateGeometryFeaColors(c.pisGeo, loadScale * 0.92);
+                updateGeometryFeaColors(c.pinGeo, loadScale * 0.96);
+            });
+        }
+
         document.getElementById('feaColorBtn').addEventListener('click', function() {
             showFeaColors = !showFeaColors;
             this.classList.toggle('active', showFeaColors);
+            if (showFeaColors) refreshFeaStressIntensity();
             if (realAudiMesh) {
                 realAudiMesh.material.color.setHex(showFeaColors ? 0xD4A359 : 0xBEC8D6);
             }
