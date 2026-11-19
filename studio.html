@@ -1301,6 +1301,14 @@
                     const dz = Math.abs(z - zCenter);
                     const shearPlane = Math.exp(-Math.pow((dz - 0.19) / 0.09, 2));
                     s = 0.12 + shearPlane * 0.86;
+                } else if (partType === 'audi') {
+                    // CFD Aerodynamic Surface Pressure (Cp) & Shear distribution on Audi R8 shell:
+                    // High stagnation pressure at front grille/splitter (x < -2.1) & windshield base (-0.9 < x < -0.3)
+                    const frontStag = Math.exp(-Math.pow((x + 2.55) / 0.48, 2)) * (y < 0.15 ? 1.0 : 0.65);
+                    const cowlStag  = Math.exp(-Math.pow((x + 0.65) / 0.35, 2)) * (y > 0.05 && y < 0.45 ? 0.72 : 0.25);
+                    const roofVel   = Math.exp(-Math.pow((x - 0.15) / 0.85, 2)) * Math.max(0.0, (y + 0.15) / 0.65) * 0.58;
+                    const wingWake  = Math.exp(-Math.pow((x - 2.35) / 0.42, 2)) * 0.42;
+                    s = 0.10 + Math.max(frontStag * 0.90, cowlStag * 0.78, roofVel + wingWake * 0.4);
                 }
 
                 s = Math.max(0.05, Math.min(1.0, s));
@@ -1348,8 +1356,8 @@
             attachSpatialStressMap(crankGeo, 'crank', 1, 0, rCrank, lRod);
             crankGeoRef = crankGeo;
 
-            crankMetalMat = new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.78, roughness: 0.22 });
-            crankFeaMat   = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45 });
+            crankMetalMat = new THREE.MeshStandardMaterial({ color: 0x94A3B8, metalness: 0.78, roughness: 0.22, side: THREE.DoubleSide });
+            crankFeaMat   = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45, side: THREE.DoubleSide });
             allEngineMaterials.push(crankMetalMat, crankFeaMat);
             crankMesh = new THREE.Mesh(crankGeo, crankMetalMat);
             engineGroup.add(crankMesh);
@@ -1371,7 +1379,7 @@
             gasGeo.rotateZ(Math.PI / 2);
             const fireballGeo = new THREE.SphereGeometry(boreR * 0.82, 16, 16);
 
-            const sharedFeaMat = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45 });
+            const sharedFeaMat = new THREE.MeshStandardMaterial({ vertexColors: true, metalness: 0.22, roughness: 0.45, side: THREE.DoubleSide });
             allEngineMaterials.push(sharedFeaMat);
 
             const bankDirs = [1, -1, -1, 1];
@@ -1382,7 +1390,7 @@
                 const rodGeo = stlLoader.parse(base64ToArrayBuffer(ep.rods[i]));
                 rodGeo.computeVertexNormals();
                 attachSpatialStressMap(rodGeo, 'rod', dir, zPos, rCrank, lRod);
-                const rodMat = new THREE.MeshStandardMaterial({ color: 0xB8C4D4, metalness: 0.7, roughness: 0.26 });
+                const rodMat = new THREE.MeshStandardMaterial({ color: 0xB8C4D4, metalness: 0.7, roughness: 0.26, side: THREE.DoubleSide });
                 allEngineMaterials.push(rodMat);
                 const rodMesh = new THREE.Mesh(rodGeo, rodMat);
                 engineGroup.add(rodMesh);
@@ -1390,7 +1398,7 @@
                 const pisGeo = stlLoader.parse(base64ToArrayBuffer(ep.pistons[i]));
                 pisGeo.computeVertexNormals();
                 attachSpatialStressMap(pisGeo, 'piston', dir, zPos, rCrank, lRod);
-                const pisMat = new THREE.MeshStandardMaterial({ color: 0xDDE3EA, metalness: 0.72, roughness: 0.2 });
+                const pisMat = new THREE.MeshStandardMaterial({ color: 0xDDE3EA, metalness: 0.72, roughness: 0.2, side: THREE.DoubleSide });
                 allEngineMaterials.push(pisMat);
                 const pistonMesh = new THREE.Mesh(pisGeo, pisMat);
                 engineGroup.add(pistonMesh);
@@ -1398,7 +1406,7 @@
                 const pinGeo = stlLoader.parse(base64ToArrayBuffer(ep.pins[i]));
                 pinGeo.computeVertexNormals();
                 attachSpatialStressMap(pinGeo, 'pin', dir, zPos, rCrank, lRod);
-                const pinMat = new THREE.MeshStandardMaterial({ color: 0xD4A359, metalness: 0.82, roughness: 0.18 });
+                const pinMat = new THREE.MeshStandardMaterial({ color: 0xD4A359, metalness: 0.82, roughness: 0.18, side: THREE.DoubleSide });
                 allEngineMaterials.push(pinMat);
                 const pinMesh = new THREE.Mesh(pinGeo, pinMat);
                 engineGroup.add(pinMesh);
@@ -1606,6 +1614,7 @@
 
         let realAudiMesh = null;
         let audiGeom = null;
+        let audiMetalMat = null, audiFeaMat = null;
         const GRID_NX = 40, GRID_NZ = 24;
         const audiHeightMap = new Float32Array(GRID_NX * GRID_NZ).fill(-0.85);
 
@@ -1633,11 +1642,15 @@
             audiGeom = stlLoader.parse(base64ToArrayBuffer(window.KARCILI_AUDI_STL_B64));
             audiGeom.computeVertexNormals();
             buildAudiHeightMap(audiGeom);
+            attachSpatialStressMap(audiGeom, 'audi', 1, 0, 1, 1);
 
-            const audiMat = new THREE.MeshStandardMaterial({
-                color: 0xBEC8D6, metalness: 0.62, roughness: 0.22
+            audiMetalMat = new THREE.MeshStandardMaterial({
+                color: 0xBEC8D6, metalness: 0.62, roughness: 0.22, side: THREE.DoubleSide
             });
-            realAudiMesh = new THREE.Mesh(audiGeom, audiMat);
+            audiFeaMat = new THREE.MeshStandardMaterial({
+                vertexColors: true, metalness: 0.25, roughness: 0.42, side: THREE.DoubleSide
+            });
+            realAudiMesh = new THREE.Mesh(audiGeom, audiMetalMat);
             windTunnelGroup.add(realAudiMesh);
         }
 
@@ -1735,6 +1748,7 @@
             simWindKmh = parseFloat(windSpeedSlider.value);
             document.getElementById('windSpeedVal').textContent = `${simWindKmh} km/h`;
             runAeroSolver();
+            refreshFeaStressIntensity();
         });
 
         document.getElementById('aeroConfigSelect').addEventListener('change', runAeroSolver);
@@ -1780,6 +1794,10 @@
                 updateGeometryFeaColors(c.pisGeo, loadScale * 0.92);
                 updateGeometryFeaColors(c.pinGeo, loadScale * 0.96);
             });
+            if (audiGeom) {
+                const aeroScale = Math.max(0.45, Math.min(1.15, 0.50 + 0.58 * (simWindKmh / 240)));
+                updateGeometryFeaColors(audiGeom, aeroScale);
+            }
         }
 
         document.getElementById('feaColorBtn').addEventListener('click', function() {
@@ -1787,7 +1805,8 @@
             this.classList.toggle('active', showFeaColors);
             if (showFeaColors) refreshFeaStressIntensity();
             if (realAudiMesh) {
-                realAudiMesh.material.color.setHex(showFeaColors ? 0xD4A359 : 0xBEC8D6);
+                realAudiMesh.material = (showFeaColors && audiFeaMat) ? audiFeaMat : audiMetalMat;
+                realAudiMesh.material.wireframe = showWireframe;
             }
             updateBoxerKinematics(crankAngle);
         });
@@ -1796,24 +1815,117 @@
             showWireframe = !showWireframe;
             this.classList.toggle('active', showWireframe);
             allEngineMaterials.forEach(m => { m.wireframe = showWireframe; });
-            if (realAudiMesh) realAudiMesh.material.wireframe = showWireframe;
+            if (audiMetalMat) audiMetalMat.wireframe = showWireframe;
+            if (audiFeaMat) audiFeaMat.wireframe = showWireframe;
         });
 
-        /* --- PROCEDURAL WEBAUDIO BOXER-4 ENGINE SOUND SYNTHESIZER --- */
-        let audioCtx = null, soundEnabled = false, engineOsc = null, subOsc = null, engineGain = null, filterNode = null;
+        /* --- PHYSICAL 4-CYLINDER BOXER COMBUSTION PULSE AUDIO SYNTHESIZER --- */
+        let audioCtx = null, soundEnabled = false, engineSource = null, engineGain = null, filterNode = null;
+
+        function buildBoxerCombustionBuffer(ctx) {
+            const sr = ctx.sampleRate;
+            // Base speed = 1500 RPM -> 25 rev/s -> 720 deg (4 firings) = 0.080 s -> 0.020 s per firing (50 Hz)
+            // 20 full 720-deg cycles = 1.60 s seamless PCM loop with cycle-to-cycle turbulence variation
+            const cycleDur = 0.080;
+            const numCycles = 20;
+            const totalSamples = Math.round(numCycles * cycleDur * sr);
+            const buf = ctx.createBuffer(1, totalSamples, sr);
+            const data = buf.getChannelData(0);
+
+            let brownNoise = 0.0;
+            const noiseStream = new Float32Array(totalSamples);
+            for (let i = 0; i < totalSamples; i++) {
+                const white = Math.random() * 2.0 - 1.0;
+                brownNoise = (brownNoise + 0.045 * white) / 1.045;
+                noiseStream[i] = brownNoise * 2.8 + white * 0.22;
+            }
+
+            // Asymmetric uneven-length Boxer manifold delays per cylinder (1-4-2-3 firing order)
+            const firePhases = [0.000, 0.020, 0.0432, 0.060];
+            const pulseSamples = Math.round(0.036 * sr);
+
+            for (let cyc = 0; cyc < numCycles; cyc++) {
+                const cycleJitter = (Math.random() - 0.5) * 0.0007;
+                for (let f = 0; f < 4; f++) {
+                    const ampVar = 0.88 + Math.random() * 0.24;
+                    const tStart = cyc * cycleDur + firePhases[f] + cycleJitter;
+                    const sStart = Math.round(tStart * sr);
+                    const isOddBank = (f === 1 || f === 2);
+
+                    for (let k = 0; k < pulseSamples; k++) {
+                        const t = k / sr;
+                        const idx = ((sStart + k) % totalSamples + totalSamples) % totalSamples;
+
+                        // 1. Low-frequency cylinder combustion thump (f0 = 115 Hz -> 48 Hz rapid pitch drop)
+                        const instFreq = 48.0 + 67.0 * Math.exp(-t / 0.0055);
+                        const thumpEnv = (t / 0.0045) * Math.exp(1.0 - t / 0.0045);
+                        const thump = Math.sin(2.0 * Math.PI * instFreq * t) * thumpEnv * 0.72;
+
+                        // 2. Boxer unequal-length secondary exhaust pulse (82 Hz burble delayed ~3.2ms on cylinders 2 & 4)
+                        let headerBurble = 0.0;
+                        if (isOddBank && t >= 0.0032) {
+                            const tb = t - 0.0032;
+                            const bEnv = Math.exp(-tb / 0.0065) * Math.min(1.0, tb / 0.0012);
+                            headerBurble = Math.sin(2.0 * Math.PI * 82.0 * tb) * bEnv * 0.42;
+                        }
+
+                        // 3. Exhaust blowdown gas turbulence + crisp 1.2ms mechanical valve tappet transient
+                        const blowEnv = Math.exp(-t / 0.011) * Math.min(1.0, t / 0.0015);
+                        const gasTurb = noiseStream[idx] * blowEnv * 0.36;
+                        const tappet = t < 0.0012 ? Math.sin(2.0 * Math.PI * 680.0 * t) * (1.0 - t / 0.0012) * 0.14 : 0.0;
+
+                        data[idx] += (thump + headerBurble + gasTurb + tappet) * ampVar;
+                    }
+                }
+            }
+
+            // Subtle continuous crankcase mechanical rumble + DC removal + soft normalize
+            let mean = 0.0, peak = 0.001;
+            for (let i = 0; i < totalSamples; i++) {
+                data[i] += noiseStream[i] * 0.06;
+                mean += data[i];
+            }
+            mean /= totalSamples;
+            for (let i = 0; i < totalSamples; i++) {
+                data[i] -= mean;
+                const a = Math.abs(data[i]);
+                if (a > peak) peak = a;
+            }
+            const normGain = 0.88 / peak;
+            for (let i = 0; i < totalSamples; i++) {
+                data[i] *= normGain;
+            }
+            return buf;
+        }
+
+        function createWarmSaturationCurve() {
+            const n = 256;
+            const curve = new Float32Array(n);
+            for (let i = 0; i < n; i++) {
+                const x = (i * 2) / n - 1;
+                curve[i] = Math.tanh(2.2 * x) / Math.tanh(2.2);
+            }
+            return curve;
+        }
 
         function updateEngineSoundFrequency() {
-            if (!soundEnabled || !audioCtx || !engineOsc) return;
+            if (!soundEnabled || !audioCtx || !engineSource) return;
             if (simRpm <= 50 || isDraggingTheta || isSimulationPaused) {
                 engineGain.gain.setTargetAtTime(0.0, audioCtx.currentTime, 0.05);
                 return;
             }
-            const effectiveRpm = isSlowMoCamera ? simRpm * 0.12 : simRpm;
-            const fireFreq = Math.max(8, (effectiveRpm / 60.0) * 2.0);
-            engineOsc.frequency.setTargetAtTime(fireFreq, audioCtx.currentTime, 0.04);
-            subOsc.frequency.setTargetAtTime(fireFreq * 0.5, audioCtx.currentTime, 0.04);
-            filterNode.frequency.setTargetAtTime(140 + (effectiveRpm / 5800) * 750, audioCtx.currentTime, 0.04);
-            engineGain.gain.setTargetAtTime(0.12 + (simRpm / 5800) * 0.12, audioCtx.currentTime, 0.05);
+            const effectiveRpm = isSlowMoCamera ? Math.max(260, simRpm * 0.12) : simRpm;
+            // Playback rate relative to 1500 RPM reference buffer
+            const rate = Math.max(0.18, effectiveRpm / 1500.0);
+            engineSource.playbackRate.setTargetAtTime(rate, audioCtx.currentTime, 0.04);
+
+            // Low-Q warm lowpass (180 Hz at idle -> 920 Hz at 5800 RPM) with zero resonant whistling
+            const cutoff = 180.0 + Math.min(1.0, effectiveRpm / 5800.0) * 740.0;
+            filterNode.frequency.setTargetAtTime(cutoff, audioCtx.currentTime, 0.05);
+
+            const pressBoost = 0.8 + (simPressureMPa / 10.0) * 0.35;
+            const targetVol = (0.24 + (simRpm / 5800.0) * 0.22) * pressBoost;
+            engineGain.gain.setTargetAtTime(targetVol, audioCtx.currentTime, 0.05);
         }
 
         document.getElementById('soundToggleBtn').addEventListener('click', function() {
@@ -1827,20 +1939,29 @@
                 if (!audioCtx) {
                     const AudioContextCls = window.AudioContext || window.webkitAudioContext;
                     audioCtx = new AudioContextCls();
-                    engineOsc = audioCtx.createOscillator();
-                    subOsc = audioCtx.createOscillator();
+
+                    const boxerBuffer = buildBoxerCombustionBuffer(audioCtx);
+                    engineSource = audioCtx.createBufferSource();
+                    engineSource.buffer = boxerBuffer;
+                    engineSource.loop = true;
+
+                    const shaper = audioCtx.createWaveShaper();
+                    shaper.curve = createWarmSaturationCurve();
+                    shaper.oversample = '2x';
+
                     filterNode = audioCtx.createBiquadFilter();
-                    engineGain = audioCtx.createGain();
-                    engineOsc.type = 'sawtooth';
-                    subOsc.type = 'triangle';
                     filterNode.type = 'lowpass';
-                    filterNode.Q.value = 3.5;
-                    engineOsc.connect(filterNode);
-                    subOsc.connect(filterNode);
+                    filterNode.Q.value = 1.4;
+
+                    engineGain = audioCtx.createGain();
+                    engineGain.gain.value = 0.0;
+
+                    engineSource.connect(shaper);
+                    shaper.connect(filterNode);
                     filterNode.connect(engineGain);
                     engineGain.connect(audioCtx.destination);
-                    engineOsc.start();
-                    subOsc.start();
+
+                    engineSource.start();
                 }
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 updateEngineSoundFrequency();
