@@ -3156,27 +3156,48 @@
             document.querySelector('#menuToggle i').className = 'fas fa-bars';
         }));
 
-        /* --- SILENT ANONYMOUS VISITOR TRACKING (ZERO PERSONAL DATA, NO POPUPS) --- */
+        /* --- SILENT ANONYMOUS UNIQUE VISITOR TRACKING (IP-HASH DEDUPLICATED, ZERO POPUPS) --- */
+        async function getAnonymousVisitorHash() {
+            let cached = localStorage.getItem('ak_vhash_v1');
+            if (cached) return cached;
+            try {
+                const res = await fetch('https://api.ipify.org?format=json', { cache: 'no-store' });
+                if (res.ok) {
+                    const { ip } = await res.json();
+                    if (ip && window.crypto && window.crypto.subtle) {
+                        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('ak_salt_' + ip));
+                        const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 8);
+                        localStorage.setItem('ak_vhash_v1', hex);
+                        return hex;
+                    }
+                }
+            } catch (e) {}
+            const fallback = Math.random().toString(36).slice(2, 10);
+            localStorage.setItem('ak_vhash_v1', fallback);
+            return fallback;
+        }
+
         async function trackAnonymousVisit(pageKey) {
             try {
-                // Skip local file:// tests so your own local edits don't inflate visitor count
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost') return;
-                const sessionFlag = `ak_visited_${pageKey}`;
-                if (sessionStorage.getItem(sessionFlag)) return;
-                sessionStorage.setItem(sessionFlag, '1');
+                // Deduplicate per device permanently (localStorage) so same browser never spams the database
+                const storageFlag = `ak_visited_uniq_${pageKey}`;
+                if (localStorage.getItem(storageFlag)) return;
+                localStorage.setItem(storageFlag, '1');
 
                 const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || window.innerWidth <= 768;
                 let refHost = 'Direkt Giriş';
                 if (document.referrer) {
                     try { refHost = new URL(document.referrer).hostname.replace(/^www\./, ''); } catch(e) {}
                 }
+                const vHash = await getAnonymousVisitorHash();
                 await sb.from('site_visits').insert([{
                     page: pageKey,
                     device: isMobile ? 'mobile' : 'desktop',
-                    referrer: refHost
+                    referrer: `${refHost} #${vHash}`
                 }]);
             } catch (err) {
-                // Silent fail if analytics table is not yet initialized
+                // Silent fail
             }
         }
 

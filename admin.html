@@ -1025,25 +1025,59 @@ async function loadVisitorAnalytics() {
 
         setupBox.style.display = 'none';
         const rows = data || [];
-        const homeVisits = rows.filter(r => r.page === 'home');
-        const studioVisits = rows.filter(r => (r.page || '').startsWith('studio'));
+
+        // Extract anonymized IP hash (#xxxxxxxx) from referrer and deduplicate by IP + page!
+        function parseRefAndHash(refStr, fallbackId) {
+            const raw = (refStr || 'Direkt Giriş').trim();
+            const m = raw.match(/^(.*?)\s*#([a-f0-9a-z]{6,10})$/i);
+            if (m) return { source: m[1].trim() || 'Direkt Giriş', hash: m[2].toLowerCase() };
+            return { source: raw, hash: 'legacy_' + fallbackId };
+        }
+
+        // Deduplicate home visits by unique IP hash (so same IP never counts or displays twice)
+        const uniqueHomeMap = new Map();
+        const uniqueStudioMap = new Map();
+        const uniqueAllTableMap = new Map();
+
+        rows.forEach(r => {
+            const { source, hash } = parseRefAndHash(r.referrer, r.id);
+            const entry = { ...r, cleanSource: source, vHash: hash };
+
+            if (r.page === 'home') {
+                if (!uniqueHomeMap.has(hash)) uniqueHomeMap.set(hash, entry);
+            } else if ((r.page || '').startsWith('studio')) {
+                const sKey = `${hash}_${r.page}`;
+                if (!uniqueStudioMap.has(sKey)) uniqueStudioMap.set(sKey, entry);
+            }
+
+            const tKey = `${hash}_${r.page || 'home'}`;
+            if (!uniqueAllTableMap.has(tKey)) {
+                uniqueAllTableMap.set(tKey, { ...entry, hitCount: 1 });
+            } else {
+                uniqueAllTableMap.get(tKey).hitCount += 1;
+            }
+        });
+
+        const uniqueHomeVisits = Array.from(uniqueHomeMap.values());
+        const uniqueStudioVisits = Array.from(uniqueStudioMap.values());
+        const uniqueTableRows = Array.from(uniqueAllTableMap.values());
 
         const now = new Date();
         const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
         const sevenDaysAgo = now.getTime() - 7 * 24 * 60 * 60 * 1000;
 
-        const todayCount = homeVisits.filter(r => new Date(r.created_at).getTime() >= startOfToday).length;
-        const weekCount  = homeVisits.filter(r => new Date(r.created_at).getTime() >= sevenDaysAgo).length;
-        const mobileCnt  = homeVisits.filter(r => r.device === 'mobile').length;
-        const desktopCnt = homeVisits.length - mobileCnt;
+        const todayCount = uniqueHomeVisits.filter(r => new Date(r.created_at).getTime() >= startOfToday).length;
+        const weekCount  = uniqueHomeVisits.filter(r => new Date(r.created_at).getTime() >= sevenDaysAgo).length;
+        const mobileCnt  = uniqueHomeVisits.filter(r => r.device === 'mobile').length;
+        const desktopCnt = uniqueHomeVisits.length - mobileCnt;
 
-        document.getElementById('kpiTotalVisits').textContent   = homeVisits.length;
+        document.getElementById('kpiTotalVisits').textContent   = uniqueHomeVisits.length;
         document.getElementById('statVisitsToday').textContent  = todayCount;
         document.getElementById('statVisits7d').textContent     = weekCount;
-        document.getElementById('statVisitsStudio').textContent = studioVisits.length;
+        document.getElementById('statVisitsStudio').textContent = uniqueStudioVisits.length;
         document.getElementById('statDeviceSplit').textContent  = `${mobileCnt} Mobil / ${desktopCnt} PC`;
 
-        if (!rows.length) {
+        if (!uniqueTableRows.length) {
             bodyEl.innerHTML = '<div class="empty-state"><i class="fas fa-users"></i><p>Henüz kayıtlı ziyaret yok. Siteye canlı adresten girildiğinde burada anında görünecektir.</p></div>';
             return;
         }
@@ -1054,17 +1088,19 @@ async function loadVisitorAnalytics() {
             'studio_audi_cfd': '3B Stüdyo — Audi R8 Rüzgar Tüneli'
         };
 
-        let html = '<table class="data-table"><thead><tr><th>Tarih &amp; Saat</th><th>Görüntülenen Sayfa</th><th>Cihaz</th><th>Geldiği Kaynak</th></tr></thead><tbody>';
-        rows.slice(0, 30).forEach(r => {
+        let html = '<table class="data-table"><thead><tr><th>Son Giriş Tarihi</th><th>Görüntülenen Sayfa</th><th>Cihaz</th><th>Geldiği Kaynak</th><th>Tekil Kimlik</th></tr></thead><tbody>';
+        uniqueTableRows.slice(0, 30).forEach(r => {
             const dtStr = new Date(r.created_at).toLocaleString('tr-TR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
             const devBadge = r.device === 'mobile'
                 ? '<span class="table-tag" style="color:#A855F7;border-color:rgba(168,85,247,0.35)"><i class="fas fa-mobile-alt"></i> Mobil</span>'
                 : '<span class="table-tag" style="color:#38BDF8;border-color:rgba(56,189,248,0.35)"><i class="fas fa-desktop"></i> Masaüstü</span>';
+            const shortId = r.vHash.startsWith('legacy_') ? 'Eski Kayıt' : `#${r.vHash.slice(0, 6)}`;
             html += `<tr>
                 <td style="font-family:'JetBrains Mono',monospace;font-size:0.76rem;color:var(--text-muted)">${dtStr}</td>
                 <td style="font-weight:600">${PAGE_LABELS[r.page] || r.page}</td>
                 <td>${devBadge}</td>
-                <td><span class="table-tag">${r.referrer || 'Direkt Giriş'}</span></td>
+                <td><span class="table-tag">${r.cleanSource}</span></td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--text-muted)">${shortId}</td>
             </tr>`;
         });
         html += '</tbody></table>';
